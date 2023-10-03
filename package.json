@@ -14,11 +14,11 @@
   },
   "lint-staged": {
     "src/**/*.{js,jsx,ts,tsx}": [
-      "npx run format",
-      "npx lint:fix"
+      "npm run format",
+      "npm run lint:fix"
     ],
     "src/**/*.{css,scss,sass}": [
-      "npx run format"
+      "npm run format"
     ]
   },
   "dependencies": {
