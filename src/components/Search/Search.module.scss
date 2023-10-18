@@ -1,0 +1,15 @@
+@import 'src/scss/vars';
+
+.input {
+  height: 50px;
+  background-color: $black-3;
+  color: $white-1;
+  border-radius: 10px;
+  border: none;
+}
+
+.button {
+  height: 50px;
+  margin-left: 20px;
+  padding: 0 30px;
+}
