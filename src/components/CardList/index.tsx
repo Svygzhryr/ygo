@@ -1,15 +1,33 @@
 import React, { Component } from 'react';
-import RequestService from '../../services/RequestService';
+import { ICard } from '../../types/types';
 import styles from './CardList.module.scss';
 
-export default class CardList extends Component {
+interface ICardListProps {
+  cards: ICard[];
+}
+
+export default class CardList extends Component<ICardListProps> {
+  constructor(props: ICardListProps) {
+    super(props);
+  }
+
   render() {
     return (
       <div className={styles.wrapper}>
-        <button>Card</button>
-        <button>Card</button>
-        <button>Card</button>
-        <button>Card</button>
+        <div className={styles.cardListWrapper}>
+          {this.props.cards.map((card) => {
+            return (
+              <div key={card.id} className={styles.cardItem}>
+                <img
+                  className={styles.cardItemImg}
+                  src={card.card_images[0].image_url}
+                  alt={card.name}
+                  loading="lazy"
+                />
+              </div>
+            );
+          })}
+        </div>
       </div>
     );
   }

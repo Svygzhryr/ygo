@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import styles from './App.module.scss';
 import MainPage from '../pages/MainPage';
+import ErrorBoundary from '../components/ErrorBoundary';
+import ErrorFallback from '../components/ErrorFallback';
 
 type MyState = { count: number };
 
@@ -12,7 +13,9 @@ export default class App extends Component<object, MyState> {
   render() {
     return (
       <>
+        {/* <ErrorBoundary FallbackComponent={ErrorFallback}> */}
         <MainPage />
+        {/* </ErrorBoundary> */}
       </>
     );
   }

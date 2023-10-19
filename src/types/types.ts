@@ -46,3 +46,12 @@ export interface ICardAPI {
     next_page_offset: number;
   };
 }
+
+export interface IErrorBoundaryProps {
+  children?: React.ReactNode;
+  FallbackComponent: JSX.Element; // fix
+}
+
+export interface IErrorBoundaryState {
+  error: Error | null;
+}
