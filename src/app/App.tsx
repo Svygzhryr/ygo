@@ -13,9 +13,9 @@ export default class App extends Component<object, MyState> {
   render() {
     return (
       <>
-        {/* <ErrorBoundary FallbackComponent={ErrorFallback}> */}
-        <MainPage />
-        {/* </ErrorBoundary> */}
+        <ErrorBoundary FallbackComponent={ErrorFallback}>
+          <MainPage />
+        </ErrorBoundary>
       </>
     );
   }

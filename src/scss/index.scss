@@ -3,6 +3,7 @@
 html {
   box-sizing: border-box;
   height: 100%;
+  background: $black-1;
 }
 
 *,
@@ -30,10 +31,16 @@ a {
 }
 
 button {
+  padding: 5px 20px;
   background-color: $green-1;
   border: none;
   border-radius: 12px;
   color: $white-1;
+
+  transition: all 0.2s ease-in-out;
+  &:hover {
+    background-color: $green-2;
+  }
 }
 
 /* ===== Scrollbar CSS ===== */

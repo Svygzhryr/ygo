@@ -15,9 +15,9 @@ export default class ErrorBoundary extends Component<IErrorBoundaryProps, IError
     const { error } = this.state;
     const { children, FallbackComponent } = this.props;
 
-    // if (error) {
-    //   return <FallbackComponent error={error} />;
-    // }
+    if (error) {
+      return <FallbackComponent error={error} />;
+    }
 
     return children;
   }

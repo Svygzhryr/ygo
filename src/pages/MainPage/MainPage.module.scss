@@ -6,3 +6,16 @@
   text-align: center;
   background-color: $black-1;
 }
+
+.error {
+  padding: 5px 10px;
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  font-size: 14px;
+  background-color: $red-1;
+
+  &:hover {
+    background-color: $red-2;
+  }
+}

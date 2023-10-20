@@ -49,7 +49,7 @@ export interface ICardAPI {
 
 export interface IErrorBoundaryProps {
   children?: React.ReactNode;
-  FallbackComponent: JSX.Element; // fix
+  FallbackComponent: React.ComponentType<IErrorBoundaryState>;
 }
 
 export interface IErrorBoundaryState {

@@ -8,6 +8,7 @@ import styles from './MainPage.module.scss';
 interface ICardState {
   cards: ICard[];
   searchValue: string;
+  throwErrorMessage: string | null;
 }
 
 export default class MainPage extends Component<object, ICardState> {
@@ -16,6 +17,7 @@ export default class MainPage extends Component<object, ICardState> {
     this.state = {
       cards: [],
       searchValue: '',
+      throwErrorMessage: null,
     };
   }
 
@@ -41,6 +43,10 @@ export default class MainPage extends Component<object, ICardState> {
     this.setState({ searchValue: e.target.value });
   }
 
+  handleThrowError() {
+    this.setState({ throwErrorMessage: 'Whoops! An error has occured.' });
+  }
+
   componentDidMount = async () => {
     const storageSearchValue = localStorage.getItem('prevSearch');
     if (storageSearchValue) {
@@ -53,9 +59,18 @@ export default class MainPage extends Component<object, ICardState> {
     }
   };
 
+  componentDidUpdate = () => {
+    if (this.state.throwErrorMessage) {
+      throw new Error(this.state.throwErrorMessage);
+    }
+  };
+
   render() {
     return (
       <section className={styles.wrapper}>
+        <button className={styles.error} onClick={this.handleThrowError.bind(this)}>
+          Throw an error!
+        </button>
         <Search
           value={this.state.searchValue}
           onClick={this.handleOnClick.bind(this)}
