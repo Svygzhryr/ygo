@@ -13,4 +13,9 @@
   height: 50px;
   margin-left: 20px;
   padding: 0 30px;
+
+  transition: all 0.2s ease-in-out;
+  &:hover {
+    background-color: $green-2;
+  }
 }

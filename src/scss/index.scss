@@ -35,3 +35,25 @@ button {
   border-radius: 12px;
   color: $white-1;
 }
+
+/* ===== Scrollbar CSS ===== */
+/* Firefox */
+* {
+  scrollbar-width: auto;
+  scrollbar-color: #349d63 #111111;
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #111111;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #349d63;
+  border-radius: 10px;
+  border: 0px solid #ffffff;
+}
