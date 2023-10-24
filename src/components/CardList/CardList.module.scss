@@ -1,7 +1,10 @@
 @import 'src/scss/vars';
 
+$card-width: 260px;
+$card-height: 300px;
+
 .wrapper {
-  max-width: 1000px;
+  max-width: 900px;
   width: 100%;
   margin: 50px auto;
 }
@@ -10,20 +13,83 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(4, 1fr);
-  grid-column-gap: 20px;
-  grid-row-gap: 20px;
+  grid-row-gap: 40px;
+  justify-items: center;
+}
+
+.cardItemWrapper {
+  width: $card-width;
+  height: $card-height;
+  display: flex;
+  justify-content: center;
+  border-radius: 15px;
+  padding: 5px;
 }
 
 .cardItem {
+  width: 100%;
+  padding: 20px 10px;
+  background-color: #0c0c0c;
+  border-radius: 25px;
 }
 
 .cardItemImg {
-  width: 100%;
-  height: auto;
+  width: 150px;
+  height: 150px;
   object-fit: cover;
+  border-radius: 20px;
+}
+
+.cardItemName {
+  margin: 10px 20px;
+}
+
+.typeMonster {
+  color: hsla(11, 58%, 65%, 1);
+  background: hsla(49, 72%, 65%, 1);
+
+  background: linear-gradient(270deg, hsla(49, 72%, 65%, 1) 0%, hsla(11, 58%, 65%, 1) 100%);
+
+  background: -moz-linear-gradient(270deg, hsla(49, 72%, 65%, 1) 0%, hsla(11, 58%, 65%, 1) 100%);
+
+  background: -webkit-linear-gradient(270deg, hsla(49, 72%, 65%, 1) 0%, hsla(11, 58%, 65%, 1) 100%);
+}
+
+.typeMonsterDecoration {
+  border-radius: 50px 50px 25px 25px;
+  border: 14px double hsla(49, 72%, 65%, 1);
+  border-left: none;
+  border-right: none;
+  border-bottom: none;
+}
+
+.typeSpell {
+  color: hsla(220, 78%, 69%, 1);
+  background: hsla(0, 0%, 24%, 1);
+
+  background: linear-gradient(270deg, hsla(0, 0%, 24%, 1) 50%, hsla(220, 78%, 69%, 1) 100%);
+
+  background: -moz-linear-gradient(270deg, hsla(0, 0%, 24%, 1) 50%, hsla(220, 78%, 69%, 1) 100%);
+
+  background: -webkit-linear-gradient(270deg, hsla(0, 0%, 24%, 1) 50%, hsla(220, 78%, 69%, 1) 100%);
+}
+
+.typeTrap {
+  color: hsla(147, 45%, 47%, 1);
+  background: hsla(0, 0%, 24%, 1);
+
+  background: linear-gradient(270deg, hsla(0, 0%, 24%, 1) 50%, hsla(147, 45%, 47%, 1) 100%);
+
+  background: -moz-linear-gradient(270deg, hsla(0, 0%, 24%, 1) 50%, hsla(147, 45%, 47%, 1) 100%);
+
+  background: -webkit-linear-gradient(270deg, hsla(0, 0%, 24%, 1) 50%, hsla(147, 45%, 47%, 1) 100%);
+}
+
+.typeOther {
+  background-color: $white-1;
 }
 
 .skeleton {
-  width: 100%;
-  height: 400px;
+  width: $card-width;
+  height: $card-height;
 }
