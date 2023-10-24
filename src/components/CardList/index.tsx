@@ -6,6 +6,7 @@ import styles from './CardList.module.scss';
 
 interface ICardListProps {
   cards: ICard[];
+  isLoading: boolean;
 }
 
 export default class CardList extends Component<ICardListProps> {
@@ -17,7 +18,7 @@ export default class CardList extends Component<ICardListProps> {
     return (
       <div className={styles.wrapper}>
         <div className={styles.cardListWrapper}>
-          {this.props.cards.length < 0 ? (
+          {this.props.isLoading ? (
             <SkeletonTheme baseColor="#1b1b1b" highlightColor="#303030">
               {Array(12)
                 .fill(true)
@@ -33,7 +34,7 @@ export default class CardList extends Component<ICardListProps> {
                     className={styles.cardItemImg}
                     src={card.card_images[0].image_url}
                     alt={card.name}
-                    // loading="lazy"
+                    loading="lazy"
                   />
                 </div>
               );

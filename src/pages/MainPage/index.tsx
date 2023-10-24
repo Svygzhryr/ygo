@@ -9,6 +9,7 @@ interface ICardState {
   cards: ICard[];
   searchValue: string;
   throwErrorMessage: string | null;
+  isLoading: boolean;
 }
 
 export default class MainPage extends Component<object, ICardState> {
@@ -18,15 +19,17 @@ export default class MainPage extends Component<object, ICardState> {
       cards: [],
       searchValue: '',
       throwErrorMessage: null,
+      isLoading: false,
     };
   }
 
   async getCardSearch() {
+    this.setState({ isLoading: true });
     if (!this.state.searchValue) return;
 
     const response = await RequestService.getCards(...[, ,], this.state.searchValue);
     if (response?.data) {
-      this.setState({ cards: response.data.data });
+      this.setState({ cards: response.data.data, isLoading: false });
       localStorage.setItem('prevSearch', this.state.searchValue);
     }
   }
@@ -47,16 +50,18 @@ export default class MainPage extends Component<object, ICardState> {
     this.setState({ throwErrorMessage: 'Whoops! An error has occured.' });
   }
 
-  componentDidMount = async () => {
+  componentDidMount = () => {
     const storageSearchValue = localStorage.getItem('prevSearch');
     if (storageSearchValue) {
       this.setState({ searchValue: storageSearchValue }, this.getCardSearch);
     } else {
-      const response = await RequestService.getCards();
-      if (response?.data) {
-        this.setState({ cards: response.data.data });
-      }
+      RequestService.getCards().then((response) => {
+        if (response) {
+          this.setState({ cards: response.data.data, isLoading: false });
+        }
+      });
     }
+    this.setState({ isLoading: false });
   };
 
   componentDidUpdate = () => {
@@ -77,7 +82,7 @@ export default class MainPage extends Component<object, ICardState> {
           onChange={this.handleOnChange.bind(this)}
           onKeyDown={this.handleKeyDown.bind(this)}
         />
-        <CardList cards={this.state.cards} />
+        <CardList cards={this.state.cards} isLoading={this.state.isLoading} />
       </section>
     );
   }
