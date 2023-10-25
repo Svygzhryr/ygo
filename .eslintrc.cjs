@@ -23,7 +23,7 @@ module.exports = {
   },
   plugins: ['@typescript-eslint', 'react', 'prettier', 'react-hooks'],
   rules: {
-    'no-console': 'warn',
+    'no-console': ['warn', { allow: ['error'] }],
     'prettier/prettier': 'error',
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'warn',

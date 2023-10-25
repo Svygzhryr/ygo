@@ -49,8 +49,11 @@ export default class CardList extends Component<ICardListProps> {
   render() {
     return (
       <div className={styles.wrapper}>
+        {!this.props.cards.length && !this.props.isLoading && (
+          <h5 className={styles.errorMessage}>No cards matching your query.</h5>
+        )}
         <div className={styles.cardListWrapper}>
-          {this.props.isLoading ? (
+          {this.props.isLoading && (
             <SkeletonTheme baseColor="#1b1b1b" highlightColor="#303030">
               {Array(12)
                 .fill(true)
@@ -58,9 +61,9 @@ export default class CardList extends Component<ICardListProps> {
                   <Skeleton key={i} className={styles.skeleton} />
                 ))}
             </SkeletonTheme>
-          ) : (
+          )}
+          {!this.props.isLoading &&
             this.props.cards.map((card) => {
-              console.log(card.type);
               return (
                 <div
                   key={card.id}
@@ -85,19 +88,18 @@ export default class CardList extends Component<ICardListProps> {
                         card.type.match('Spell') ||
                         card.type.match('Trap')}
                     </div>
-                    {card.type.includes('Monster') ? (
+                    {card.type.includes('Monster') && (
                       <div className={styles.statsWrapper}>
                         <div className={`${styles.statAtk} ${styles.stat}`}>{card.atk}</div>
                         <div className={`${styles.statDef} ${styles.stat}`}>
                           {card.def ?? 'n/a'}
                         </div>
                       </div>
-                    ) : null}
+                    )}
                   </div>
                 </div>
               );
-            })
-          )}
+            })}
         </div>
       </div>
     );

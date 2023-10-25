@@ -250,6 +250,10 @@ $card-height: 300px;
   border-left: 12px double $black-1;
 }
 
+.errorMessage {
+  text-align: center;
+}
+
 .skeleton {
   width: $card-width;
   height: $card-height;

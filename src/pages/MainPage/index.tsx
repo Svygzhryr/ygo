@@ -25,11 +25,10 @@ export default class MainPage extends Component<object, ICardState> {
 
   async getCardSearch() {
     this.setState({ isLoading: true });
-    if (!this.state.searchValue) return;
 
-    const response = await RequestService.getCards(...[, ,], this.state.searchValue);
-    if (response?.data) {
-      this.setState({ cards: response.data.data, isLoading: false });
+    const { data } = await RequestService.getCards(...[, ,], this.state.searchValue);
+    if (data?.data) {
+      this.setState({ cards: data.data, isLoading: false });
       localStorage.setItem('prevSearch', this.state.searchValue);
     }
   }
