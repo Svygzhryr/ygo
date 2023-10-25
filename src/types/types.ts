@@ -1,9 +1,13 @@
 export interface ICard {
+  attribute: string;
   id: number;
   name: string;
   type: string;
   frameType: string;
   desc: string;
+  atk: number;
+  def: number;
+  level: number;
   race: string;
   archetype: string;
   card_sets: [
@@ -34,17 +38,19 @@ export interface ICard {
   ];
 }
 
+interface ICardMeta {
+  current_rows: number;
+  total_rows: number;
+  rows_remaining: number;
+  total_pages: number;
+  pages_remaining: number;
+  next_page: string;
+  next_page_offset: number;
+}
+
 export interface ICardAPI {
   data: ICard[];
-  meta: {
-    current_rows: number;
-    total_rows: number;
-    rows_remaining: number;
-    total_pages: number;
-    pages_remaining: number;
-    next_page: string;
-    next_page_offset: number;
-  };
+  meta: ICardMeta | null;
 }
 
 export interface IErrorBoundaryProps {
