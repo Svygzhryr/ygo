@@ -27,6 +27,25 @@ export default class CardList extends Component<ICardListProps> {
     }
   }
 
+  defineAttribute(attribute: string) {
+    switch (attribute) {
+      case 'DARK':
+        return styles.attrDark;
+      case 'DIVINE':
+        return styles.attrDivine;
+      case 'EARTH':
+        return styles.attrEarth;
+      case 'FIRE':
+        return styles.attrFire;
+      case 'LIGHT':
+        return styles.attrLight;
+      case 'WATER':
+        return styles.attrWater;
+      case 'WIND':
+        return styles.attrWind;
+    }
+  }
+
   render() {
     return (
       <div className={styles.wrapper}>
@@ -59,6 +78,21 @@ export default class CardList extends Component<ICardListProps> {
                       loading="lazy"
                     />
                     <h6 className={styles.cardItemName}>{card.name}</h6>
+                    <div
+                      className={`${styles.cardItemType} ${this.defineAttribute(card.attribute)}`}
+                    >
+                      {card.attribute?.toLowerCase() ||
+                        card.type.match('Spell') ||
+                        card.type.match('Trap')}
+                    </div>
+                    {card.type.includes('Monster') ? (
+                      <div className={styles.statsWrapper}>
+                        <div className={`${styles.statAtk} ${styles.stat}`}>{card.atk}</div>
+                        <div className={`${styles.statDef} ${styles.stat}`}>
+                          {card.def ?? 'n/a'}
+                        </div>
+                      </div>
+                    ) : null}
                   </div>
                 </div>
               );
