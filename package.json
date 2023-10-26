@@ -8,7 +8,7 @@
     "build": "tsc && vite build",
     "lint": "eslint \"src/**/*.{ts,tsx,json}\"",
     "lint:fix": "eslint --fix \"src/**/*.{ts,tsx,json}\"",
-    "format": "prettier --write \"src/**/*.{ts,tsx,css,md,json}\" --config ./.prettierrc.json",
+    "format:fix": "prettier --write \"src/**/*.{ts,tsx,css,md,json}\" --config ./.prettierrc.json",
     "preview": "vite preview",
     "prepare": "husky install"
   },

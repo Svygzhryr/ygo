@@ -3,13 +3,7 @@ import MainPage from '../pages/MainPage';
 import ErrorBoundary from '../components/ErrorBoundary';
 import ErrorFallback from '../components/ErrorFallback';
 
-type MyState = { count: number };
-
-export default class App extends Component<object, MyState> {
-  constructor(props: object) {
-    super(props);
-  }
-
+export default class App extends Component {
   render() {
     return (
       <>

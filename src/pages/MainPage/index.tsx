@@ -21,6 +21,8 @@ export default class MainPage extends Component<object, ICardState> {
       throwErrorMessage: null,
       isLoading: false,
     };
+
+    this.handleThrowError = this.handleThrowError.bind(this);
   }
 
   async getCardSearch() {
@@ -72,7 +74,7 @@ export default class MainPage extends Component<object, ICardState> {
   render() {
     return (
       <section className={styles.wrapper}>
-        <button className={styles.error} onClick={this.handleThrowError.bind(this)}>
+        <button className={styles.error} onClick={this.handleThrowError}>
           Throw an error!
         </button>
         <Search
