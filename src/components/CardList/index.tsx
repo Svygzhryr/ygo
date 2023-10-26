@@ -77,8 +77,8 @@ export default class CardList extends Component<ICardListProps> {
                     <img
                       className={styles.cardItemImg}
                       src={card.card_images[0].image_url_cropped}
-                      alt={card.name}
                       loading="lazy"
+                      alt=""
                     />
                     <h6 className={styles.cardItemName}>{card.name}</h6>
                     <div
