@@ -23,6 +23,9 @@ export default class MainPage extends Component<object, ICardState> {
     };
 
     this.handleThrowError = this.handleThrowError.bind(this);
+    this.handleOnClick = this.handleOnClick.bind(this);
+    this.handleOnChange = this.handleOnChange.bind(this);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
   }
 
   async getCardSearch() {
@@ -79,9 +82,9 @@ export default class MainPage extends Component<object, ICardState> {
         </button>
         <Search
           value={this.state.searchValue}
-          onClick={this.handleOnClick.bind(this)}
-          onChange={this.handleOnChange.bind(this)}
-          onKeyDown={this.handleKeyDown.bind(this)}
+          onClick={this.handleOnClick}
+          onChange={this.handleOnChange}
+          onKeyDown={this.handleKeyDown}
         />
         <CardList cards={this.state.cards} isLoading={this.state.isLoading} />
       </section>

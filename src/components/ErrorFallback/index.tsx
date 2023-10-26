@@ -5,6 +5,7 @@ import { IErrorBoundaryState } from '../../types/types';
 export default class ErrorFallback extends Component<IErrorBoundaryState, object> {
   constructor(props: IErrorBoundaryState) {
     super(props);
+    this.handleOnClick = this.handleOnClick.bind(this);
   }
 
   handleOnClick() {
@@ -16,7 +17,7 @@ export default class ErrorFallback extends Component<IErrorBoundaryState, object
       <div className={styles.wrapper}>
         <h1>An error has occurred:</h1>
         <pre>{this.props.error?.message}</pre>
-        <button onClick={this.handleOnClick.bind(this)}>Click to go back..</button>
+        <button onClick={this.handleOnClick}>Click to go back..</button>
       </div>
     );
   }

@@ -25,7 +25,7 @@ export default class Search extends Component<ISearchProps, object> {
           onKeyDown={this.props.onKeyDown}
           placeholder="Type in something..."
         />
-        <button className={styles.button} onClick={this.props.onClick.bind(this)}>
+        <button className={styles.button} onClick={this.props.onClick}>
           Search
         </button>
       </div>
