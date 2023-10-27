@@ -1,93 +1,78 @@
-import React, { ChangeEvent, Component, KeyboardEvent } from 'react';
-import CardList from '../../components/CardList';
-import Search from '../../components/Search';
+import React, { ChangeEvent, FC, KeyboardEvent, useEffect, useState } from 'react';
+
+import { CardList } from '../../components/CardList';
+import { Search } from '../../components/Search';
 import RequestService from '../../services/RequestService';
 import { ICard } from '../../types/types';
 import styles from './MainPage.module.scss';
 
-interface ICardState {
-  cards: ICard[];
-  searchValue: string;
-  throwErrorMessage: string | null;
-  isLoading: boolean;
-}
+export const MainPage: FC = () => {
+  const [cards, setCards] = useState<ICard[]>([]);
+  const [searchValue, setSearchValue] = useState('');
+  const [throwErrorMessage, setThrowErrorMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
-export default class MainPage extends Component<object, ICardState> {
-  constructor(props: object) {
-    super(props);
-    this.state = {
-      cards: [],
-      searchValue: '',
-      throwErrorMessage: null,
-      isLoading: false,
-    };
+  const getCardSearch = async () => {
+    setIsLoading(true);
 
-    this.handleThrowError = this.handleThrowError.bind(this);
-    this.handleOnClick = this.handleOnClick.bind(this);
-    this.handleOnChange = this.handleOnChange.bind(this);
-    this.handleKeyDown = this.handleKeyDown.bind(this);
-  }
-
-  async getCardSearch() {
-    this.setState({ isLoading: true });
-
-    const { data } = await RequestService.getCards(...[, ,], this.state.searchValue);
+    const { data } = await RequestService.getCards(...[, ,], searchValue);
     if (data?.data) {
-      this.setState({ cards: data.data, isLoading: false });
-      localStorage.setItem('prevSearch', this.state.searchValue);
+      setCards(data?.data);
+      setIsLoading(false);
+      localStorage.setItem('prevSearch', searchValue);
     }
-  }
+  };
 
-  async handleOnClick() {
-    this.getCardSearch();
-  }
+  const handleOnClick = async () => {
+    getCardSearch();
+  };
 
-  async handleKeyDown(e: KeyboardEvent) {
-    if (e.key === 'Enter') this.getCardSearch();
-  }
+  const handleKeyDown = async (e: KeyboardEvent) => {
+    if (e.key === 'Enter') getCardSearch();
+  };
 
-  handleOnChange(e: ChangeEvent<HTMLInputElement>) {
-    this.setState({ searchValue: e.target.value });
-  }
+  const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(e.target.value);
+  };
 
-  handleThrowError() {
-    this.setState({ throwErrorMessage: 'Whoops! An error has occured.' });
-  }
+  const handleThrowError = () => {
+    setThrowErrorMessage('Whoops! An error has occured.');
+  };
 
-  componentDidMount = () => {
+  useEffect(() => {
     const storageSearchValue = localStorage.getItem('prevSearch');
     if (storageSearchValue) {
-      this.setState({ searchValue: storageSearchValue }, this.getCardSearch);
+      setSearchValue(storageSearchValue);
+      getCardSearch();
     } else {
       RequestService.getCards().then((response) => {
         if (response) {
-          this.setState({ cards: response.data.data, isLoading: false });
+          setCards(response.data.data);
+          setIsLoading(false);
         }
       });
     }
-    this.setState({ isLoading: false });
-  };
+    setIsLoading(false);
+  }, []);
 
-  componentDidUpdate = () => {
-    if (this.state.throwErrorMessage) {
-      throw new Error(this.state.throwErrorMessage);
+  useEffect(() => {
+    if (throwErrorMessage) {
+      throw new Error(throwErrorMessage);
     }
-  };
+  }, [throwErrorMessage]);
 
-  render() {
-    return (
-      <section className={styles.wrapper}>
-        <button className={styles.error} onClick={this.handleThrowError}>
-          Throw an error!
-        </button>
-        <Search
-          value={this.state.searchValue}
-          onClick={this.handleOnClick}
-          onChange={this.handleOnChange}
-          onKeyDown={this.handleKeyDown}
-        />
-        <CardList cards={this.state.cards} isLoading={this.state.isLoading} />
-      </section>
-    );
-  }
-}
+  return (
+    <section className={styles.wrapper}>
+      <button className={styles.error} onClick={handleThrowError}>
+        Throw an error!
+      </button>
+      <Search
+        value={searchValue}
+        onClick={handleOnClick}
+        onChange={handleOnChange}
+        onKeyDown={handleKeyDown}
+      />
+      <CardList cards={cards} isLoading={isLoading} />
+    </section>
+  );
+};
