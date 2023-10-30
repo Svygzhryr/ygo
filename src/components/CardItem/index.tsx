@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 
 import { ICard } from '../../types/types';
 import styles from './CardItem.module.scss';

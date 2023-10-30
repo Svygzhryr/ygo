@@ -1,16 +1,19 @@
 import { Component } from 'react';
+
 import styles from './ErrorFallback.module.scss';
-import { IErrorBoundaryState } from '../../types/types';
+
+interface IErrorBoundaryState {
+  error: Error | null;
+}
 
 export default class ErrorFallback extends Component<IErrorBoundaryState, object> {
   constructor(props: IErrorBoundaryState) {
     super(props);
-    this.handleOnClick = this.handleOnClick.bind(this);
   }
 
-  handleOnClick() {
+  handleOnClick = () => {
     window.location.reload();
-  }
+  };
 
   render() {
     return (

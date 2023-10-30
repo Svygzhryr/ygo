@@ -52,12 +52,3 @@ export interface ICardAPI {
   data: ICard[];
   meta: ICardMeta | null;
 }
-
-export interface IErrorBoundaryProps {
-  children?: React.ReactNode;
-  FallbackComponent: React.ComponentType<IErrorBoundaryState>;
-}
-
-export interface IErrorBoundaryState {
-  error: Error | null;
-}

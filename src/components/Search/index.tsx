@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, KeyboardEventHandler } from 'react';
+import { ChangeEvent, FC, KeyboardEventHandler } from 'react';
 
 import styles from './Search.module.scss';
 

@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 
@@ -14,7 +14,7 @@ interface ICardListProps {
 export const CardList: FC<ICardListProps> = ({ cards, isLoading }) => {
   return (
     <div className={styles.wrapper}>
-      {cards.length && !isLoading && (
+      {!cards.length && !isLoading && (
         <h5 className={styles.errorMessage}>No cards matching your query.</h5>
       )}
       <div className={styles.cardListWrapper}>
