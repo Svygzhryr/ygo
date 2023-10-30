@@ -32,14 +32,20 @@ a {
 
 button {
   padding: 5px 20px;
-  background-color: $green-1;
+  background-color: $yellow-1;
   border: none;
   border-radius: 12px;
-  color: $white-1;
+  color: $black-1;
 
   transition: all 0.2s ease-in-out;
   &:hover {
-    background-color: $green-2;
+    background-color: $yellow-2;
+    color: $black-1;
+  }
+
+  &:active {
+    background-color: $yellow-3;
+    transition: all 0s;
   }
 }
 
@@ -47,7 +53,7 @@ button {
 /* Firefox */
 * {
   scrollbar-width: auto;
-  scrollbar-color: #349d63 #111111;
+  scrollbar-color: $yellow-1;
 }
 
 /* Chrome, Edge, and Safari */
@@ -60,7 +66,7 @@ button {
 }
 
 *::-webkit-scrollbar-thumb {
-  background-color: #349d63;
+  background-color: $yellow-1;
   border-radius: 10px;
   border: 0px solid #ffffff;
 }

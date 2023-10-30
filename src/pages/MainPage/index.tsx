@@ -1,13 +1,14 @@
-import React, { ChangeEvent, FC, KeyboardEvent, useEffect, useState } from 'react';
+import { ChangeEvent, FC, KeyboardEvent, useEffect, useState } from 'react';
 
 import { CardList } from '../../components/CardList';
 import { Search } from '../../components/Search';
 import RequestService from '../../services/RequestService';
-import { ICard } from '../../types/types';
+import { ICard, ICardMeta } from '../../types/types';
 import styles from './MainPage.module.scss';
 
 export const MainPage: FC = () => {
   const [cards, setCards] = useState<ICard[]>([]);
+  const [meta, setMeta] = useState<ICardMeta | null>(null);
   const [searchValue, setSearchValue] = useState('');
   const [throwErrorMessage, setThrowErrorMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -18,6 +19,7 @@ export const MainPage: FC = () => {
     const { data } = await RequestService.getCards(...[, ,], searchValue);
     if (data?.data) {
       setCards(data?.data);
+      setMeta(data.meta);
       setIsLoading(false);
       localStorage.setItem('prevSearch', searchValue);
     }
@@ -48,6 +50,7 @@ export const MainPage: FC = () => {
       RequestService.getCards().then((response) => {
         if (response) {
           setCards(response.data.data);
+          setMeta(response.data.meta);
           setIsLoading(false);
         }
       });
@@ -72,7 +75,14 @@ export const MainPage: FC = () => {
         onChange={handleOnChange}
         onKeyDown={handleKeyDown}
       />
-      <CardList cards={cards} isLoading={isLoading} />
+      <CardList
+        cards={cards}
+        setCards={setCards}
+        isLoading={isLoading}
+        meta={meta}
+        setMeta={setMeta}
+        searchValue={searchValue}
+      />
     </section>
   );
 };

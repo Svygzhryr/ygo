@@ -2,20 +2,35 @@ import { FC } from 'react';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 
-import { ICard } from '../../types/types';
+import { ICard, ICardMeta } from '../../types/types';
 import { CardItem } from '../CardItem';
+import { Pagination } from '../Pagination';
 import styles from './CardList.module.scss';
 
 interface ICardListProps {
   cards: ICard[];
+  searchValue: string;
+  setCards: React.Dispatch<React.SetStateAction<ICard[]>>;
   isLoading: boolean;
+  meta: ICardMeta | null;
+  setMeta: React.Dispatch<React.SetStateAction<ICardMeta | null>>;
 }
 
-export const CardList: FC<ICardListProps> = ({ cards, isLoading }) => {
+export const CardList: FC<ICardListProps> = ({
+  cards,
+  isLoading,
+  meta,
+  setMeta,
+  setCards,
+  searchValue,
+}) => {
   return (
     <div className={styles.wrapper}>
       {!cards.length && !isLoading && (
         <h5 className={styles.errorMessage}>No cards matching your query.</h5>
+      )}
+      {!isLoading && !!cards.length && (
+        <Pagination searchValue={searchValue} setCards={setCards} meta={meta} setMeta={setMeta} />
       )}
       <div className={styles.cardListWrapper}>
         {isLoading && (

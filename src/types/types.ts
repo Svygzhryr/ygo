@@ -38,7 +38,7 @@ export interface ICard {
   ];
 }
 
-interface ICardMeta {
+export interface ICardMeta {
   current_rows: number;
   total_rows: number;
   rows_remaining: number;
@@ -46,6 +46,7 @@ interface ICardMeta {
   pages_remaining: number;
   next_page: string;
   next_page_offset: number;
+  previous_page_offset?: number;
 }
 
 export interface ICardAPI {

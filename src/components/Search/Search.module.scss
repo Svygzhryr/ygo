@@ -13,12 +13,6 @@
   height: 50px;
   margin-left: 20px;
   padding: 0 30px;
-
-  background-color: $green-1;
-
   transition: all 0.2s ease-in-out;
-
-  &:hover {
-    background-color: $green-2;
-  }
+  font-weight: 500;
 }
