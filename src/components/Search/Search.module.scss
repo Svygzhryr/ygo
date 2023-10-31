@@ -1,0 +1,24 @@
+@import 'src/scss/vars';
+
+.input {
+  height: 50px;
+  padding: 5px 10px;
+  background-color: $black-3;
+  color: $white-1;
+  border-radius: 10px;
+  border: none;
+}
+
+.button {
+  height: 50px;
+  margin-left: 20px;
+  padding: 0 30px;
+
+  background-color: $green-1;
+
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    background-color: $green-2;
+  }
+}

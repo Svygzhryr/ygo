@@ -1,0 +1,49 @@
+{
+  "name": "react-component",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "lint": "eslint --fix \"src/**/*.{ts,tsx,json}\"",
+    "format:fix": "prettier --write \"src/**/*.{ts,tsx,css,md,json}\" --config ./.prettierrc.json",
+    "preview": "vite preview",
+    "prepare": "husky install"
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx}": [
+      "npx prettier --write",
+      "npx eslint --fix"
+    ],
+    "src/**/*.{css,scss,sass}": [
+      "npx prettier --write"
+    ]
+  },
+  "dependencies": {
+    "axios": "^1.5.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-loading-skeleton": "^3.3.1",
+    "sass": "^1.69.4"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.15",
+    "@types/react-dom": "^18.2.7",
+    "@typescript-eslint/eslint-plugin": "^5.22.0",
+    "@typescript-eslint/parser": "^5.22.0",
+    "@vitejs/plugin-react": "^4.0.3",
+    "eslint": "^8.14.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-import-resolver-typescript": "^2.7.1",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-react": "^7.29.4",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "husky": "^8.0.0",
+    "lint-staged": "^13.2.3",
+    "prettier": "^2.6.2",
+    "typescript": "^5.0.2",
+    "vite": "^4.4.5"
+  }
+}
