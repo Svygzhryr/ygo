@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import { Link } from 'react-router-dom';
 
 import { ICard } from '../../types/types';
 import styles from './CardItem.module.scss';
@@ -41,7 +42,11 @@ export const CardItem: FC<CardItemProps> = ({ card }) => {
   };
 
   return (
-    <div key={card.id} className={`${styles.cardItemWrapper} ${defineType(card.type)}`}>
+    <Link
+      to="/details"
+      key={card.id}
+      className={`${styles.cardItemWrapper} ${defineType(card.type)}`}
+    >
       <div
         className={`${styles.cardItem} ${
           card.type.includes('Monster') ? styles.typeMonsterDecoration : null
@@ -64,6 +69,6 @@ export const CardItem: FC<CardItemProps> = ({ card }) => {
           </div>
         )}
       </div>
-    </div>
+    </Link>
   );
 };

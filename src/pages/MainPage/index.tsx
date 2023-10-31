@@ -1,4 +1,5 @@
 import { ChangeEvent, FC, KeyboardEvent, useEffect, useState } from 'react';
+import { Outlet } from 'react-router-dom';
 
 import { CardList } from '../../components/CardList';
 import { Search } from '../../components/Search';
@@ -65,24 +66,27 @@ export const MainPage: FC = () => {
   }, [throwErrorMessage]);
 
   return (
-    <section className={styles.wrapper}>
-      <button className={styles.error} onClick={handleThrowError}>
-        Throw an error!
-      </button>
-      <Search
-        value={searchValue}
-        onClick={handleOnClick}
-        onChange={handleOnChange}
-        onKeyDown={handleKeyDown}
-      />
-      <CardList
-        cards={cards}
-        setCards={setCards}
-        isLoading={isLoading}
-        meta={meta}
-        setMeta={setMeta}
-        searchValue={searchValue}
-      />
-    </section>
+    <div className={styles.details}>
+      <section className={styles.wrapper}>
+        <button className={styles.error} onClick={handleThrowError}>
+          Throw an error!
+        </button>
+        <Search
+          value={searchValue}
+          onClick={handleOnClick}
+          onChange={handleOnChange}
+          onKeyDown={handleKeyDown}
+        />
+        <CardList
+          cards={cards}
+          setCards={setCards}
+          isLoading={isLoading}
+          meta={meta}
+          setMeta={setMeta}
+          searchValue={searchValue}
+        />
+      </section>
+      <Outlet />
+    </div>
   );
 };

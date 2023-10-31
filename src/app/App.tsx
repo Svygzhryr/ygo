@@ -1,21 +1,19 @@
 import { FC } from 'react';
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 
 import ErrorBoundary from '../components/ErrorBoundary';
+import { Details } from '../pages/Details';
 import { MainPage } from '../pages/MainPage';
-
-export const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <MainPage />,
-  },
-]);
 
 export const App: FC = () => {
   return (
     <>
       <ErrorBoundary>
-        <RouterProvider router={router} />
+        <Routes>
+          <Route path="/" element={<MainPage />}>
+            <Route path="/details" element={<Details />} />
+          </Route>
+        </Routes>
       </ErrorBoundary>
     </>
   );

@@ -3,6 +3,8 @@
 .cardItemWrapper {
   position: relative;
   width: $card-width;
+  min-width: 220px;
+  max-width: 290px;
   height: $card-height;
   padding: 5px;
   display: flex;
