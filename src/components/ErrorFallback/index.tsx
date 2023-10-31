@@ -1,6 +1,7 @@
 import { Component } from 'react';
-import styles from './ErrorFallback.module.scss';
+
 import { IErrorBoundaryState } from '../../types/types';
+import styles from './ErrorFallback.module.scss';
 
 export default class ErrorFallback extends Component<IErrorBoundaryState, object> {
   constructor(props: IErrorBoundaryState) {

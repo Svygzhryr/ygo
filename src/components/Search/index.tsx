@@ -1,4 +1,5 @@
 import React, { ChangeEvent, Component, KeyboardEventHandler } from 'react';
+
 import styles from './Search.module.scss';
 
 interface ISearchProps {

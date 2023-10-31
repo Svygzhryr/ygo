@@ -1,4 +1,5 @@
-import React, { ChangeEvent, Component, KeyboardEvent } from 'react';
+import { ChangeEvent, Component, KeyboardEvent } from 'react';
+
 import CardList from '../../components/CardList';
 import Search from '../../components/Search';
 import RequestService from '../../services/RequestService';

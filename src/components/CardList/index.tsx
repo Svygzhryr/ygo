@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { ICard } from '../../types/types';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
+
+import { ICard } from '../../types/types';
 import styles from './CardList.module.scss';
 
 interface ICardListProps {

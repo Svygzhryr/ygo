@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import MainPage from '../pages/MainPage';
+
 import ErrorBoundary from '../components/ErrorBoundary';
 import ErrorFallback from '../components/ErrorFallback';
+import MainPage from '../pages/MainPage';
 
 export default class App extends Component {
   render() {
