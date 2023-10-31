@@ -1,11 +1,13 @@
 import { FC } from 'react';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
+import { Link } from 'react-router-dom';
 
 import styles from './Details.module.scss';
 
 export const Details: FC = () => {
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.fixed}>
+      <Link to="/">хуй</Link>
       <SkeletonTheme baseColor="#1b1b1b" highlightColor="#303030">
         <Skeleton className={styles.skeletonCard} />
         {Array(6)
