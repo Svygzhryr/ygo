@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, ReactEventHandler, useEffect, useState } from 'react';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -62,6 +62,13 @@ export const Details: FC = () => {
     }
   }, []);
 
+  const addDefaultSrc: ReactEventHandler<HTMLImageElement> = (e) => {
+    const target = e.target as HTMLImageElement;
+    if (target) {
+      target.src = fallback;
+    }
+  };
+
   console.log(card);
   return (
     <>
@@ -79,8 +86,9 @@ export const Details: FC = () => {
         ) : (
           <div className={styles.info}>
             <img
+              onError={addDefaultSrc}
               className={styles.image}
-              src={card.card_images[0].image_url || fallback}
+              src={card.card_images[0].image_url}
               alt="A card"
             />
             <p className={styles.description}>{card.desc}</p>

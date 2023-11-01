@@ -41,7 +41,6 @@ export const getCard = async (id: string) => {
     });
 
     data.data = response.data.data;
-    data.meta = response.data.meta;
   } catch (err) {
     console.error(err);
   }

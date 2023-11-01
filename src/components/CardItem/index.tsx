@@ -1,6 +1,7 @@
-import { FC } from 'react';
+import { FC, ReactEventHandler } from 'react';
 import { Link } from 'react-router-dom';
 
+import fallback from '../../assets/fallback.jpg';
 import { ICard } from '../../types/types';
 import styles from './CardItem.module.scss';
 
@@ -41,6 +42,13 @@ export const CardItem: FC<CardItemProps> = ({ card }) => {
     }
   };
 
+  const addDefaultSrc: ReactEventHandler<HTMLImageElement> = (e) => {
+    const target = e.target as HTMLImageElement;
+    if (target) {
+      target.src = fallback;
+    }
+  };
+
   return (
     <Link
       to={`/details?id=${card.id}`}
@@ -54,6 +62,7 @@ export const CardItem: FC<CardItemProps> = ({ card }) => {
       >
         <img
           className={styles.cardItemImg}
+          onError={addDefaultSrc}
           src={card.card_images[0].image_url_cropped}
           loading="lazy"
           alt=""

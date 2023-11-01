@@ -70,3 +70,11 @@ button {
   border-radius: 10px;
   border: 0px solid $black-1;
 }
+
+*::-webkit-scrollbar-corner {
+  display: none;
+  border: none;
+  outline: none;
+  margin: 0;
+  padding: 0;
+}
