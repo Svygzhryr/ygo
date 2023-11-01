@@ -1,5 +1,5 @@
 import { FC, ReactEventHandler } from 'react';
-import { Link } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import fallback from '../../assets/fallback.jpg';
 import { ICard } from '../../types/types';
@@ -10,6 +10,9 @@ interface CardItemProps {
 }
 
 export const CardItem: FC<CardItemProps> = ({ card }) => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const defineType = (type: string) => {
     switch (true) {
       case type.includes('Monster'):
@@ -50,10 +53,10 @@ export const CardItem: FC<CardItemProps> = ({ card }) => {
   };
 
   return (
-    <Link
-      to={`/details?id=${card.id}`}
+    <div
       key={card.id}
       className={`${styles.cardItemWrapper} ${defineType(card.type)}`}
+      onClick={() => navigate(`/details${location.search}&id=${card.id}`)}
     >
       <div
         className={`${styles.cardItem} ${
@@ -78,6 +81,6 @@ export const CardItem: FC<CardItemProps> = ({ card }) => {
           </div>
         )}
       </div>
-    </Link>
+    </div>
   );
 };

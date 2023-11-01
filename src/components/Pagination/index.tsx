@@ -1,5 +1,5 @@
-import { FC, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { FC, useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import next from '../../assets/next.svg';
 import prev from '../../assets/prev.svg';
@@ -15,6 +15,8 @@ interface IPaginationProps {
 }
 
 export const Pagination: FC<IPaginationProps> = ({ meta, setMeta, setCards, searchValue }) => {
+  const location = useLocation();
+
   if (!meta) {
     throw new Error("Cat't get card data..");
   }
@@ -30,7 +32,6 @@ export const Pagination: FC<IPaginationProps> = ({ meta, setMeta, setCards, sear
       setMeta(response.data.meta);
       setIsLoading(false);
     });
-    navigate(`?page=${currentPage}`);
   };
 
   const handleNextPage = () => {
@@ -40,8 +41,12 @@ export const Pagination: FC<IPaginationProps> = ({ meta, setMeta, setCards, sear
       setMeta(response.data.meta);
       setIsLoading(false);
     });
-    navigate(`?page=${currentPage}`);
   };
+
+  useEffect(() => {
+    console.log(location);
+    navigate(`${location.pathname}?page=${currentPage}`);
+  }, [currentPage]);
 
   return (
     <div className={styles.wrapper}>

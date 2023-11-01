@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, KeyboardEvent, useEffect, useState } from 'react';
+import { ChangeEvent, FC, KeyboardEvent, useCallback, useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 
 import { CardList } from '../../components/CardList';
@@ -11,31 +11,20 @@ export const MainPage: FC = () => {
   const [cards, setCards] = useState<ICard[]>([]);
   const [meta, setMeta] = useState<ICardMeta | null>(null);
   const [searchValue, setSearchValue] = useState('');
+  const [searchTemp, setSearchTemp] = useState('');
   const [throwErrorMessage, setThrowErrorMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  const getCardSearch = async () => {
-    setIsLoading(true);
-
-    const { data } = await getCards(...[, ,], searchValue);
-    if (data?.data) {
-      setCards(data?.data);
-      setMeta(data.meta);
-      setIsLoading(false);
-      localStorage.setItem('prevSearch', searchValue);
-    }
-  };
-
   const handleOnClick = async () => {
-    getCardSearch();
+    setSearchValue(searchTemp);
   };
 
   const handleKeyDown = async (e: KeyboardEvent) => {
-    if (e.key === 'Enter') getCardSearch();
+    if (e.key === 'Enter') handleOnClick();
   };
 
   const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchValue(e.target.value);
+    setSearchTemp(e.target.value);
   };
 
   const handleThrowError = () => {
@@ -43,21 +32,29 @@ export const MainPage: FC = () => {
   };
 
   useEffect(() => {
-    const storageSearchValue = localStorage.getItem('prevSearch');
+    const storageSearchValue = localStorage.getItem('prevSearch') || '';
     if (storageSearchValue) {
       setSearchValue(storageSearchValue);
-      getCardSearch();
-    } else {
-      getCards().then((response) => {
-        if (response) {
-          setCards(response.data.data);
-          setMeta(response.data.meta);
-          setIsLoading(false);
-        }
-      });
+      setSearchTemp(storageSearchValue);
     }
-    setIsLoading(false);
   }, []);
+
+  const getCardsHandler = useCallback(async () => {
+    setIsLoading(true);
+
+    console.log('dependency render');
+    const { data } = await getCards(...[, ,], searchValue);
+    if (data?.data) {
+      setCards(data?.data);
+      setMeta(data.meta);
+      setIsLoading(false);
+      localStorage.setItem('prevSearch', searchValue);
+    }
+  }, [searchValue]);
+
+  useEffect(() => {
+    getCardsHandler();
+  }, [getCardsHandler]);
 
   useEffect(() => {
     if (throwErrorMessage) {
@@ -72,7 +69,7 @@ export const MainPage: FC = () => {
           Throw an error!
         </button>
         <Search
-          value={searchValue}
+          value={searchTemp}
           onClick={handleOnClick}
           onChange={handleOnChange}
           onKeyDown={handleKeyDown}

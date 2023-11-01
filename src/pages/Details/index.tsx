@@ -1,6 +1,6 @@
 import { FC, ReactEventHandler, useEffect, useState } from 'react';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import fallback from '../../assets/fallback.jpg';
 import { getCard } from '../../services/RequestService';
@@ -8,6 +8,8 @@ import { ICard } from '../../types/types';
 import styles from './Details.module.scss';
 
 export const Details: FC = () => {
+  const location = useLocation();
+
   const [card, setCard] = useState<ICard>({
     attribute: '',
     id: 0,
@@ -51,7 +53,7 @@ export const Details: FC = () => {
 
   useEffect(() => {
     setIsLoading(true);
-    const id = window.location.href.match(/(\d{1,}$)/)?.[0];
+    const id = location.search.match(/(\d{1,}$)/)?.[0];
     if (id) {
       getCard(id).then((response) => {
         setCard(response.data.data[0]);
@@ -60,7 +62,7 @@ export const Details: FC = () => {
     } else {
       console.error('Error getting card..');
     }
-  }, []);
+  }, [location.search]);
 
   const addDefaultSrc: ReactEventHandler<HTMLImageElement> = (e) => {
     const target = e.target as HTMLImageElement;
@@ -72,7 +74,7 @@ export const Details: FC = () => {
   console.log(card);
   return (
     <>
-      <Link to="/" className={styles.overlay}></Link>
+      <Link to="/?page=1" className={styles.overlay} />
       <div className={styles.fixed}>
         {isLoading ? (
           <SkeletonTheme baseColor="#1b1b1b" highlightColor="#303030">
