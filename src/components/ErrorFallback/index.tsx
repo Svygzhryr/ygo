@@ -20,7 +20,7 @@ export default class ErrorFallback extends Component<IErrorBoundaryState, object
       <div className={styles.wrapper}>
         <h1>An error has occurred:</h1>
         <pre>{this.props.error?.message}</pre>
-        <button onClick={this.handleOnClick}>Click to go back..</button>
+        <button onClick={this.handleOnClick}>Click to reload the page.</button>
       </div>
     );
   }

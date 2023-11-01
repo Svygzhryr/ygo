@@ -1,18 +1,70 @@
 @import '../../scss/vars';
 
+.overlay {
+  position: fixed;
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.336);
+  height: 100%;
+  width: 100%;
+  backdrop-filter: blur(15px);
+  cursor: unset;
+}
+
+.closeWrapper {
+  width: 100%;
+  display: flex;
+}
+
+.close {
+  margin: 20px auto;
+  color: $black-1;
+  background-color: $yellow-1;
+  padding: 5px 40px;
+  border-radius: 12px;
+
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    background-color: $yellow-2;
+  }
+
+  &:active {
+    background-color: $yellow-3;
+  }
+}
+
 .fixed {
+  z-index: 2;
   position: fixed;
   right: 0;
-  width: 25%;
+  width: 30%;
+  min-width: 400px;
   height: 100%;
   background-color: $black-2;
+  padding: 50px;
+  overflow: scroll;
+  text-align: center;
+
+  box-shadow: 0px 0 100px -10px $yellow-1;
 }
 
 .skeletonCard {
   margin: 0 auto;
-  margin-bottom: 50px;
+  margin-bottom: 20px;
   height: $card-height;
 }
 
 .skeletonText {
+}
+
+.closeButton {
+}
+
+.image {
+  width: $card-width;
+  height: $card-height;
+}
+
+.description {
+  font-size: 16px;
 }

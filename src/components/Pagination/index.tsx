@@ -1,7 +1,7 @@
-import { FC, useEffect, useState } from 'react';
+import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import RequestService from '../../services/RequestService';
+import { getCards } from '../../services/RequestService';
 import { ICard, ICardMeta } from '../../types/types';
 import styles from './Pagination.module.scss';
 
@@ -21,7 +21,7 @@ export const Pagination: FC<IPaginationProps> = ({ meta, setMeta, setCards, sear
   const navigate = useNavigate();
 
   const handlePrevPage = () => {
-    RequestService.getCards(12, meta?.previous_page_offset, searchValue).then((response) => {
+    getCards(12, meta?.previous_page_offset, searchValue).then((response) => {
       setCards(response.data.data);
       setMeta(response.data.meta);
     });
@@ -29,7 +29,7 @@ export const Pagination: FC<IPaginationProps> = ({ meta, setMeta, setCards, sear
   };
 
   const handleNextPage = () => {
-    RequestService.getCards(12, meta?.next_page_offset, searchValue).then((response) => {
+    getCards(12, meta?.next_page_offset, searchValue).then((response) => {
       setCards(response.data.data);
       setMeta(response.data.meta);
     });

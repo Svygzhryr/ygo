@@ -43,7 +43,7 @@ export const CardItem: FC<CardItemProps> = ({ card }) => {
 
   return (
     <Link
-      to="/details"
+      to={`/details?id=${card.id}`}
       key={card.id}
       className={`${styles.cardItemWrapper} ${defineType(card.type)}`}
     >

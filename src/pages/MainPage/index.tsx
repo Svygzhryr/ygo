@@ -3,7 +3,7 @@ import { Outlet } from 'react-router-dom';
 
 import { CardList } from '../../components/CardList';
 import { Search } from '../../components/Search';
-import RequestService from '../../services/RequestService';
+import { getCards } from '../../services/RequestService';
 import { ICard, ICardMeta } from '../../types/types';
 import styles from './MainPage.module.scss';
 
@@ -17,7 +17,7 @@ export const MainPage: FC = () => {
   const getCardSearch = async () => {
     setIsLoading(true);
 
-    const { data } = await RequestService.getCards(...[, ,], searchValue);
+    const { data } = await getCards(...[, ,], searchValue);
     if (data?.data) {
       setCards(data?.data);
       setMeta(data.meta);
@@ -48,7 +48,7 @@ export const MainPage: FC = () => {
       setSearchValue(storageSearchValue);
       getCardSearch();
     } else {
-      RequestService.getCards().then((response) => {
+      getCards().then((response) => {
         if (response) {
           setCards(response.data.data);
           setMeta(response.data.meta);

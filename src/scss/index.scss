@@ -62,11 +62,11 @@ button {
 }
 
 *::-webkit-scrollbar-track {
-  background: #111111;
+  background: $black-2;
 }
 
 *::-webkit-scrollbar-thumb {
   background-color: $yellow-1;
   border-radius: 10px;
-  border: 0px solid #ffffff;
+  border: 0px solid $black-1;
 }
