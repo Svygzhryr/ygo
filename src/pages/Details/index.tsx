@@ -18,11 +18,9 @@ export const Details: FC = () => {
     setIsLoading(true);
     const id = location.search.match(/(\d{1,}$)/)?.[0];
     setPage(location.search.match(/(?<=[=])\d*(?=[&])/)?.[0] as string);
-    console.log(page);
     if (id) {
       getCard(id).then((response) => {
         setCard(response.data.data[0]);
-        console.log(response.data);
         setIsLoading(false);
       });
     } else {
