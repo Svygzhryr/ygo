@@ -45,6 +45,7 @@ export const Pagination: FC<IPaginationProps> = ({ meta, setMeta, setCards, sear
 
   useEffect(() => {
     navigate(`${location.pathname}?page=${currentPage}`);
+    // eslint-disable-next-line
   }, [currentPage]);
 
   return (
