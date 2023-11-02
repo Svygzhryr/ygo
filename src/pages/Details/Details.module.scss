@@ -42,11 +42,29 @@
 
   box-shadow: 0px 0 100px -10px $yellow-1;
 
+  transition: all 1s ease-in-out;
+
   &::-webkit-scrollbar-thumb {
     background-color: $pink-1;
     border-radius: 10px;
     border: 0px solid $black-1;
   }
+}
+
+.typeMonster {
+  box-shadow: 0px 0 100px -10px $yellow-1;
+}
+
+.typeSpell {
+  box-shadow: 0px 0 40px 0px $green-1;
+}
+
+.typeTrap {
+  box-shadow: 0px 0 40px 0px $magenta-3;
+}
+
+.typeOther {
+  box-shadow: 0px 0 40px 0px $white-1;
 }
 
 .skeletonCard {

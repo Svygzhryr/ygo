@@ -42,7 +42,6 @@ export const MainPage: FC = () => {
   const getCardsHandler = useCallback(async () => {
     setIsLoading(true);
 
-    console.log('dependency render');
     const { data } = await getCards(...[, ,], searchValue);
     if (data?.data) {
       setCards(data?.data);

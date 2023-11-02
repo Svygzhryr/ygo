@@ -35,10 +35,23 @@ export const Details: FC = () => {
     }
   };
 
+  const defineType = (type: string) => {
+    switch (true) {
+      case type.includes('Monster'):
+        return styles.typeMonster;
+      case type === 'Spell Card':
+        return styles.typeSpell;
+      case type === 'Trap Card':
+        return styles.typeTrap;
+      default:
+        return styles.typeOther;
+    }
+  };
+
   return (
     <>
       <Link to={`/?page=${page}`} className={styles.overlay} />
-      <div className={styles.fixed}>
+      <div className={`${styles.fixed} ${defineType(card.type)}`}>
         {isLoading ? (
           <SkeletonTheme baseColor="#1b1b1b" highlightColor="#303030">
             <Skeleton className={styles.skeletonCard} />
