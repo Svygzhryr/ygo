@@ -1,62 +1,28 @@
 import { FC, ReactEventHandler, useEffect, useState } from 'react';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 import fallback from '../../assets/fallback.jpg';
 import { getCard } from '../../services/RequestService';
-import { ICard } from '../../types/types';
+import { cardState } from '../../utils/cardState';
 import styles from './Details.module.scss';
 
 export const Details: FC = () => {
   const location = useLocation();
 
-  const [card, setCard] = useState<ICard>({
-    attribute: '',
-    id: 0,
-    name: '',
-    type: '',
-    frameType: '',
-    desc: '',
-    atk: 0,
-    def: 0,
-    level: 0,
-    race: '',
-    archetype: '',
-    card_sets: [
-      {
-        set_name: '',
-        set_code: '',
-        set_rarity: '',
-        set_rarity_code: '',
-        set_price: '',
-      },
-    ],
-    card_images: [
-      {
-        id: 0,
-        image_url: '',
-        image_url_small: '',
-        image_url_cropped: '',
-      },
-    ],
-    card_prices: [
-      {
-        cardmarket_price: '',
-        tcgplayer_price: '',
-        ebay_price: '',
-        amazon_price: '',
-        coolstuffinc_price: '',
-      },
-    ],
-  });
+  const [card, setCard] = useState(cardState);
   const [isLoading, setIsLoading] = useState(true);
+  const [page, setPage] = useState('');
 
   useEffect(() => {
     setIsLoading(true);
     const id = location.search.match(/(\d{1,}$)/)?.[0];
+    setPage(location.search.match(/(?<=[=])\d*(?=[&])/)?.[0] as string);
+    console.log(page);
     if (id) {
       getCard(id).then((response) => {
         setCard(response.data.data[0]);
+        console.log(response.data);
         setIsLoading(false);
       });
     } else {
@@ -71,10 +37,9 @@ export const Details: FC = () => {
     }
   };
 
-  console.log(card);
   return (
     <>
-      <Link to="/?page=1" className={styles.overlay} />
+      <Link to={`/?page=${page}`} className={styles.overlay} />
       <div className={styles.fixed}>
         {isLoading ? (
           <SkeletonTheme baseColor="#1b1b1b" highlightColor="#303030">
@@ -96,12 +61,6 @@ export const Details: FC = () => {
             <p className={styles.description}>{card.desc}</p>
           </div>
         )}
-
-        <div className={styles.closeWrapper}>
-          <Link className={styles.close} to="/">
-            Close
-          </Link>
-        </div>
       </div>
     </>
   );

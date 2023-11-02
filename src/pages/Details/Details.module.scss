@@ -10,11 +10,6 @@
   cursor: unset;
 }
 
-.closeWrapper {
-  width: 100%;
-  display: flex;
-}
-
 .close {
   margin: 20px auto;
   color: $black-1;
@@ -58,12 +53,6 @@
   margin: 0 auto;
   margin-bottom: 20px;
   height: $card-height;
-}
-
-.skeletonText {
-}
-
-.closeButton {
 }
 
 .image {

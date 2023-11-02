@@ -44,7 +44,6 @@ export const Pagination: FC<IPaginationProps> = ({ meta, setMeta, setCards, sear
   };
 
   useEffect(() => {
-    console.log(location);
     navigate(`${location.pathname}?page=${currentPage}`);
   }, [currentPage]);
 
