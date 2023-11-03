@@ -44,7 +44,9 @@ export const Pagination: FC<IPaginationProps> = ({ meta, setMeta, setCards, sear
   };
 
   useEffect(() => {
-    navigate(`${location.pathname}?page=${currentPage}`);
+    navigate(
+      `${location.pathname}?page=${currentPage}${searchValue ? `&search=${searchValue}` : ''}`
+    );
     // eslint-disable-next-line
   }, [currentPage]);
 

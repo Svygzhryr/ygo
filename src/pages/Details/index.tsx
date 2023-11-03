@@ -1,6 +1,6 @@
 import { FC, ReactEventHandler, useEffect, useState } from 'react';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import fallback from '../../assets/fallback.jpg';
 import { getCard } from '../../services/RequestService';

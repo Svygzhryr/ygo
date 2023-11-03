@@ -1,5 +1,5 @@
 import { ChangeEvent, FC, KeyboardEvent, useCallback, useEffect, useState } from 'react';
-import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 
 import { CardList } from '../../components/CardList';
 import { Search } from '../../components/Search';
@@ -8,8 +8,7 @@ import { ICard, ICardMeta } from '../../types/types';
 import styles from './MainPage.module.scss';
 
 export const MainPage: FC = () => {
-  // const navigate = useNavigate();
-  // const location = useLocation();
+  const navigate = useNavigate();
 
   const [cards, setCards] = useState<ICard[]>([]);
   const [meta, setMeta] = useState<ICardMeta | null>(null);
@@ -20,7 +19,7 @@ export const MainPage: FC = () => {
 
   const handleOnClick = async () => {
     setSearchValue(searchTemp);
-    // navigate(`${location.search}&search=${searchTemp}`);
+    navigate(`${location.pathname}?page=1&search=${searchTemp}`);
   };
 
   const handleKeyDown = async (e: KeyboardEvent) => {
