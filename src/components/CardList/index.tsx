@@ -1,7 +1,8 @@
-import { FC } from 'react';
+import { FC, useContext } from 'react';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 
+import { CardContext } from '../../contexts/cardContext';
 import { ICard, ICardMeta } from '../../types/types';
 import { CardItem } from '../CardItem';
 import { Pagination } from '../Pagination';
@@ -24,6 +25,8 @@ export const CardList: FC<ICardListProps> = ({
   setCards,
   searchValue,
 }) => {
+  const cardz = useContext(CardContext);
+  console.log(cardz);
   return (
     <div className={styles.wrapper}>
       {!cards.length && !isLoading && (

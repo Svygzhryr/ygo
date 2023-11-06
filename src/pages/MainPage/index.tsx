@@ -1,8 +1,17 @@
-import { ChangeEvent, FC, KeyboardEvent, useCallback, useEffect, useState } from 'react';
+import {
+  ChangeEvent,
+  FC,
+  KeyboardEvent,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 import { Outlet, useSearchParams } from 'react-router-dom';
 
 import { CardList } from '../../components/CardList';
 import { Search } from '../../components/Search';
+import { CardContext } from '../../contexts/cardContext';
 import { getCards } from '../../services/RequestService';
 import { ICard, ICardMeta } from '../../types/types';
 import styles from './MainPage.module.scss';
@@ -13,6 +22,7 @@ type MainSearch = {
 };
 
 export const MainPage: FC = () => {
+  const cardz = useContext(CardContext);
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [cards, setCards] = useState<ICard[]>([]);
@@ -61,6 +71,7 @@ export const MainPage: FC = () => {
 
     const { data } = await getCards(...[, ,], searchValue || '');
     if (data?.data) {
+      cardz.setCardList(data.data);
       setCards(data?.data);
       setMeta(data.meta);
       setIsLoading(false);
