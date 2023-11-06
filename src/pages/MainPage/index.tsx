@@ -1,5 +1,5 @@
 import { ChangeEvent, FC, KeyboardEvent, useCallback, useEffect, useState } from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet, useSearchParams } from 'react-router-dom';
 
 import { CardList } from '../../components/CardList';
 import { Search } from '../../components/Search';
@@ -7,19 +7,33 @@ import { getCards } from '../../services/RequestService';
 import { ICard, ICardMeta } from '../../types/types';
 import styles from './MainPage.module.scss';
 
+type MainSearch = {
+  page: string;
+  search?: string;
+};
+
 export const MainPage: FC = () => {
-  const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const [cards, setCards] = useState<ICard[]>([]);
   const [meta, setMeta] = useState<ICardMeta | null>(null);
-  const [searchValue, setSearchValue] = useState('');
+  const [searchValue, setSearchValue] = useState(searchParams.get('search'));
   const [searchTemp, setSearchTemp] = useState('');
   const [throwErrorMessage, setThrowErrorMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   const handleOnClick = async () => {
+    const params: MainSearch = {
+      page: String(1),
+    };
+
+    if (searchTemp) {
+      params.search = searchTemp;
+    }
+
+    setSearchParams(params);
+
     setSearchValue(searchTemp);
-    navigate(`${location.pathname}?page=1&search=${searchTemp}`);
   };
 
   const handleKeyDown = async (e: KeyboardEvent) => {
@@ -45,12 +59,12 @@ export const MainPage: FC = () => {
   const getCardsHandler = useCallback(async () => {
     setIsLoading(true);
 
-    const { data } = await getCards(...[, ,], searchValue);
+    const { data } = await getCards(...[, ,], searchValue || '');
     if (data?.data) {
       setCards(data?.data);
       setMeta(data.meta);
       setIsLoading(false);
-      localStorage.setItem('prevSearch', searchValue);
+      localStorage.setItem('prevSearch', searchValue || '');
     }
   }, [searchValue]);
 
@@ -82,7 +96,7 @@ export const MainPage: FC = () => {
           isLoading={isLoading}
           meta={meta}
           setMeta={setMeta}
-          searchValue={searchValue}
+          searchValue={searchValue || ''}
         />
       </section>
       <Outlet />

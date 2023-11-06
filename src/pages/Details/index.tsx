@@ -56,7 +56,7 @@ export const Details: FC = () => {
       <div onClick={handleHistoryBack} className={styles.overlay} />
       <div className={`${styles.fixed} ${defineType(card.type)}`}>
         {isLoading ? (
-          <SkeletonTheme baseColor="#1b1b1b" highlightColor="#303030">
+          <SkeletonTheme baseColor="#2b2b2b" highlightColor="#707070">
             <Skeleton className={styles.skeletonCard} />
             {Array(5)
               .fill(true)
