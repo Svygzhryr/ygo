@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 
 import next from '../../assets/next.svg';
 import prev from '../../assets/prev.svg';
+import { MainSearch } from '../../pages/MainPage';
 import { getCards } from '../../services/RequestService';
 import { ICard, ICardMeta } from '../../types/types';
 import styles from './Pagination.module.scss';
@@ -13,11 +14,6 @@ interface IPaginationProps {
   meta: ICardMeta | null;
   setMeta: React.Dispatch<React.SetStateAction<ICardMeta | null>>;
 }
-
-type PaginationSearch = {
-  page: string;
-  search?: string;
-};
 
 export const Pagination: FC<IPaginationProps> = ({ meta, setMeta, setCards, searchValue }) => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -48,14 +44,14 @@ export const Pagination: FC<IPaginationProps> = ({ meta, setMeta, setCards, sear
   };
 
   useEffect(() => {
-    const params: PaginationSearch = {
-      page: `${currentPage}`,
-    };
+    const help = Object.fromEntries(searchParams.entries());
+    const params: MainSearch = Object.fromEntries(searchParams.entries());
+    params.page = String(currentPage);
     if (searchValue) {
       params.search = searchValue;
     }
+
     setSearchParams(params);
-    // eslint-disable-next-line
   }, [currentPage]);
 
   return (
