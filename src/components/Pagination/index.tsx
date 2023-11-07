@@ -1,8 +1,9 @@
 import { FC, useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 
 import next from '../../assets/next.svg';
 import prev from '../../assets/prev.svg';
+import { MainSearch } from '../../pages/MainPage';
 import { getCards } from '../../services/RequestService';
 import { ICard, ICardMeta } from '../../types/types';
 import styles from './Pagination.module.scss';
@@ -15,7 +16,7 @@ interface IPaginationProps {
 }
 
 export const Pagination: FC<IPaginationProps> = ({ meta, setMeta, setCards, searchValue }) => {
-  const location = useLocation();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   if (!meta) {
     throw new Error("Cat't get card data..");
@@ -23,7 +24,6 @@ export const Pagination: FC<IPaginationProps> = ({ meta, setMeta, setCards, sear
 
   const [isLoading, setIsLoading] = useState(false);
   const currentPage = meta.total_pages + 1 - meta.pages_remaining;
-  const navigate = useNavigate();
 
   const handlePrevPage = () => {
     setIsLoading(true);
@@ -44,10 +44,14 @@ export const Pagination: FC<IPaginationProps> = ({ meta, setMeta, setCards, sear
   };
 
   useEffect(() => {
-    navigate(
-      `${location.pathname}?page=${currentPage}${searchValue ? `&search=${searchValue}` : ''}`
-    );
-    // eslint-disable-next-line
+    const help = Object.fromEntries(searchParams.entries());
+    const params: MainSearch = Object.fromEntries(searchParams.entries());
+    params.page = String(currentPage);
+    if (searchValue) {
+      params.search = searchValue;
+    }
+
+    setSearchParams(params);
   }, [currentPage]);
 
   return (

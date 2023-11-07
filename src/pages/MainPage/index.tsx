@@ -16,9 +16,10 @@ import { getCards } from '../../services/RequestService';
 import { ICard, ICardMeta } from '../../types/types';
 import styles from './MainPage.module.scss';
 
-type MainSearch = {
-  page: string;
+export type MainSearch = {
+  page?: string;
   search?: string;
+  id?: string;
 };
 
 export const MainPage: FC = () => {
