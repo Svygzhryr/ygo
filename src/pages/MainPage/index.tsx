@@ -13,7 +13,7 @@ import { CardList } from '../../components/CardList';
 import { Search } from '../../components/Search';
 import { CardContext } from '../../contexts/cardContext';
 import { getCards } from '../../services/RequestService';
-import { ICard, ICardMeta } from '../../types/types';
+import { ICardMeta } from '../../types/types';
 import styles from './MainPage.module.scss';
 
 export type MainSearch = {
@@ -23,10 +23,9 @@ export type MainSearch = {
 };
 
 export const MainPage: FC = () => {
-  const cardz = useContext(CardContext);
+  const { setCardList } = useContext(CardContext);
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const [cards, setCards] = useState<ICard[]>([]);
   const [meta, setMeta] = useState<ICardMeta | null>(null);
   const [searchValue, setSearchValue] = useState(searchParams.get('search'));
   const [searchTemp, setSearchTemp] = useState('');
@@ -72,8 +71,7 @@ export const MainPage: FC = () => {
 
     const { data } = await getCards(...[, ,], searchValue || '');
     if (data?.data) {
-      cardz.setCardList(data.data);
-      setCards(data?.data);
+      setCardList(data.data);
       setMeta(data.meta);
       setIsLoading(false);
       localStorage.setItem('prevSearch', searchValue || '');
@@ -103,8 +101,6 @@ export const MainPage: FC = () => {
           onKeyDown={handleKeyDown}
         />
         <CardList
-          cards={cards}
-          setCards={setCards}
           isLoading={isLoading}
           meta={meta}
           setMeta={setMeta}
