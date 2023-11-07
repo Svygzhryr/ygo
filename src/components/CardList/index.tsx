@@ -26,7 +26,6 @@ export const CardList: FC<ICardListProps> = ({
   searchValue,
 }) => {
   const cardz = useContext(CardContext);
-  console.log(cardz);
   return (
     <div className={styles.wrapper}>
       {!cards.length && !isLoading && (

@@ -1,6 +1,6 @@
 import { FC, ReactEventHandler, useEffect, useState } from 'react';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 
 import fallback from '../../assets/fallback.jpg';
 import { getCard } from '../../services/RequestService';
@@ -10,6 +10,7 @@ import styles from './Details.module.scss';
 export const Details: FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const [card, setCard] = useState(cardState);
   const [isLoading, setIsLoading] = useState(true);
@@ -48,7 +49,7 @@ export const Details: FC = () => {
   };
 
   const handleHistoryBack = () => {
-    navigate(-1);
+    navigate(-3);
   };
 
   return (
