@@ -9,22 +9,19 @@ import { Pagination } from '../Pagination';
 import styles from './CardList.module.scss';
 
 interface ICardListProps {
-  searchValue: string;
   isLoading: boolean;
   meta: ICardMeta | null;
   setMeta: React.Dispatch<React.SetStateAction<ICardMeta | null>>;
 }
 
-export const CardList: FC<ICardListProps> = ({ isLoading, meta, setMeta, searchValue }) => {
+export const CardList: FC<ICardListProps> = ({ isLoading, meta, setMeta }) => {
   const cards = useContext(CardContext).cardList;
   return (
     <div className={styles.wrapper}>
       {!cards.length && !isLoading && (
         <h5 className={styles.errorMessage}>No cards matching your query.</h5>
       )}
-      {!isLoading && !!cards.length && (
-        <Pagination searchValue={searchValue} meta={meta} setMeta={setMeta} />
-      )}
+      {!isLoading && !!cards.length && <Pagination meta={meta} setMeta={setMeta} />}
       <div className={styles.cardListWrapper}>
         {isLoading && (
           <SkeletonTheme baseColor="#1b1b1b" highlightColor="#303030">

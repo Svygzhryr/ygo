@@ -23,11 +23,10 @@ export type MainSearch = {
 };
 
 export const MainPage: FC = () => {
-  const { setCardList } = useContext(CardContext);
+  const { setCardList, searchValue, setSearchValue } = useContext(CardContext);
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [meta, setMeta] = useState<ICardMeta | null>(null);
-  const [searchValue, setSearchValue] = useState(searchParams.get('search'));
   const [searchTemp, setSearchTemp] = useState('');
   const [throwErrorMessage, setThrowErrorMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -100,12 +99,7 @@ export const MainPage: FC = () => {
           onChange={handleOnChange}
           onKeyDown={handleKeyDown}
         />
-        <CardList
-          isLoading={isLoading}
-          meta={meta}
-          setMeta={setMeta}
-          searchValue={searchValue || ''}
-        />
+        <CardList isLoading={isLoading} meta={meta} setMeta={setMeta} />
       </section>
       <Outlet />
     </div>

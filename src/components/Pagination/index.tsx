@@ -10,13 +10,12 @@ import { ICardMeta } from '../../types/types';
 import styles from './Pagination.module.scss';
 
 interface IPaginationProps {
-  searchValue: string;
   meta: ICardMeta | null;
   setMeta: React.Dispatch<React.SetStateAction<ICardMeta | null>>;
 }
 
-export const Pagination: FC<IPaginationProps> = ({ meta, setMeta, searchValue }) => {
-  const { setCardList } = useContext(CardContext);
+export const Pagination: FC<IPaginationProps> = ({ meta, setMeta }) => {
+  const { setCardList, searchValue } = useContext(CardContext);
 
   const [searchParams, setSearchParams] = useSearchParams();
 
