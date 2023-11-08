@@ -1,21 +1,23 @@
-import { FC, useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { FC, useContext, useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 import next from '../../assets/next.svg';
 import prev from '../../assets/prev.svg';
+import { CardContext } from '../../contexts/cardContext';
+import { MainSearch } from '../../pages/MainPage';
 import { getCards } from '../../services/RequestService';
-import { ICard, ICardMeta } from '../../types/types';
+import { ICardMeta } from '../../types/types';
 import styles from './Pagination.module.scss';
 
 interface IPaginationProps {
-  searchValue: string;
-  setCards: React.Dispatch<React.SetStateAction<ICard[]>>;
   meta: ICardMeta | null;
   setMeta: React.Dispatch<React.SetStateAction<ICardMeta | null>>;
 }
 
-export const Pagination: FC<IPaginationProps> = ({ meta, setMeta, setCards, searchValue }) => {
-  const location = useLocation();
+export const Pagination: FC<IPaginationProps> = ({ meta, setMeta }) => {
+  const { setCardList, searchValue } = useContext(CardContext);
+
+  const [searchParams, setSearchParams] = useSearchParams();
 
   if (!meta) {
     throw new Error("Cat't get card data..");
@@ -23,12 +25,11 @@ export const Pagination: FC<IPaginationProps> = ({ meta, setMeta, setCards, sear
 
   const [isLoading, setIsLoading] = useState(false);
   const currentPage = meta.total_pages + 1 - meta.pages_remaining;
-  const navigate = useNavigate();
 
   const handlePrevPage = () => {
     setIsLoading(true);
     getCards(12, meta?.previous_page_offset, searchValue).then((response) => {
-      setCards(response.data.data);
+      setCardList(response.data.data);
       setMeta(response.data.meta);
       setIsLoading(false);
     });
@@ -37,17 +38,20 @@ export const Pagination: FC<IPaginationProps> = ({ meta, setMeta, setCards, sear
   const handleNextPage = () => {
     setIsLoading(true);
     getCards(12, meta?.next_page_offset, searchValue).then((response) => {
-      setCards(response.data.data);
+      setCardList(response.data.data);
       setMeta(response.data.meta);
       setIsLoading(false);
     });
   };
 
   useEffect(() => {
-    navigate(
-      `${location.pathname}?page=${currentPage}${searchValue ? `&search=${searchValue}` : ''}`
-    );
-    // eslint-disable-next-line
+    const params: MainSearch = Object.fromEntries(searchParams.entries());
+    params.page = String(currentPage);
+    if (searchValue) {
+      params.search = searchValue;
+    }
+
+    setSearchParams(params);
   }, [currentPage]);
 
   return (
