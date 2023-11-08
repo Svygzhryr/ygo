@@ -5,6 +5,7 @@ import ErrorBoundary from '../components/ErrorBoundary';
 import { CardContext } from '../contexts/cardContext';
 import { Details } from '../pages/Details';
 import { MainPage } from '../pages/MainPage';
+import { NotFound } from '../pages/NotFound';
 import { ICard } from '../types/types';
 
 export const App: FC = () => {
@@ -26,6 +27,7 @@ export const App: FC = () => {
             <Route path="/" element={<MainPage />}>
               <Route path="/details" element={<Details />} />
             </Route>
+            <Route path="/*" element={<NotFound />} />
           </Routes>
         </ErrorBoundary>
       </CardContext.Provider>
