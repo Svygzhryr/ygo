@@ -15,13 +15,13 @@ interface ICardListProps {
 }
 
 export const CardList: FC<ICardListProps> = ({ isLoading, meta, setMeta }) => {
-  const cards = useContext(CardContext).cardList;
+  const { cardList } = useContext(CardContext);
   return (
     <div className={styles.wrapper}>
-      {!cards.length && !isLoading && (
+      {!cardList.length && !isLoading && (
         <h5 className={styles.errorMessage}>No cards matching your query.</h5>
       )}
-      {!isLoading && !!cards.length && <Pagination meta={meta} setMeta={setMeta} />}
+      {!isLoading && !!cardList.length && <Pagination meta={meta} setMeta={setMeta} />}
       <div className={styles.cardListWrapper}>
         {isLoading && (
           <SkeletonTheme baseColor="#1b1b1b" highlightColor="#303030">
@@ -33,7 +33,7 @@ export const CardList: FC<ICardListProps> = ({ isLoading, meta, setMeta }) => {
           </SkeletonTheme>
         )}
         {!isLoading &&
-          cards.map((card) => {
+          cardList.map((card) => {
             return <CardItem key={card.id} card={card} />;
           })}
       </div>
