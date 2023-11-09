@@ -71,7 +71,7 @@ export const CardItem: FC<CardItemProps> = ({ card }) => {
           alt=""
         />
         <h6 className={styles.cardItemName}>{card.name}</h6>
-        <div className={`${styles.cardItemType} ${defineAttribute(card.attribute)}`}>
+        <div className={`${styles.cardItemType} ${defineAttribute(card.attribute || '')}`}>
           {card.attribute?.toLowerCase() || card.type.match('Spell') || card.type.match('Trap')}
         </div>
         {card.type.includes('Monster') && (

@@ -12,7 +12,7 @@ export const App: FC = () => {
   const [searchValue, setSearchValue] = useState('');
   const [cardList, setCardList] = useState<ICard[]>([]);
 
-  const cardz = {
+  const cards = {
     searchValue,
     setSearchValue,
     cardList,
@@ -21,7 +21,7 @@ export const App: FC = () => {
 
   return (
     <>
-      <CardContext.Provider value={cardz}>
+      <CardContext.Provider value={cards}>
         <ErrorBoundary>
           <Routes>
             <Route path="/" element={<MainPage />}>

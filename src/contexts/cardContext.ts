@@ -2,7 +2,7 @@ import { createContext } from 'react';
 
 import { ICard } from '../types/types';
 
-interface ICardContext {
+export interface ICardContext {
   searchValue: string;
   setSearchValue: (searchValue: string) => void;
   cardList: ICard[];

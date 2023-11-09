@@ -19,12 +19,8 @@ export const Pagination: FC<IPaginationProps> = ({ meta, setMeta }) => {
 
   const [searchParams, setSearchParams] = useSearchParams();
 
-  if (!meta) {
-    throw new Error("Cat't get card data..");
-  }
-
   const [isLoading, setIsLoading] = useState(false);
-  const currentPage = meta.total_pages + 1 - meta.pages_remaining;
+  const currentPage = meta ? meta.total_pages + 1 - meta.pages_remaining : 1;
 
   const handlePrevPage = () => {
     setIsLoading(true);
@@ -53,6 +49,10 @@ export const Pagination: FC<IPaginationProps> = ({ meta, setMeta }) => {
 
     setSearchParams(params);
   }, [currentPage]);
+
+  if (!meta) {
+    return <div>Cant get card data...</div>;
+  }
 
   return (
     <div className={styles.wrapper}>
