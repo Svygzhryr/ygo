@@ -16,7 +16,6 @@ interface ICardListProps {
 
 export const CardList: FC<ICardListProps> = ({ isLoading, meta, setMeta }) => {
   const { cardList } = useContext(CardContext);
-  console.log(cardList);
   return (
     <div className={styles.wrapper}>
       {!cardList.length && !isLoading && (

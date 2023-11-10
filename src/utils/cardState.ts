@@ -1,15 +1,10 @@
 export const cardState = {
-  attribute: '',
   id: 0,
   name: '',
   type: '',
   frameType: '',
   desc: '',
-  atk: 0,
-  def: 0,
-  level: 0,
   race: '',
-  archetype: '',
   card_sets: [
     {
       set_name: '',

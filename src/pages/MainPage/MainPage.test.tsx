@@ -1,21 +1,59 @@
 import '@testing-library/jest-dom';
-import { cleanup, findByText, fireEvent, getByText, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 
 import { MainPage } from '.';
-
-afterEach(() => {
-  cleanup();
-});
+import { CardContext } from '../../contexts/cardContext';
+import { cards } from '../../mocks/mockedData';
 
 describe('Main', () => {
-  test('Page displays top bar correctly', async () => {
-    render(
+  test('Search bar working correctly', async () => {
+    const { rerender } = render(
       <BrowserRouter>
-        <MainPage />
+        <CardContext.Provider value={cards}>
+          <MainPage />
+        </CardContext.Provider>
       </BrowserRouter>
     );
-    const dataElement = await screen.findByText('Search');
-    expect(dataElement).toBeVisible();
+    const input = screen.getByPlaceholderText('Type in something...');
+    fireEvent.change(input, { target: { value: 'lacooda' } });
+    expect(input).toHaveValue('lacooda');
+
+    const searchButton = await screen.findByText('Search');
+    expect(searchButton).toBeInTheDocument();
+    fireEvent(searchButton, new MouseEvent('click', { bubbles: true }));
+
+    const foundCardDefence = await screen.findByText('3-Hump Lacooda');
+
+    expect(foundCardDefence).toBeVisible();
+
+    rerender(
+      <BrowserRouter>
+        <CardContext.Provider value={cards}>
+          <MainPage />
+        </CardContext.Provider>
+      </BrowserRouter>
+    );
+
+    expect(input).toHaveValue('lacooda');
+  });
+
+  test('Error fallback component', async () => {
+    render(
+      <BrowserRouter>
+        <CardContext.Provider value={cards}>
+          <MainPage />
+        </CardContext.Provider>
+      </BrowserRouter>
+    );
+
+    console.error = jest.fn();
+
+    const errorButton = await screen.findByText('Throw an error!');
+    try {
+      fireEvent(errorButton, new MouseEvent('click', { bubbles: true }));
+    } catch (e) {
+      expect((e as Error).message).toBe('Whoops! An error has occured.');
+    }
   });
 });

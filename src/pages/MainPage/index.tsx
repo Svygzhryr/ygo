@@ -72,6 +72,7 @@ export const MainPage: FC = () => {
     if (data?.data) {
       setCardList(data.data);
       setMeta(data.meta);
+      console.log(data.meta);
       setIsLoading(false);
       localStorage.setItem('prevSearch', searchValue || '');
     }
