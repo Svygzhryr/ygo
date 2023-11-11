@@ -3,6 +3,7 @@ import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import fallback from '../../assets/fallback.jpg';
+import { card } from '../../mocks/mockedData';
 import { getCard } from '../../services/RequestService';
 import { cardState } from '../../utils/cardState';
 import styles from './Details.module.scss';
@@ -23,7 +24,8 @@ export const Details: FC = () => {
         setIsLoading(false);
       });
     } else {
-      console.error('Error getting card..');
+      setCard(card);
+      setIsLoading(false);
     }
   }, [location.search]);
 
@@ -56,7 +58,7 @@ export const Details: FC = () => {
       <div onClick={handleHistoryBack} className={styles.overlay} />
       <div className={`${styles.fixed} ${defineType(card.type)}`}>
         {isLoading ? (
-          <SkeletonTheme baseColor="#1b1b1b" highlightColor="#303030">
+          <SkeletonTheme baseColor="#2b2b2b" highlightColor="#707070">
             <Skeleton className={styles.skeletonCard} />
             {Array(5)
               .fill(true)

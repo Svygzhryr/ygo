@@ -1,15 +1,15 @@
 export interface ICard {
-  attribute: string;
+  attribute?: string;
   id: number;
   name: string;
   type: string;
   frameType: string;
   desc: string;
-  atk: number;
-  def: number;
-  level: number;
+  atk?: number;
+  def?: number;
+  level?: number;
   race: string;
-  archetype: string;
+  archetype?: string;
   card_sets: [
     {
       set_name: string;

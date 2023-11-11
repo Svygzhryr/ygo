@@ -1,25 +1,48 @@
-import { ChangeEvent, FC, KeyboardEvent, useCallback, useEffect, useState } from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
+import {
+  ChangeEvent,
+  FC,
+  KeyboardEvent,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
+import { Outlet, useSearchParams } from 'react-router-dom';
 
 import { CardList } from '../../components/CardList';
 import { Search } from '../../components/Search';
+import { CardContext } from '../../contexts/cardContext';
 import { getCards } from '../../services/RequestService';
-import { ICard, ICardMeta } from '../../types/types';
+import { ICardMeta } from '../../types/types';
 import styles from './MainPage.module.scss';
 
-export const MainPage: FC = () => {
-  const navigate = useNavigate();
+export type MainSearch = {
+  page?: string;
+  search?: string;
+  id?: string;
+};
 
-  const [cards, setCards] = useState<ICard[]>([]);
+export const MainPage: FC = () => {
+  const { setCardList, searchValue, setSearchValue } = useContext(CardContext);
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const [meta, setMeta] = useState<ICardMeta | null>(null);
-  const [searchValue, setSearchValue] = useState('');
   const [searchTemp, setSearchTemp] = useState('');
   const [throwErrorMessage, setThrowErrorMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   const handleOnClick = async () => {
+    const params: MainSearch = {
+      page: String(1),
+    };
+
+    if (searchTemp) {
+      params.search = searchTemp;
+    }
+
+    setSearchParams(params);
+
     setSearchValue(searchTemp);
-    navigate(`${location.pathname}?page=1&search=${searchTemp}`);
   };
 
   const handleKeyDown = async (e: KeyboardEvent) => {
@@ -45,12 +68,13 @@ export const MainPage: FC = () => {
   const getCardsHandler = useCallback(async () => {
     setIsLoading(true);
 
-    const { data } = await getCards(...[, ,], searchValue);
+    const { data } = await getCards(...[, ,], searchValue || '');
     if (data?.data) {
-      setCards(data?.data);
+      setCardList(data.data);
       setMeta(data.meta);
+      console.log(data.meta);
       setIsLoading(false);
-      localStorage.setItem('prevSearch', searchValue);
+      localStorage.setItem('prevSearch', searchValue || '');
     }
   }, [searchValue]);
 
@@ -76,14 +100,7 @@ export const MainPage: FC = () => {
           onChange={handleOnChange}
           onKeyDown={handleKeyDown}
         />
-        <CardList
-          cards={cards}
-          setCards={setCards}
-          isLoading={isLoading}
-          meta={meta}
-          setMeta={setMeta}
-          searchValue={searchValue}
-        />
+        <CardList isLoading={isLoading} meta={meta} setMeta={setMeta} />
       </section>
       <Outlet />
     </div>
