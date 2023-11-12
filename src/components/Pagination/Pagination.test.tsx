@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 
 import { Pagination } from '.';
@@ -29,5 +29,19 @@ describe('Pagination', () => {
 
     const getCurrentPage = await screen.findByText('1');
     expect(getCurrentPage).toBeInTheDocument();
+  });
+
+  test('Button click', async () => {
+    render(
+      <BrowserRouter>
+        <CardContext.Provider value={cards}>
+          <Pagination meta={meta} setMeta={setMeta} />
+        </CardContext.Provider>
+      </BrowserRouter>
+    );
+
+    const buttons = screen.getAllByRole('button');
+    expect(buttons[0]).toBeDisabled();
+    expect(buttons[1]).toBeDisabled();
   });
 });
