@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 
+import { useAppSelector } from '../../hooks/redux';
 import styles from './NotFound.module.scss';
 
 export const NotFound = () => {

@@ -17,7 +17,6 @@ describe('Details', () => {
     );
 
     const getCardDesc = await screen.findByRole('img');
-    console.log(getCardDesc);
     expect(getCardDesc).toBeInTheDocument();
   });
 });

@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 
 import ErrorBoundary from '../components/ErrorBoundary';
 import { CardContext } from '../contexts/cardContext';
+import { useAppSelector } from '../hooks/redux';
 import { Details } from '../pages/Details';
 import { MainPage } from '../pages/MainPage';
 import { NotFound } from '../pages/NotFound';

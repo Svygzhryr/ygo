@@ -3,6 +3,7 @@ import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 
 import { CardContext } from '../../contexts/cardContext';
+import { cardsAPI } from '../../services/RequestService';
 import { ICardMeta } from '../../types/types';
 import { CardItem } from '../CardItem';
 import { Pagination } from '../Pagination';
@@ -14,14 +15,16 @@ interface ICardListProps {
   setMeta: React.Dispatch<React.SetStateAction<ICardMeta | null>>;
 }
 
-export const CardList: FC<ICardListProps> = ({ isLoading, meta, setMeta }) => {
-  const { cardList } = useContext(CardContext);
+export const CardList: FC<ICardListProps> = ({ meta, setMeta }) => {
+  // const { cardList } = useContext(CardContext);
+  const { data, error, isLoading } = cardsAPI.useFetchAllCardsQuery();
+  const cardList = data?.data;
+
+  console.log(data);
   return (
     <div className={styles.wrapper}>
-      {!cardList.length && !isLoading && (
-        <h5 className={styles.errorMessage}>No cards matching your query.</h5>
-      )}
-      {!isLoading && !!cardList.length && <Pagination meta={meta} setMeta={setMeta} />}
+      {error && <h5 className={styles.errorMessage}>No cards matching your query.</h5>}
+      {cardList && <Pagination meta={meta} setMeta={setMeta} />}
       <div className={styles.cardListWrapper}>
         {isLoading && (
           <SkeletonTheme baseColor="#1b1b1b" highlightColor="#303030">
@@ -32,8 +35,8 @@ export const CardList: FC<ICardListProps> = ({ isLoading, meta, setMeta }) => {
               ))}
           </SkeletonTheme>
         )}
-        {!isLoading &&
-          cardList.map((card) => {
+        {cardList &&
+          cardList?.map((card) => {
             return <CardItem key={card.id} card={card} />;
           })}
       </div>

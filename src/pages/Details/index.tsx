@@ -3,7 +3,6 @@ import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import fallback from '../../assets/fallback.jpg';
-import { card } from '../../mocks/mockedData';
 import { getCard } from '../../services/RequestService';
 import { cardState } from '../../utils/cardState';
 import styles from './Details.module.scss';

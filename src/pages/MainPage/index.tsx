@@ -12,7 +12,9 @@ import { Outlet, useSearchParams } from 'react-router-dom';
 import { CardList } from '../../components/CardList';
 import { Search } from '../../components/Search';
 import { CardContext } from '../../contexts/cardContext';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { getCards } from '../../services/RequestService';
+import { searchSlice } from '../../store/reducers/SearchSlice';
 import { ICardMeta } from '../../types/types';
 import styles from './MainPage.module.scss';
 
@@ -31,6 +33,10 @@ export const MainPage: FC = () => {
   const [throwErrorMessage, setThrowErrorMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
+  const { newSearchValue } = useAppSelector((state) => state.searchReducer);
+  const { newSetSearchValue } = searchSlice.actions;
+  const dispatch = useAppDispatch();
+
   const handleOnClick = async () => {
     const params: MainSearch = {
       page: String(1),
@@ -39,6 +45,8 @@ export const MainPage: FC = () => {
     if (searchTemp) {
       params.search = searchTemp;
     }
+
+    dispatch(newSetSearchValue(searchTemp));
 
     setSearchParams(params);
 
@@ -72,7 +80,6 @@ export const MainPage: FC = () => {
     if (data?.data) {
       setCardList(data.data);
       setMeta(data.meta);
-      console.log(data.meta);
       setIsLoading(false);
       localStorage.setItem('prevSearch', searchValue || '');
     }

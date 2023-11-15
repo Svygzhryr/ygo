@@ -1,8 +1,27 @@
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import axios from 'axios';
 
-import { ICardAPI } from '../types/types';
+import { ICard, ICardAPI } from '../types/types';
 
-const API_URL = 'https://db.ygoprodeck.com/api/v7/cardinfo.php';
+interface IQueryParams {
+  num?: number;
+  offset?: number;
+}
+
+const baseUrl = 'https://db.ygoprodeck.com/api/v7/cardinfo.php';
+
+export const cardsAPI = createApi({
+  reducerPath: 'cardsAPI',
+  baseQuery: fetchBaseQuery({ baseUrl }),
+  endpoints: (build) => ({
+    fetchAllCards: build.query<ICardAPI, IQueryParams>({
+      query: ({ num, offset } = { num: 12, offset: 0 }) => ({
+        url: '/',
+        params: { num, offset },
+      }),
+    }),
+  }),
+});
 
 export const getCards = async (limit = 12, offset = 0, search = '') => {
   const data = {
@@ -11,7 +30,7 @@ export const getCards = async (limit = 12, offset = 0, search = '') => {
   } as ICardAPI;
 
   try {
-    const response = await axios.get<ICardAPI>(`${API_URL}`, {
+    const response = await axios.get<ICardAPI>(`${baseUrl}`, {
       params: {
         num: limit,
         offset,
@@ -34,7 +53,7 @@ export const getCard = async (id: string) => {
   } as ICardAPI;
 
   try {
-    const response = await axios.get<ICardAPI>(`${API_URL}`, {
+    const response = await axios.get<ICardAPI>(`${baseUrl}`, {
       params: {
         id,
       },
