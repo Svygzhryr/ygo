@@ -6,6 +6,7 @@ import { ICard, ICardAPI } from '../types/types';
 interface IQueryParams {
   num?: number;
   offset?: number;
+  search?: string;
 }
 
 const baseUrl = 'https://db.ygoprodeck.com/api/v7/cardinfo.php';
@@ -15,9 +16,9 @@ export const cardsAPI = createApi({
   baseQuery: fetchBaseQuery({ baseUrl }),
   endpoints: (build) => ({
     fetchAllCards: build.query<ICardAPI, IQueryParams>({
-      query: ({ num, offset } = { num: 12, offset: 0 }) => ({
+      query: ({ num, offset, search } = { num: 12, offset: 0, search: '' }) => ({
         url: '/',
-        params: { num, offset },
+        params: { num, offset, search },
       }),
     }),
   }),

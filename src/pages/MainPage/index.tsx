@@ -26,52 +26,14 @@ export type MainSearch = {
 
 export const MainPage: FC = () => {
   const { setCardList, searchValue, setSearchValue } = useContext(CardContext);
-  const [searchParams, setSearchParams] = useSearchParams();
 
   const [meta, setMeta] = useState<ICardMeta | null>(null);
-  const [searchTemp, setSearchTemp] = useState('');
   const [throwErrorMessage, setThrowErrorMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-
-  const { newSearchValue } = useAppSelector((state) => state.searchReducer);
-  const { newSetSearchValue } = searchSlice.actions;
-  const dispatch = useAppDispatch();
-
-  const handleOnClick = async () => {
-    const params: MainSearch = {
-      page: String(1),
-    };
-
-    if (searchTemp) {
-      params.search = searchTemp;
-    }
-
-    dispatch(newSetSearchValue(searchTemp));
-
-    setSearchParams(params);
-
-    setSearchValue(searchTemp);
-  };
-
-  const handleKeyDown = async (e: KeyboardEvent) => {
-    if (e.key === 'Enter') handleOnClick();
-  };
-
-  const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchTemp(e.target.value);
-  };
 
   const handleThrowError = () => {
     setThrowErrorMessage('Whoops! An error has occured.');
   };
-
-  useEffect(() => {
-    const storageSearchValue = localStorage.getItem('prevSearch') || '';
-    if (storageSearchValue) {
-      setSearchValue(storageSearchValue);
-      setSearchTemp(storageSearchValue);
-    }
-  }, []);
 
   const getCardsHandler = useCallback(async () => {
     setIsLoading(true);
@@ -86,10 +48,6 @@ export const MainPage: FC = () => {
   }, [searchValue]);
 
   useEffect(() => {
-    getCardsHandler();
-  }, [getCardsHandler]);
-
-  useEffect(() => {
     if (throwErrorMessage) {
       throw new Error(throwErrorMessage);
     }
@@ -101,12 +59,7 @@ export const MainPage: FC = () => {
         <button className={styles.error} onClick={handleThrowError}>
           Throw an error!
         </button>
-        <Search
-          value={searchTemp}
-          onClick={handleOnClick}
-          onChange={handleOnChange}
-          onKeyDown={handleKeyDown}
-        />
+        <Search />
         <CardList isLoading={isLoading} meta={meta} setMeta={setMeta} />
       </section>
       <Outlet />
