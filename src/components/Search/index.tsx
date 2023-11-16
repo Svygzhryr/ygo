@@ -3,6 +3,8 @@ import { useSearchParams } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { MainSearch } from '../../pages/MainPage';
+import { cardsAPI } from '../../services/RequestService';
+import { currentPageSlice } from '../../store/reducers/PaginationSlice';
 import { searchSlice } from '../../store/reducers/SearchSlice';
 import styles from './Search.module.scss';
 
@@ -14,9 +16,10 @@ import styles from './Search.module.scss';
 // }
 
 export const Search: FC = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
   const [searchTemp, setSearchTemp] = useState('');
+  const [searchParams, setSearchParams] = useSearchParams();
   const { newSetSearchValue } = searchSlice.actions;
+  const { setCurrentPage } = currentPageSlice.actions;
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -36,6 +39,7 @@ export const Search: FC = () => {
       params.search = searchTemp;
     }
 
+    dispatch(setCurrentPage(0));
     dispatch(newSetSearchValue(searchTemp));
     setSearchParams(params);
     newSetSearchValue(searchTemp);

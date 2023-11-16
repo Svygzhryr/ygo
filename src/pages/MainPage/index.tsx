@@ -1,20 +1,9 @@
-import {
-  ChangeEvent,
-  FC,
-  KeyboardEvent,
-  useCallback,
-  useContext,
-  useEffect,
-  useState,
-} from 'react';
-import { Outlet, useSearchParams } from 'react-router-dom';
+import { FC, useEffect, useState } from 'react';
+import { Outlet } from 'react-router-dom';
 
 import { CardList } from '../../components/CardList';
 import { Search } from '../../components/Search';
-import { CardContext } from '../../contexts/cardContext';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { getCards } from '../../services/RequestService';
-import { searchSlice } from '../../store/reducers/SearchSlice';
+import { useAppSelector } from '../../hooks/redux';
 import { ICardMeta } from '../../types/types';
 import styles from './MainPage.module.scss';
 
@@ -25,27 +14,13 @@ export type MainSearch = {
 };
 
 export const MainPage: FC = () => {
-  const { setCardList, searchValue, setSearchValue } = useContext(CardContext);
-
+  const { newSearchValue } = useAppSelector((state) => state.searchReducer);
   const [meta, setMeta] = useState<ICardMeta | null>(null);
   const [throwErrorMessage, setThrowErrorMessage] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
 
   const handleThrowError = () => {
     setThrowErrorMessage('Whoops! An error has occured.');
   };
-
-  const getCardsHandler = useCallback(async () => {
-    setIsLoading(true);
-
-    const { data } = await getCards(...[, ,], searchValue || '');
-    if (data?.data) {
-      setCardList(data.data);
-      setMeta(data.meta);
-      setIsLoading(false);
-      localStorage.setItem('prevSearch', searchValue || '');
-    }
-  }, [searchValue]);
 
   useEffect(() => {
     if (throwErrorMessage) {
@@ -60,7 +35,7 @@ export const MainPage: FC = () => {
           Throw an error!
         </button>
         <Search />
-        <CardList isLoading={isLoading} meta={meta} setMeta={setMeta} />
+        <CardList meta={meta} setMeta={setMeta} />
       </section>
       <Outlet />
     </div>

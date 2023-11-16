@@ -10,29 +10,28 @@ import { Pagination } from '../Pagination';
 import styles from './CardList.module.scss';
 
 interface ICardListProps {
-  isLoading: boolean;
   meta: ICardMeta | null;
   setMeta: React.Dispatch<React.SetStateAction<ICardMeta | null>>;
 }
 
 export const CardList: FC<ICardListProps> = () => {
   const [offset, setOffset] = useState(1);
+  const { currentPage } = useAppSelector((state) => state.pageReducer);
   const { newSearchValue } = useAppSelector((state) => state.searchReducer);
-  console.log(newSearchValue);
   const { data, error, isLoading, isFetching } = cardsAPI.useFetchAllCardsQuery({
     num: 12,
-    offset,
-    search: newSearchValue,
+    offset: Math.ceil(currentPage * 12),
+    fname: newSearchValue,
   });
   const cardList = data?.data;
   const meta = data?.meta;
 
+  console.log(currentPage);
+
   return (
     <div className={styles.wrapper}>
       {error && <h5 className={styles.errorMessage}>No cards matching your query.</h5>}
-      {cardList && (
-        <Pagination isFetching={isFetching} meta={meta} offset={offset} setOffset={setOffset} />
-      )}
+      {cardList && <Pagination isFetching={isFetching} meta={meta} />}
       <div className={styles.cardListWrapper}>
         {isLoading && (
           <SkeletonTheme baseColor="#1b1b1b" highlightColor="#303030">

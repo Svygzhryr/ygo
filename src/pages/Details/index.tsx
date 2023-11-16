@@ -3,7 +3,7 @@ import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import fallback from '../../assets/fallback.jpg';
-import { getCard } from '../../services/RequestService';
+// import { getCard } from '../../services/RequestService';
 import { cardState } from '../../utils/cardState';
 import styles from './Details.module.scss';
 
@@ -14,19 +14,19 @@ export const Details: FC = () => {
   const [card, setCard] = useState(cardState);
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    setIsLoading(true);
-    const id = location.search.match(/(\d{1,}$)/)?.[0];
-    if (id) {
-      getCard(id).then((response) => {
-        setCard(response.data.data[0]);
-        setIsLoading(false);
-      });
-    } else {
-      setCard(card);
-      setIsLoading(false);
-    }
-  }, [location.search]);
+  // useEffect(() => {
+  //   setIsLoading(true);
+  //   const id = location.search.match(/(\d{1,}$)/)?.[0];
+  //   if (id) {
+  //     getCard(id).then((response) => {
+  //       setCard(response.data.data[0]);
+  //       setIsLoading(false);
+  //     });
+  //   } else {
+  //     setCard(card);
+  //     setIsLoading(false);
+  //   }
+  // }, [location.search]);
 
   const addDefaultSrc: ReactEventHandler<HTMLImageElement> = (e) => {
     const target = e.target as HTMLImageElement;

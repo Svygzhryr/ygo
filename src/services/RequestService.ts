@@ -6,63 +6,69 @@ import { ICard, ICardAPI } from '../types/types';
 interface IQueryParams {
   num?: number;
   offset?: number;
-  search?: string;
+  fname?: string;
 }
 
-const baseUrl = 'https://db.ygoprodeck.com/api/v7/cardinfo.php';
+const baseUrl = 'https://db.ygoprodeck.com/api/v7/cardinfo.php/';
 
 export const cardsAPI = createApi({
   reducerPath: 'cardsAPI',
   baseQuery: fetchBaseQuery({ baseUrl }),
   endpoints: (build) => ({
     fetchAllCards: build.query<ICardAPI, IQueryParams>({
-      query: ({ num, offset, search } = { num: 12, offset: 0, search: '' }) => ({
-        url: '/',
-        params: { num, offset, search },
+      query: ({ num = 12, offset = 0, fname = '' }) => ({
+        url: `/`,
+        params: { num, offset, fname },
       }),
     }),
+    // fetchSearchedCards: build.query<ICardAPI, IQueryParams>({
+    //   query: ({ num = 12, offset = 0, fname = '' }) => ({
+    //     url: '/',
+    //     params: { num, offset, fname },
+    //   }),
+    // }),
   }),
 });
 
-export const getCards = async (limit = 12, offset = 0, search = '') => {
-  const data = {
-    data: [],
-    meta: null,
-  } as ICardAPI;
+// export const getCards = async (limit = 12, offset = 0, search = '') => {
+//   const data = {
+//     data: [],
+//     meta: null,
+//   } as ICardAPI;
 
-  try {
-    const response = await axios.get<ICardAPI>(`${baseUrl}`, {
-      params: {
-        num: limit,
-        offset,
-        fname: search,
-      },
-    });
+//   try {
+//     const response = await axios.get<ICardAPI>(`${baseUrl}`, {
+//       params: {
+//         num: limit,
+//         offset,
+//         fname: search,
+//       },
+//     });
 
-    data.data = response.data.data;
-    data.meta = response.data.meta;
-  } catch (err) {
-    console.error(err);
-  }
-  return { data };
-};
+//     data.data = response.data.data;
+//     data.meta = response.data.meta;
+//   } catch (err) {
+//     console.error(err);
+//   }
+//   return { data };
+// };
 
-export const getCard = async (id: string) => {
-  const data = {
-    data: [],
-    meta: null,
-  } as ICardAPI;
+// export const getCard = async (id: string) => {
+//   const data = {
+//     data: [],
+//     meta: null,
+//   } as ICardAPI;
 
-  try {
-    const response = await axios.get<ICardAPI>(`${baseUrl}`, {
-      params: {
-        id,
-      },
-    });
+//   try {
+//     const response = await axios.get<ICardAPI>(`${baseUrl}`, {
+//       params: {
+//         id,
+//       },
+//     });
 
-    data.data = response.data.data;
-  } catch (err) {
-    console.error(err);
-  }
-  return { data };
-};
+//     data.data = response.data.data;
+//   } catch (err) {
+//     console.error(err);
+//   }
+//   return { data };
+// };

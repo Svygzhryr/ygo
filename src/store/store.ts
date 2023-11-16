@@ -1,9 +1,14 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
 import { cardsAPI } from '../services/RequestService';
+import pageReducer from './reducers/PaginationSlice';
 import searchReducer from './reducers/SearchSlice';
 
-const rootReducer = combineReducers({ searchReducer, [cardsAPI.reducerPath]: cardsAPI.reducer });
+const rootReducer = combineReducers({
+  searchReducer,
+  pageReducer,
+  [cardsAPI.reducerPath]: cardsAPI.reducer,
+});
 
 export const setupStore = () => {
   return configureStore({
