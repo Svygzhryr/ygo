@@ -37,7 +37,12 @@ export const CardList: FC<ICardListProps> = () => {
 
   return (
     <div className={styles.wrapper}>
-      {cardList && <Pagination isFetching={isFetching} meta={meta} />}
+      {cardList && (
+        <>
+          <Pagination isFetching={isFetching} meta={meta} /> <ItemsPerPage />
+        </>
+      )}
+
       <div className={styles.cardListWrapper}>
         {isLoading && (
           <SkeletonTheme baseColor="#1b1b1b" highlightColor="#303030">
@@ -53,7 +58,11 @@ export const CardList: FC<ICardListProps> = () => {
             return <CardItem key={card.id} card={card} />;
           })}
       </div>
-      <ItemsPerPage />
+      {cardList && itemsPerPage !== 3 && (
+        <>
+          <Pagination isFetching={isFetching} meta={meta} />
+        </>
+      )}
     </div>
   );
 };

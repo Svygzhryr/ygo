@@ -1,4 +1,4 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { PreloadedState, combineReducers, configureStore } from '@reduxjs/toolkit';
 
 import { cardsAPI } from '../services/RequestService';
 import idReducer from './reducers/IdSlice';
@@ -14,10 +14,11 @@ const rootReducer = combineReducers({
   [cardsAPI.reducerPath]: cardsAPI.reducer,
 });
 
-export const setupStore = () => {
+export const setupStore = (preloadedState?: PreloadedState<RootState>) => {
   return configureStore({
     reducer: rootReducer,
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(cardsAPI.middleware),
+    preloadedState,
   });
 };
 
