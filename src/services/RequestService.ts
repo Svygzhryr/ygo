@@ -8,7 +8,7 @@ interface IQueryParams {
   fname?: string;
 }
 
-const baseUrl = 'https://db.ygoprodeck.com/api/v7/cardinfo.php/';
+export const baseUrl = 'https://db.ygoprodeck.com/api/v7/cardinfo.php/';
 
 export const cardsAPI = createApi({
   reducerPath: 'cardsAPI',
