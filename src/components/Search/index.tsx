@@ -1,33 +1,26 @@
 import { ChangeEvent, FC, KeyboardEventHandler, useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { useAppDispatch } from '../../hooks/redux';
 import { MainSearch } from '../../pages/MainPage';
-import { cardsAPI } from '../../services/RequestService';
 import { currentPageSlice } from '../../store/reducers/PaginationSlice';
 import { searchSlice } from '../../store/reducers/SearchSlice';
 import styles from './Search.module.scss';
 
-// interface ISearchProps {
-//   value: string;
-//   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
-//   onClick: () => Promise<void>;
-//   onKeyDown: KeyboardEventHandler<HTMLInputElement>;
-// }
-
 export const Search: FC = () => {
   const [searchTemp, setSearchTemp] = useState('');
   const [searchParams, setSearchParams] = useSearchParams();
-  const { newSetSearchValue } = searchSlice.actions;
+  const { setSearchValue } = searchSlice.actions;
   const { setCurrentPage } = currentPageSlice.actions;
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     const storageSearchValue = localStorage.getItem('prevSearch') || '';
     if (storageSearchValue) {
-      dispatch(newSetSearchValue(storageSearchValue));
+      dispatch(setSearchValue(storageSearchValue));
       setSearchTemp(storageSearchValue);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleOnClick = async () => {
@@ -40,9 +33,9 @@ export const Search: FC = () => {
     }
 
     dispatch(setCurrentPage(0));
-    dispatch(newSetSearchValue(searchTemp));
+    dispatch(setSearchValue(searchTemp));
     setSearchParams(params);
-    newSetSearchValue(searchTemp);
+    setSearchValue(searchTemp);
     localStorage.setItem('prevSearch', searchTemp || '');
   };
 

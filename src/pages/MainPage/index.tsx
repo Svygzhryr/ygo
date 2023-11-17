@@ -14,7 +14,6 @@ export type MainSearch = {
 };
 
 export const MainPage: FC = () => {
-  const { newSearchValue } = useAppSelector((state) => state.searchReducer);
   const [meta, setMeta] = useState<ICardMeta | null>(null);
   const [throwErrorMessage, setThrowErrorMessage] = useState('');
 

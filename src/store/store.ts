@@ -1,12 +1,16 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
 import { cardsAPI } from '../services/RequestService';
+import idReducer from './reducers/IdSlice';
+import itemsPerPageReducer from './reducers/ItemsPerPageSlice';
 import pageReducer from './reducers/PaginationSlice';
 import searchReducer from './reducers/SearchSlice';
 
 const rootReducer = combineReducers({
   searchReducer,
   pageReducer,
+  idReducer,
+  itemsPerPageReducer,
   [cardsAPI.reducerPath]: cardsAPI.reducer,
 });
 

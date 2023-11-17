@@ -1,9 +1,8 @@
-import { FC, useContext, useEffect, useState } from 'react';
+import { FC, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import next from '../../assets/next.svg';
 import prev from '../../assets/prev.svg';
-import { CardContext } from '../../contexts/cardContext';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { MainSearch } from '../../pages/MainPage';
 import { currentPageSlice } from '../../store/reducers/PaginationSlice';
@@ -16,10 +15,9 @@ interface IPaginationProps {
 }
 
 export const Pagination: FC<IPaginationProps> = ({ meta, isFetching }) => {
-  const { newSearchValue } = useAppSelector((state) => state.searchReducer);
   const { currentPage } = useAppSelector((state) => state.pageReducer);
   const { nextPage, prevPage } = currentPageSlice.actions;
-  const { searchValue } = useContext(CardContext);
+  const { searchValue } = useAppSelector((state) => state.searchReducer);
   const dispatch = useAppDispatch();
 
   const [searchParams, setSearchParams] = useSearchParams();
@@ -40,6 +38,7 @@ export const Pagination: FC<IPaginationProps> = ({ meta, isFetching }) => {
     }
 
     setSearchParams(params);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage]);
 
   if (!meta) {
