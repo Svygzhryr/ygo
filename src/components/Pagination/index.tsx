@@ -40,7 +40,7 @@ export const Pagination: FC<IPaginationProps> = ({ meta, isFetching }) => {
     }
 
     setSearchParams(params);
-  }, []);
+  }, [currentPage]);
 
   if (!meta) {
     return <h1>Can't get card data...</h1>;
