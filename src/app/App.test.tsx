@@ -2,11 +2,12 @@ import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 
+import { renderWithProviders } from '../utils/test-utils';
 import { App } from './App';
 
 describe('App', () => {
   test('App title dispays correctly', () => {
-    render(
+    renderWithProviders(
       <BrowserRouter>
         <App />
       </BrowserRouter>

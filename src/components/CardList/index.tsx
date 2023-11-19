@@ -1,42 +1,60 @@
-import { FC, useContext } from 'react';
+import { FC } from 'react';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 
-import { CardContext } from '../../contexts/cardContext';
-import { ICardMeta } from '../../types/types';
+import { useAppSelector } from '../../hooks/redux';
+import { cardsAPI } from '../../services/RequestService';
 import { CardItem } from '../CardItem';
+import { ItemsPerPage } from '../ItemsPerPage';
 import { Pagination } from '../Pagination';
 import styles from './CardList.module.scss';
 
-interface ICardListProps {
-  isLoading: boolean;
-  meta: ICardMeta | null;
-  setMeta: React.Dispatch<React.SetStateAction<ICardMeta | null>>;
-}
+export const CardList: FC = () => {
+  const { currentPage } = useAppSelector((state) => state.pageReducer);
+  const { searchValue } = useAppSelector((state) => state.searchReducer);
+  const { itemsPerPage } = useAppSelector((state) => state.itemsPerPageReducer);
 
-export const CardList: FC<ICardListProps> = ({ isLoading, meta, setMeta }) => {
-  const { cardList } = useContext(CardContext);
+  const { data, error, isLoading, isFetching } = cardsAPI.useFetchAllCardsQuery({
+    num: itemsPerPage,
+    offset: Math.ceil(currentPage * itemsPerPage),
+    fname: searchValue,
+  });
+
+  const cardList = data?.data;
+  const meta = data?.meta;
+
+  if (error) {
+    return <h5 className={styles.errorMessage}>No cards matching your query.</h5>;
+  }
+
   return (
     <div className={styles.wrapper}>
-      {!cardList.length && !isLoading && (
-        <h5 className={styles.errorMessage}>No cards matching your query.</h5>
+      {cardList && (
+        <>
+          <Pagination isFetching={isFetching} meta={meta} /> <ItemsPerPage />
+        </>
       )}
-      {!isLoading && !!cardList.length && <Pagination meta={meta} setMeta={setMeta} />}
+
       <div className={styles.cardListWrapper}>
         {isLoading && (
           <SkeletonTheme baseColor="#1b1b1b" highlightColor="#303030">
-            {Array(12)
+            {Array(itemsPerPage)
               .fill(true)
               .map((_, i) => (
                 <Skeleton key={i} className={styles.skeleton} />
               ))}
           </SkeletonTheme>
         )}
-        {!isLoading &&
-          cardList.map((card) => {
+        {cardList &&
+          cardList?.map((card) => {
             return <CardItem key={card.id} card={card} />;
           })}
       </div>
+      {cardList && itemsPerPage !== 3 && (
+        <>
+          <Pagination isFetching={isFetching} meta={meta} />
+        </>
+      )}
     </div>
   );
 };

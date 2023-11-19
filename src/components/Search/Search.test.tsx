@@ -1,5 +1,20 @@
 import '@testing-library/jest-dom';
+import { screen } from '@testing-library/react';
+import { BrowserRouter } from 'react-router-dom';
 
-test('sanity check', async () => {
-  expect(1).toBe(1);
+import { Search } from '.';
+import { cards } from '../../mocks/mockedData';
+import { renderWithProviders } from '../../utils/test-utils';
+
+describe('Search', () => {
+  test('Input displays correctly', async () => {
+    renderWithProviders(
+      <BrowserRouter>
+        <Search />
+      </BrowserRouter>
+    );
+
+    const placeholderText = await screen.findByRole('textbox');
+    expect(placeholderText).toBeInTheDocument();
+  });
 });

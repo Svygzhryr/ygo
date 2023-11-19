@@ -1,59 +1,55 @@
-import '@testing-library/jest-dom';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { act, fireEvent, screen, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 
 import { MainPage } from '.';
-import { CardContext } from '../../contexts/cardContext';
-import { cards } from '../../mocks/mockedData';
+import { renderWithProviders } from '../../utils/test-utils';
 
-describe('Main', () => {
-  test('Search bar working correctly', async () => {
-    const { rerender } = render(
-      <BrowserRouter>
-        <CardContext.Provider value={cards}>
+describe('Main page tests', () => {
+  test('Main page receives list of cards via RTK query requests', async () => {
+    await act(async () =>
+      renderWithProviders(
+        <BrowserRouter>
           <MainPage />
-        </CardContext.Provider>
-      </BrowserRouter>
-    );
-    const input = screen.getByPlaceholderText('Type in something...');
-    fireEvent.change(input, { target: { value: 'lacooda' } });
-    expect(input).toHaveValue('lacooda');
-
-    const searchButton = await screen.findByText('Search');
-    expect(searchButton).toBeInTheDocument();
-    fireEvent(searchButton, new MouseEvent('click', { bubbles: true }));
-
-    const foundCardDefence = await screen.findByText('3-Hump Lacooda');
-
-    expect(foundCardDefence).toBeVisible();
-
-    rerender(
-      <BrowserRouter>
-        <CardContext.Provider value={cards}>
-          <MainPage />
-        </CardContext.Provider>
-      </BrowserRouter>
+        </BrowserRouter>
+      )
     );
 
-    expect(input).toHaveValue('lacooda');
+    await waitFor(async () => {
+      const card = await screen.findByText('30,000-Year White Turtle');
+      expect(card).toBeInTheDocument();
+
+      const card2 = await screen.findByText('1st Movement Solo');
+      expect(card2).toBeInTheDocument();
+
+      const card3 = await screen.findByText('4-Starred Ladybug of Doom');
+      expect(card3).toBeInTheDocument();
+    });
   });
 
-  test('Error fallback component', async () => {
-    render(
-      <BrowserRouter>
-        <CardContext.Provider value={cards}>
+  test('A message displays correctly if no cards has been found', async () => {
+    await act(async () =>
+      renderWithProviders(
+        <BrowserRouter>
           <MainPage />
-        </CardContext.Provider>
-      </BrowserRouter>
+        </BrowserRouter>
+      )
     );
 
-    console.error = jest.fn();
+    const input = await screen.findByRole('textbox');
+    expect(input).toBeInTheDocument();
 
-    const errorButton = await screen.findByText('Throw an error!');
-    try {
-      fireEvent(errorButton, new MouseEvent('click', { bubbles: true }));
-    } catch (e) {
-      expect((e as Error).message).toBe('Whoops! An error has occured.');
-    }
+    fireEvent.change(input, {
+      target: {
+        value: 'xcvxcvxvxv',
+      },
+    });
+
+    const searchButton = await screen.findByText('Search');
+    fireEvent.click(searchButton);
+
+    await waitFor(async () => {
+      const emptyMessage = await screen.findByText('No cards matching your query.');
+      expect(emptyMessage).toBeInTheDocument();
+    });
   });
 });

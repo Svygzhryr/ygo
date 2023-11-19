@@ -1,19 +1,17 @@
 import '@testing-library/jest-dom';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 
 import { CardItem } from '.';
-import { CardContext } from '../../contexts/cardContext';
-import { card, cards } from '../../mocks/mockedData';
+import { card } from '../../mocks/mockedData';
 import { ICard } from '../../types/types';
+import { renderWithProviders } from '../../utils/test-utils';
 
 describe('Card Item', () => {
   test('Monster card and its data displays correctly', () => {
-    render(
+    renderWithProviders(
       <BrowserRouter>
-        <CardContext.Provider value={cards}>
-          <CardItem card={card as ICard} />
-        </CardContext.Provider>
+        <CardItem card={card as ICard} />
       </BrowserRouter>
     );
 
