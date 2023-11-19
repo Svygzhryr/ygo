@@ -1,12 +1,10 @@
 import '@testing-library/jest-dom';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 
 import { Pagination } from '.';
-import { CardContext } from '../../contexts/cardContext';
-import { cards } from '../../mocks/mockedData';
+import { renderWithProviders } from '../../utils/test-utils';
 
-const setMeta = jest.fn();
 const meta = {
   current_rows: 12,
   total_rows: 12850,
@@ -17,13 +15,13 @@ const meta = {
   next_page_offset: 12,
 };
 
+const isFetching = false;
+
 describe('Pagination', () => {
   test('Page number displays correctly', async () => {
-    render(
+    renderWithProviders(
       <BrowserRouter>
-        <CardContext.Provider value={cards}>
-          <Pagination meta={meta} setMeta={setMeta} />
-        </CardContext.Provider>
+        <Pagination meta={meta} isFetching={isFetching} />
       </BrowserRouter>
     );
 
@@ -32,11 +30,9 @@ describe('Pagination', () => {
   });
 
   test('Button click', async () => {
-    render(
+    renderWithProviders(
       <BrowserRouter>
-        <CardContext.Provider value={cards}>
-          <Pagination meta={meta} setMeta={setMeta} />
-        </CardContext.Provider>
+        <Pagination meta={meta} isFetching={isFetching} />
       </BrowserRouter>
     );
 

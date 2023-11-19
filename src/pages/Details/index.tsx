@@ -42,30 +42,32 @@ export const Details: FC = () => {
     return <h5>Can't retrieve card data..</h5>;
   }
 
+  if (isLoading) {
+    return (
+      <SkeletonTheme baseColor="#2b2b2b" highlightColor="#707070">
+        <Skeleton className={styles.skeletonCard} />
+        {Array(5)
+          .fill(true)
+          .map((_, i) => (
+            <Skeleton key={i} className={styles.skeletonText} />
+          ))}
+      </SkeletonTheme>
+    );
+  }
+
   return (
     <>
       <div onClick={handleHistoryBack} className={styles.overlay} />
       <div className={`${styles.fixed} ${defineType(card.type)}`}>
-        {isLoading ? (
-          <SkeletonTheme baseColor="#2b2b2b" highlightColor="#707070">
-            <Skeleton className={styles.skeletonCard} />
-            {Array(5)
-              .fill(true)
-              .map((_, i) => (
-                <Skeleton key={i} className={styles.skeletonText} />
-              ))}
-          </SkeletonTheme>
-        ) : (
-          <div className={styles.info}>
-            <img
-              onError={addDefaultSrc}
-              className={styles.image}
-              src={card.card_images[0].image_url}
-              alt="A card"
-            />
-            <p className={styles.description}>{card.desc}</p>
-          </div>
-        )}
+        <div className={styles.info}>
+          <img
+            onError={addDefaultSrc}
+            className={styles.image}
+            src={card.card_images[0].image_url}
+            alt="A card"
+          />
+          <p className={styles.description}>{card.desc}</p>
+        </div>
       </div>
     </>
   );

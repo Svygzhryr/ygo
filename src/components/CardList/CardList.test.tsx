@@ -1,38 +1,40 @@
 import '@testing-library/jest-dom';
 // eslint-disable-next-line react/no-deprecated
-import { render, screen } from '@testing-library/react';
+import { fireEvent, screen, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 
 import { CardList } from '.';
-import { CardContext } from '../../contexts/cardContext';
-import { cards, emptyCards } from '../../mocks/mockedData';
-
-const setMeta = jest.fn();
+import { renderWithProviders } from '../../utils/test-utils';
 
 describe('CardList tests', () => {
   test('Card list displays correctly', async () => {
-    render(
+    renderWithProviders(
       <BrowserRouter>
-        <CardContext.Provider value={cards}>
-          <CardList isLoading={false} meta={null} setMeta={setMeta} />
-        </CardContext.Provider>
+        <CardList />
       </BrowserRouter>
     );
 
-    const gotCards = screen.getAllByRole('img');
-    expect(gotCards).toHaveLength(11);
+    await waitFor(async () => {
+      const gotCard = screen.getByText('"A" Cell Breeding Device');
+      expect(gotCard).toBeInTheDocument();
+
+      const anotherCard = screen.getByText('3-Hump Lacooda');
+      expect(anotherCard).toBeInTheDocument();
+    });
   });
 
-  test('Defined message appears if no cards are displayed', () => {
-    render(
+  test('Check if itemsPerPage buttons are disabling upon clicking', async () => {
+    renderWithProviders(
       <BrowserRouter>
-        <CardContext.Provider value={emptyCards}>
-          <CardList isLoading={false} meta={null} setMeta={setMeta} />
-        </CardContext.Provider>
+        <CardList />
       </BrowserRouter>
     );
 
-    const cardName = screen.getByText('No cards matching your query.');
-    expect(cardName).toBeInTheDocument();
+    await waitFor(async () => {
+      const threeItemsButton = await screen.findByText('3');
+      fireEvent.click(threeItemsButton);
+
+      expect(threeItemsButton).toBeDisabled();
+    });
   });
 });

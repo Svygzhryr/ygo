@@ -27,3 +27,5 @@ export const cardsAPI = createApi({
     }),
   }),
 });
+
+export const { useFetchAllCardsQuery, useFetchCardByIdQuery } = cardsAPI;

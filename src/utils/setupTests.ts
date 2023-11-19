@@ -1,5 +1,4 @@
 import '@testing-library/jest-dom';
-import 'whatwg-fetch';
 
 import { server } from '../mocks/api/server';
 import { cardsAPI } from '../services/RequestService';

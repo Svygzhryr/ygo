@@ -1,10 +1,10 @@
-import { http } from 'msw';
+import { HttpResponse, http } from 'msw';
 
 import { baseUrl } from '../../services/RequestService';
 import { cardList } from '../mockedData';
 
 export const handlers = [
-  http.get(baseUrl, () => {
-    return new Response(JSON.stringify(cardList));
+  http.get('*', () => {
+    return HttpResponse.json(cardList);
   }),
 ];

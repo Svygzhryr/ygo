@@ -3,20 +3,18 @@ import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 
 import { Details } from '.';
-import { CardContext } from '../../contexts/cardContext';
 import { card, cards } from '../../mocks/mockedData';
+import { renderWithProviders } from '../../utils/test-utils';
 
 describe('Details', () => {
-  test('Card details displays correctly', async () => {
-    render(
+  test('Error message displays correctly', async () => {
+    renderWithProviders(
       <BrowserRouter>
-        <CardContext.Provider value={cards}>
-          <Details />
-        </CardContext.Provider>
+        <Details />
       </BrowserRouter>
     );
 
-    const getCardDesc = await screen.findByRole('img');
+    const getCardDesc = await screen.findByText("Can't retrieve card data..");
     expect(getCardDesc).toBeInTheDocument();
   });
 });
