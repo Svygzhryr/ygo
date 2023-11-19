@@ -27,8 +27,6 @@ export const CardList: FC = () => {
     return <h5 className={styles.errorMessage}>No cards matching your query.</h5>;
   }
 
-  console.log(itemsPerPage);
-
   return (
     <div className={styles.wrapper}>
       {cardList && (
