@@ -1,0 +1,22 @@
+@import 'src/styles/vars';
+
+.title {
+  margin-top: 20px;
+}
+
+.input {
+  height: 50px;
+  padding: 5px 10px;
+  background-color: $black-3;
+  color: $white-1;
+  border-radius: 10px;
+  border: none;
+}
+
+.button {
+  height: 50px;
+  margin-left: 20px;
+  padding: 0 30px;
+  transition: all 0.2s ease-in-out;
+  font-weight: 500;
+}

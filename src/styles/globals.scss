@@ -1,0 +1,80 @@
+@import 'vars';
+
+html {
+  box-sizing: border-box;
+  height: 100%;
+  background: $black-1;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+body {
+  min-height: 100%;
+  margin: 0;
+  background-color: $black-1;
+  color: $white-1;
+  font-family: 'Manrope', sans-serif;
+  font-size: 24px;
+}
+
+ul {
+  list-style-type: none;
+}
+
+a {
+  display: inline-block;
+  text-decoration: none;
+}
+
+button {
+  padding: 5px 20px;
+  background-color: $yellow-1;
+  border: none;
+  border-radius: 12px;
+  color: $black-1;
+
+  transition: all 0.2s ease-in-out;
+  &:hover {
+    background-color: $yellow-2;
+    color: $black-1;
+  }
+
+  &:active {
+    background-color: $yellow-3;
+    transition: all 0s;
+  }
+}
+
+/* ===== Scrollbar CSS ===== */
+/* Firefox */
+* {
+  scrollbar-width: auto;
+  scrollbar-color: $yellow-1;
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: $black-2;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: $yellow-1;
+  border-radius: 10px;
+  border: 0px solid $black-1;
+}
+
+*::-webkit-scrollbar-corner {
+  display: none;
+  border: none;
+  outline: none;
+  margin: 0;
+  padding: 0;
+}

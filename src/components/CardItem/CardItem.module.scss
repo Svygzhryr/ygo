@@ -1,0 +1,263 @@
+@import '../../styles/vars';
+
+.cardItemWrapper {
+  position: relative;
+  width: $card-width;
+  min-width: 220px;
+  max-width: 290px;
+  height: $card-height;
+  padding: 5px;
+  display: flex;
+  justify-content: center;
+  border-radius: 15px;
+
+  transition: all 0.5s cubic-bezier(0.215, 0.61, 0.355, 1) !important;
+
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.05);
+    backface-visibility: hidden;
+  }
+}
+
+.cardItem {
+  width: 100%;
+  padding: 20px 10px;
+  background-color: #0b0b0b;
+  border-radius: 25px;
+
+  border: 14px double transparent;
+  border-left: none;
+  border-right: none;
+  border-bottom: none;
+
+  transition: all 0.2s;
+}
+
+.cardItemImg {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 20px;
+  border: 4px solid $black-3;
+}
+
+.cardItemName {
+  margin: 10px 20px;
+  font-size: 16px;
+}
+
+.typeMonster {
+  color: hsla(11, 58%, 65%, 1);
+  background: hsla(49, 72%, 65%, 1);
+
+  background: linear-gradient(270deg, hsla(49, 72%, 65%, 1) 0%, hsla(11, 58%, 65%, 1) 100%);
+
+  background: -moz-linear-gradient(270deg, hsla(49, 72%, 65%, 1) 0%, hsla(11, 58%, 65%, 1) 100%);
+
+  background: -webkit-linear-gradient(270deg, hsla(49, 72%, 65%, 1) 0%, hsla(11, 58%, 65%, 1) 100%);
+
+  .cardItemImg {
+    border: 4px solid $pink-1;
+  }
+
+  .cardItemType {
+    width: 70px;
+    height: 28px;
+    border-radius: 30% 30% 0 0;
+    vertical-align: bottom;
+    border-bottom: 5px solid $pink-1;
+    padding-top: 2px;
+    background-color: $black-3;
+  }
+
+  &:hover {
+    box-shadow: 0px 0px 15px 1px $pink-1;
+  }
+}
+
+.typeMonsterDecoration {
+  border-radius: 50px 50px 25px 25px;
+  border: 14px double hsla(49, 72%, 65%, 1);
+  border-left: none;
+  border-right: none;
+  border-bottom: none;
+}
+
+.typeSpell {
+  color: #24c5b0;
+  background: hsla(0, 0%, 24%, 1);
+
+  background: linear-gradient(270deg, hsla(0, 0%, 24%, 1) 50%, #089682);
+
+  background: -moz-linear-gradient(270deg, hsla(0, 0%, 24%, 1) 50%, #089682);
+
+  background: -webkit-linear-gradient(270deg, hsla(0, 0%, 24%, 1) 50%, #089682);
+
+  .cardItemImg {
+    border: 4px solid $green-1;
+  }
+
+  .cardItemType {
+    width: 70px;
+    height: 50px;
+    border-radius: 40%;
+    vertical-align: bottom;
+    padding-top: 24px;
+    border-bottom: 6px solid $green-1;
+  }
+
+  &:hover {
+    box-shadow: 0px 0px 30px -10px $green-1;
+  }
+}
+
+.typeTrap {
+  color: #df59a9;
+  background: hsla(0, 0%, 24%, 1);
+
+  background: linear-gradient(270deg, hsla(0, 0%, 24%, 1) 50%, #ab2978);
+
+  background: -moz-linear-gradient(270deg, hsla(0, 0%, 24%, 1) 50%, #ab2978);
+
+  background: -webkit-linear-gradient(270deg, hsla(0, 0%, 24%, 1) 50%, #ab2978);
+
+  .cardItemImg {
+    border: 4px solid $magenta-3;
+  }
+
+  .cardItemType {
+    width: 70px;
+    height: 50px;
+    border-radius: 0px;
+    vertical-align: bottom;
+    padding-top: 16px;
+    border-bottom: 12px solid $magenta-3;
+  }
+
+  &:hover {
+    box-shadow: 0px 0px 30px -10px $magenta-3;
+  }
+}
+
+.typeOther {
+  color: $white-1;
+  background: hsla(0, 0%, 87%, 1);
+
+  background: linear-gradient(
+    270deg,
+    hsla(0, 0%, 87%, 1) 0%,
+    hsla(0, 0%, 24%, 1) 50%,
+    hsla(0, 0%, 87%, 1) 100%
+  );
+
+  background: -moz-linear-gradient(
+    270deg,
+    hsla(0, 0%, 87%, 1) 0%,
+    hsla(0, 0%, 24%, 1) 50%,
+    hsla(0, 0%, 87%, 1) 100%
+  );
+
+  background: -webkit-linear-gradient(
+    270deg,
+    hsla(0, 0%, 87%, 1) 0%,
+    hsla(0, 0%, 24%, 1) 50%,
+    hsla(0, 0%, 87%, 1) 100%
+  );
+
+  .cardItemImg {
+    border: 4px solid $white-1;
+  }
+
+  .cardItemType {
+    display: none;
+  }
+
+  &:hover {
+    box-shadow: 0px 0px 30px -10px $white-1;
+  }
+}
+
+.cardItemType {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  font-size: 14px;
+  font-weight: 900;
+  text-transform: capitalize;
+
+  transform: translate((-50%));
+}
+
+.cardItemType.attrDivine {
+  background-color: transparent;
+  box-shadow: 0px -8px 7px 2px #ffef62;
+  color: #ffef62;
+  text-transform: uppercase;
+}
+
+.cardItemType.attrDark {
+  background-color: #38094d;
+  color: #d58deb;
+  box-shadow: 0px -5px 10px 0px #d58deb;
+}
+
+.cardItemType.attrEarth {
+  background-color: #413220;
+  color: #c9aa7c;
+  box-shadow: 0px -5px 15px -3px #413220;
+}
+
+.cardItemType.attrFire {
+  background-color: #640202;
+  color: #ff7525;
+  box-shadow: 0px -5px 15px -3px #640202;
+}
+
+.cardItemType.attrLight {
+  background-color: #f3f3f3;
+  color: $black-1;
+  box-shadow: 0px -5px 10px 0px #f3f3f3;
+}
+
+.cardItemType.attrWater {
+  background-color: #1f2ca0;
+  color: #74cbee;
+  box-shadow: 0px -5px 15px -3px #1f2ca0;
+}
+
+.cardItemType.attrWind {
+  background-color: #096446;
+  color: #92f1bd;
+  box-shadow: 0px -5px 15px -3px #096446;
+}
+
+.stat {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  bottom: 0;
+  width: 50px;
+  height: 42px;
+  padding-bottom: 5px;
+  color: $black-1;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.statAtk {
+  left: 0px;
+  border-radius: 50% 0 50% 15px;
+  border-top: 12px double $black-1;
+  border-right: 6px double $black-1;
+  background-color: $pink-1;
+}
+
+.statDef {
+  right: 0px;
+  border-radius: 0 0 15px 50%;
+  background-color: $yellow-1;
+  border-top: 12px double $black-1;
+  border-left: 12px double $black-1;
+}

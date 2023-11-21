@@ -1,0 +1,33 @@
+@import 'src/styles/vars';
+
+.details {
+  display: flex;
+  width: 100%;
+}
+
+.wrapper {
+  margin: 0 50px;
+  text-align: center;
+  background-color: $black-1;
+  width: 100%;
+
+  transition: all 0.4s ease-in-out;
+}
+
+.wrapperMove {
+  margin-right: 400px;
+}
+
+.error {
+  padding: 5px 10px;
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  font-size: 14px;
+  background-color: $red-1;
+  color: $white-1;
+
+  &:hover {
+    background-color: $red-2;
+  }
+}

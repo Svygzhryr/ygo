@@ -1,0 +1,25 @@
+@import 'src/styles/vars';
+
+.wrapper {
+  max-width: 900px;
+  width: 100%;
+  margin: 30px auto;
+}
+
+.cardListWrapper {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-row-gap: 40px;
+  justify-items: center;
+  margin-bottom: 30px;
+}
+
+.errorMessage {
+  text-align: center;
+}
+
+.skeleton {
+  width: $card-width;
+  height: $card-height;
+  border-radius: 12px;
+}
