@@ -1,6 +1,6 @@
 import { FC, ReactEventHandler } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
 
+// import { useLocation, useNavigate } from 'react-router-dom';
 import fallback from '../../assets/fallback.jpg';
 import { useAppDispatch } from '../../hooks/redux';
 import { idSlice } from '../../store/reducers/IdSlice';
@@ -12,8 +12,8 @@ interface CardItemProps {
 }
 
 export const CardItem: FC<CardItemProps> = ({ card }) => {
-  const navigate = useNavigate();
-  const location = useLocation();
+  // const navigate = useNavigate();
+  // const location = useLocation();
   const dispatch = useAppDispatch();
   const { setId } = idSlice.actions;
 
@@ -59,7 +59,7 @@ export const CardItem: FC<CardItemProps> = ({ card }) => {
   const handleCardClick = () => {
     const id = card.id;
     dispatch(setId(id));
-    navigate(`/details${location.search}&id=${id}`);
+    // navigate(`/details${location.search}&id=${id}`);
   };
 
   return (

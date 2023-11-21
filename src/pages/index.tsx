@@ -9,11 +9,9 @@ const Home = () => {
   const store = setupStore();
 
   return (
-    <BrowserRouter>
-      <Provider store={store}>
-        <MainPage />
-      </Provider>
-    </BrowserRouter>
+    <Provider store={store}>
+      <MainPage />
+    </Provider>
   );
 };
 

@@ -1,6 +1,6 @@
 import { FC, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
 
+// import { useSearchParams } from 'react-router-dom';
 import next from '../../assets/next.svg';
 import prev from '../../assets/prev.svg';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
@@ -20,7 +20,7 @@ export const Pagination: FC<IPaginationProps> = ({ meta, isFetching }) => {
   const { searchValue } = useAppSelector((state) => state.searchReducer);
   const dispatch = useAppDispatch();
 
-  const [searchParams, setSearchParams] = useSearchParams();
+  // const [searchParams, setSearchParams] = useSearchParams();
 
   const handlePrevPage = () => {
     dispatch(prevPage());
@@ -31,13 +31,12 @@ export const Pagination: FC<IPaginationProps> = ({ meta, isFetching }) => {
   };
 
   useEffect(() => {
-    const params: MainSearch = Object.fromEntries(searchParams.entries());
-    params.page = String(currentPage + 1);
-    if (searchValue) {
-      params.search = searchValue;
-    }
-
-    setSearchParams(params);
+    // const params: MainSearch = Object.fromEntries(searchParams.entries());
+    // params.page = String(currentPage + 1);
+    // if (searchValue) {
+    //   params.search = searchValue;
+    // }
+    // setSearchParams(params);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage]);
 

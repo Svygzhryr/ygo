@@ -1,6 +1,6 @@
 import { ChangeEvent, FC, KeyboardEventHandler, useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
 
+// import { useSearchParams } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks/redux';
 import { MainSearch } from '../../pages/MainPage';
 import { currentPageSlice } from '../../store/reducers/PaginationSlice';
@@ -9,7 +9,7 @@ import styles from './Search.module.scss';
 
 export const Search: FC = () => {
   const [searchTemp, setSearchTemp] = useState('');
-  const [searchParams, setSearchParams] = useSearchParams();
+  // const [searchParams, setSearchParams] = useSearchParams();
   const { setSearchValue } = searchSlice.actions;
   const { setCurrentPage } = currentPageSlice.actions;
   const dispatch = useAppDispatch();
@@ -34,7 +34,7 @@ export const Search: FC = () => {
 
     dispatch(setCurrentPage(0));
     dispatch(setSearchValue(searchTemp));
-    setSearchParams(params);
+    // setSearchParams(params);
     setSearchValue(searchTemp);
     localStorage.setItem('prevSearch', searchTemp || '');
   };
