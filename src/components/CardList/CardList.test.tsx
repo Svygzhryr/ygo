@@ -2,9 +2,9 @@ import '@testing-library/jest-dom';
 // eslint-disable-next-line react/no-deprecated
 import { fireEvent, screen, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
+import { renderWithProviders } from 'src/utils/test-utils';
 
 import { CardList } from '.';
-import { renderWithProviders } from '../../utils/test-utils';
 
 describe('CardList tests', () => {
   test('Card list displays correctly', async () => {

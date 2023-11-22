@@ -1,10 +1,10 @@
 import { ChangeEvent, FC, KeyboardEventHandler, useEffect, useState } from 'react';
-
 // import { useSearchParams } from 'react-router-dom';
-import { useAppDispatch } from '../../hooks/redux';
-import { MainSearch } from '../../pages/MainPage';
-import { currentPageSlice } from '../../store/reducers/PaginationSlice';
-import { searchSlice } from '../../store/reducers/SearchSlice';
+import { useAppDispatch } from 'src/hooks/redux';
+import { currentPageSlice } from 'src/store/reducers/PaginationSlice';
+import { searchSlice } from 'src/store/reducers/SearchSlice';
+import { MainSearch } from 'srcpages/MainPage';
+
 import styles from './Search.module.scss';
 
 export const Search: FC = () => {

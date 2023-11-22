@@ -1,6 +1,6 @@
 import { HttpResponse, http } from 'msw';
+import { baseUrl } from 'srcpages/api/RequestService';
 
-import { baseUrl } from '../../pages/api/RequestService';
 import { cardList } from '../mockedData';
 
 export const handlers = [

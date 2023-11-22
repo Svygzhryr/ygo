@@ -5,14 +5,12 @@ import idReducer from './reducers/IdSlice';
 import itemsPerPageReducer from './reducers/ItemsPerPageSlice';
 import pageReducer from './reducers/PaginationSlice';
 import searchReducer from './reducers/SearchSlice';
-import storedIsLoadingReducer from './reducers/storedIsLoadingSlice';
 
 const rootReducer = combineReducers({
   searchReducer,
   pageReducer,
   idReducer,
   itemsPerPageReducer,
-  storedIsLoadingReducer,
   [cardsAPI.reducerPath]: cardsAPI.reducer,
 });
 

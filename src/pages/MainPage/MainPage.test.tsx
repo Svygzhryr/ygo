@@ -1,8 +1,8 @@
 import { act, fireEvent, screen, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
+import { renderWithProviders } from 'src/utils/test-utils';
 
 import { MainPage } from '.';
-import { renderWithProviders } from '../../utils/test-utils';
 
 describe('Main page tests', () => {
   test('Main page receives list of cards via RTK query requests', async () => {

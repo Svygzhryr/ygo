@@ -1,10 +1,10 @@
 import '@testing-library/jest-dom';
 import { screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
+import { renderWithProviders } from 'src/utils/test-utils';
+import { cards } from 'srcmocks/mockedData';
 
 import { Search } from '.';
-import { cards } from '../../mocks/mockedData';
-import { renderWithProviders } from '../../utils/test-utils';
 
 describe('Search', () => {
   test('Input displays correctly', async () => {

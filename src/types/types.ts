@@ -1,3 +1,5 @@
+import { StaticImageData } from 'next/image';
+
 export interface ICard {
   attribute?: string;
   id: number;
@@ -52,4 +54,10 @@ export interface ICardMeta {
 export interface ICardAPI {
   data: ICard[];
   meta: ICardMeta | null;
+}
+
+export interface ILogo {
+  //   image: HTMLImageElement;
+  src: string | StaticImageData;
+  className?: string;
 }

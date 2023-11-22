@@ -1,12 +1,13 @@
+import Image from 'next/image';
 import { FC, useEffect } from 'react';
-
 // import { useSearchParams } from 'react-router-dom';
-import next from '../../assets/next.svg';
-import prev from '../../assets/prev.svg';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { MainSearch } from '../../pages/MainPage';
-import { currentPageSlice } from '../../store/reducers/PaginationSlice';
-import { ICardMeta } from '../../types/types';
+import next from 'src/assets/next.svg';
+import prev from 'src/assets/prev.svg';
+import { useAppDispatch, useAppSelector } from 'src/hooks/redux';
+import { currentPageSlice } from 'src/store/reducers/PaginationSlice';
+import { ICardMeta } from 'src/types/types';
+import { MainSearch } from 'srcpages/MainPage';
+
 import styles from './Pagination.module.scss';
 
 interface IPaginationProps {
@@ -47,11 +48,11 @@ export const Pagination: FC<IPaginationProps> = ({ meta, isFetching }) => {
   return (
     <div className={styles.wrapper}>
       <button onClick={handlePrevPage} disabled={currentPage <= 0 || isFetching}>
-        {isFetching ? <div className={styles.loader}></div> : <img src={prev} />}
+        {isFetching ? <div className={styles.loader}></div> : <Image alt="<" src={prev} />}
       </button>
       <button disabled={true}>{currentPage + 1}</button>
       <button onClick={handleNextPage} disabled={meta?.pages_remaining === 0 || isFetching}>
-        {isFetching ? <div className={styles.loader}></div> : <img src={next} />}
+        {isFetching ? <div className={styles.loader}></div> : <Image alt=">" src={next} />}
       </button>
     </div>
   );

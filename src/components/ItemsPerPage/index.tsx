@@ -1,5 +1,6 @@
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { itemsPerPageSlice } from '../../store/reducers/ItemsPerPageSlice';
+import { useAppDispatch, useAppSelector } from 'src/hooks/redux';
+import { itemsPerPageSlice } from 'src/store/reducers/ItemsPerPageSlice';
+
 import styles from './ItemsPerPage.module.scss';
 
 export const ItemsPerPage = () => {

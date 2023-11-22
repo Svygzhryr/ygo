@@ -2,10 +2,10 @@ import '@testing-library/jest-dom';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
 import { BrowserRouter, MemoryRouter } from 'react-router-dom';
+import { App } from 'src/app/App';
+import { renderWithProviders } from 'src/utils/test-utils';
 
 import { NotFound } from '.';
-import { App } from '../../app/App';
-import { renderWithProviders } from '../../utils/test-utils';
 
 describe('Not Found', () => {
   test('Page displays correctly', async () => {

@@ -1,23 +1,25 @@
+import Image from 'next/image';
+import Link from 'next/link';
 import { FC, ReactEventHandler } from 'react';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
-import { useNavigate } from 'react-router-dom';
+import fallback from 'src/assets/fallback.jpg';
+import { useAppSelector } from 'src/hooks/redux';
+import { cardState } from 'src/utils/cardState';
 
-import fallback from '../../assets/fallback.jpg';
-import { useAppSelector } from '../../hooks/redux';
-import { cardState } from '../../utils/cardState';
 import { cardsAPI } from '../api/api';
 import styles from './Details.module.scss';
 
-export const Details: FC = () => {
-  const navigate = useNavigate();
-  const { id } = useAppSelector((state) => state.idReducer);
+const Details: FC = () => {
+  // const navigate = useNavigate();
+  // const { id } = useAppSelector((state) => state.idReducer);
+  const id = window.location.pathname.match(/\d{2,}/)[0] || '0';
   const { data, isLoading, error } = cardsAPI.useFetchCardByIdQuery(id);
   const card = data?.data[0] || cardState;
 
   const addDefaultSrc: ReactEventHandler<HTMLImageElement> = (e) => {
     const target = e.target as HTMLImageElement;
     if (target) {
-      target.src = fallback;
+      target.src = fallback.src;
     }
   };
 
@@ -34,9 +36,9 @@ export const Details: FC = () => {
     }
   };
 
-  const handleHistoryBack = () => {
-    navigate(-1);
-  };
+  // const handleHistoryBack = () => {
+  //   navigate(-1);
+  // };
 
   if (error) {
     return <h5>Can't retrieve card data..</h5>;
@@ -57,10 +59,13 @@ export const Details: FC = () => {
 
   return (
     <>
-      <div onClick={handleHistoryBack} className={styles.overlay} />
+      {/* <div onClick={handleHistoryBack} className={styles.overlay} /> */}
+      <Link href="/" className={styles.overlay} />
       <div className={`${styles.fixed} ${defineType(card.type)}`}>
         <div className={styles.info}>
-          <img
+          <Image
+            width={260}
+            height={330}
             onError={addDefaultSrc}
             className={styles.image}
             src={card.card_images[0].image_url}
@@ -72,3 +77,5 @@ export const Details: FC = () => {
     </>
   );
 };
+
+export default Details;

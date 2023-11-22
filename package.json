@@ -44,12 +44,13 @@
     }
   },
   "dependencies": {
-    "next": "14.0.3",
     "@reduxjs/toolkit": "^1.9.7",
     "@types/react-redux": "^7.1.30",
     "axios": "^1.5.1",
     "identity-obj-proxy": "^3.0.0",
     "jest-environment-jsdom": "^29.6.2",
+    "next": "14.0.3",
+    "next-redux-wrapper": "^8.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-loading-skeleton": "^3.3.1",
@@ -60,8 +61,6 @@
     "whatwg-fetch": "^3.6.19"
   },
   "devDependencies": {
-    "@types/node": "^20",
-    "eslint-config-next": "14.0.3",
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@babel/preset-typescript": "^7.22.5",
     "@testing-library/jest-dom": "^6.0.1",
@@ -69,12 +68,14 @@
     "@testing-library/user-event": "^14.4.3",
     "@trivago/prettier-plugin-sort-imports": "^4.2.1",
     "@types/jest": "^29.5.8",
+    "@types/node": "^20",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
     "@typescript-eslint/eslint-plugin": "^5.22.0",
     "@typescript-eslint/parser": "^5.22.0",
     "@vitejs/plugin-react": "^4.0.3",
     "eslint": "^8.14.0",
+    "eslint-config-next": "14.0.3",
     "eslint-config-prettier": "^8.5.0",
     "eslint-import-resolver-typescript": "^2.7.1",
     "eslint-plugin-import": "^2.26.0",

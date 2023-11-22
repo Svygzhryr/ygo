@@ -1,10 +1,12 @@
+import Image from 'next/image';
+import Link from 'next/link';
 import { FC, ReactEventHandler } from 'react';
-
 // import { useLocation, useNavigate } from 'react-router-dom';
-import fallback from '../../assets/fallback.jpg';
-import { useAppDispatch } from '../../hooks/redux';
-import { idSlice } from '../../store/reducers/IdSlice';
-import { ICard } from '../../types/types';
+import fallback from 'src/assets/fallback.jpg';
+import { useAppDispatch, useAppSelector } from 'src/hooks/redux';
+import { idSlice } from 'src/store/reducers/IdSlice';
+import { ICard, ILogo } from 'src/types/types';
+
 import styles from './CardItem.module.scss';
 
 interface CardItemProps {
@@ -52,18 +54,18 @@ export const CardItem: FC<CardItemProps> = ({ card }) => {
   const addDefaultSrc: ReactEventHandler<HTMLImageElement> = (e) => {
     const target = e.target as HTMLImageElement;
     if (target) {
-      target.src = fallback;
+      target.src = fallback.src;
     }
   };
 
   const handleCardClick = () => {
     const id = card.id;
     dispatch(setId(id));
-    // navigate(`/details${location.search}&id=${id}`);
   };
 
   return (
-    <div
+    <Link
+      href={`/details/${card.id}`}
       key={card.id}
       className={`${styles.cardItemWrapper} ${defineType(card.type)}`}
       onClick={handleCardClick}
@@ -73,11 +75,13 @@ export const CardItem: FC<CardItemProps> = ({ card }) => {
           card.type.includes('Monster') ? styles.typeMonsterDecoration : null
         }`}
       >
-        <img
+        <Image
+          width={150}
+          height={150}
           className={styles.cardItemImg}
           onError={addDefaultSrc}
           src={card.card_images[0].image_url_cropped}
-          loading="lazy"
+          loading="eager"
           alt=""
         />
         <h6 className={styles.cardItemName}>{card.name}</h6>
@@ -91,6 +95,6 @@ export const CardItem: FC<CardItemProps> = ({ card }) => {
           </div>
         )}
       </div>
-    </div>
+    </Link>
   );
 };

@@ -1,9 +1,9 @@
 import { FC } from 'react';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
+import { useAppSelector } from 'src/hooks/redux';
+import { cardsAPI } from 'src/pages/api/api';
 
-import { useAppSelector } from '../../hooks/redux';
-import { cardsAPI } from '../../pages/api/api';
 import { CardItem } from '../CardItem';
 import { ItemsPerPage } from '../ItemsPerPage';
 import { Pagination } from '../Pagination';

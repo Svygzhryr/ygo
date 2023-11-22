@@ -1,11 +1,11 @@
 import '@testing-library/jest-dom';
 import { screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
+import { ICard } from 'src/types/types';
+import { renderWithProviders } from 'src/utils/test-utils';
+import { card } from 'srcmocks/mockedData';
 
 import { CardItem } from '.';
-import { card } from '../../mocks/mockedData';
-import { ICard } from '../../types/types';
-import { renderWithProviders } from '../../utils/test-utils';
 
 describe('Card Item', () => {
   test('Monster card and its data displays correctly', () => {

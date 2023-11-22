@@ -1,5 +1,9 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/components/*": ["components/*"]
+    },
     "target": "ESNext",
     "lib": [
       "DOM",
@@ -27,10 +31,8 @@
       }
     ]
   },
-  "include": [
-    "src",
-    ".next/types/**/*.ts"
-  ],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules", ".next"],
   "references": [
     {
       "path": "./tsconfig.node.json"
@@ -39,7 +41,4 @@
   "types": [
     "node"
   ],
-  "exclude": [
-    "node_modules"
-  ]
 }

@@ -1,9 +1,9 @@
 import '@testing-library/jest-dom';
 import { screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
+import { renderWithProviders } from 'src/utils/test-utils';
 
 import { Pagination } from '.';
-import { renderWithProviders } from '../../utils/test-utils';
 
 const meta = {
   current_rows: 12,

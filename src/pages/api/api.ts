@@ -1,6 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-
-import { ICardAPI } from '../../types/types';
+import { ICardAPI } from 'src/types/types';
 
 interface IQueryParams {
   num?: number;

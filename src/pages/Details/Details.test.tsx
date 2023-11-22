@@ -1,10 +1,10 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
+import { renderWithProviders } from 'src/utils/test-utils';
+import { card, cards } from 'srcmocks/mockedData';
 
-import { Details } from '.';
-import { card, cards } from '../../mocks/mockedData';
-import { renderWithProviders } from '../../utils/test-utils';
+import { Details } from './[id]';
 
 describe('Details', () => {
   test('Error message displays correctly', async () => {
