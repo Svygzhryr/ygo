@@ -3,7 +3,8 @@ import Link from 'next/link';
 import { FC, ReactEventHandler } from 'react';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import fallback from 'src/assets/fallback.jpg';
-import { useAppSelector } from 'src/hooks/redux';
+import { useAppDispatch, useAppSelector } from 'src/hooks/redux';
+import { idSlice } from 'src/store/reducers/IdSlice';
 import { cardState } from 'src/utils/cardState';
 
 import { cardsAPI } from '../api/api';
@@ -11,10 +12,13 @@ import styles from './Details.module.scss';
 
 const Details: FC = () => {
   // const navigate = useNavigate();
-  // const { id } = useAppSelector((state) => state.idReducer);
-  const id = window.location.pathname.match(/\d{2,}/)[0] || '0';
+  const { id } = useAppSelector((state) => state.idReducer);
+  // const id = window.location.pathname.match(/\d{2,}/)[0] || '0';
   const { data, isLoading, error } = cardsAPI.useFetchCardByIdQuery(id);
   const card = data?.data[0] || cardState;
+
+  const dispatch = useAppDispatch();
+  const { setId } = idSlice.actions;
 
   const addDefaultSrc: ReactEventHandler<HTMLImageElement> = (e) => {
     const target = e.target as HTMLImageElement;
@@ -36,9 +40,10 @@ const Details: FC = () => {
     }
   };
 
-  // const handleHistoryBack = () => {
-  //   navigate(-1);
-  // };
+  const handleHistoryBack = () => {
+    // navigate(-1);
+    dispatch(setId(null));
+  };
 
   if (error) {
     return <h5>Can't retrieve card data..</h5>;
@@ -59,8 +64,8 @@ const Details: FC = () => {
 
   return (
     <>
-      {/* <div onClick={handleHistoryBack} className={styles.overlay} /> */}
-      <Link href="/" className={styles.overlay} />
+      <div onClick={handleHistoryBack} className={styles.overlay} />
+      {/* <Link href="/" className={styles.overlay} /> */}
       <div className={`${styles.fixed} ${defineType(card.type)}`}>
         <div className={styles.info}>
           <Image

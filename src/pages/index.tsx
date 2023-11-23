@@ -1,7 +1,13 @@
+import Layout from 'src/layout';
+
 import { MainPage } from './mainpage';
 
 const Home = () => {
-  return <MainPage />;
+  return (
+    <Layout>
+      <MainPage />
+    </Layout>
+  );
 };
 
 export default Home;

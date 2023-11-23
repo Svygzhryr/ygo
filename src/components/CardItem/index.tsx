@@ -64,8 +64,8 @@ export const CardItem: FC<CardItemProps> = ({ card }) => {
   };
 
   return (
-    <Link
-      href={`/details/${card.id}`}
+    <div
+      // href={`/details/${card.id}`}
       key={card.id}
       className={`${styles.cardItemWrapper} ${defineType(card.type)}`}
       onClick={handleCardClick}
@@ -95,6 +95,6 @@ export const CardItem: FC<CardItemProps> = ({ card }) => {
           </div>
         )}
       </div>
-    </Link>
+    </div>
   );
 };

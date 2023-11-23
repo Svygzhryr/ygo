@@ -4,6 +4,7 @@ import { Search } from 'src/components/Search';
 import { useAppDispatch, useAppSelector } from 'src/hooks/redux';
 import { ICardMeta } from 'src/types/types';
 
+import Details from '../details/[id]';
 import styles from './MainPage.module.scss';
 
 export type MainSearch = {
@@ -15,6 +16,7 @@ export type MainSearch = {
 export const MainPage: FC = () => {
   const [meta, setMeta] = useState<ICardMeta | null>(null);
   const [throwErrorMessage, setThrowErrorMessage] = useState('');
+  const { id } = useAppSelector((state) => state.idReducer);
 
   const handleThrowError = () => {
     setThrowErrorMessage('Whoops! An error has occured.');
@@ -35,6 +37,7 @@ export const MainPage: FC = () => {
         <Search />
         <CardList />
       </section>
+      {id && <Details />}
     </div>
   );
 };
