@@ -1,14 +1,16 @@
+import { useRouter } from 'next/navigation';
 import { ChangeEvent, FC, KeyboardEventHandler, useEffect, useState } from 'react';
 // import { useSearchParams } from 'react-router-dom';
 import { useAppDispatch } from 'src/hooks/redux';
+import { MainSearch } from 'src/pages/mainpage';
 import { currentPageSlice } from 'src/store/reducers/PaginationSlice';
 import { searchSlice } from 'src/store/reducers/SearchSlice';
-import { MainSearch } from 'srcpages/MainPage';
 
 import styles from './Search.module.scss';
 
 export const Search: FC = () => {
   const [searchTemp, setSearchTemp] = useState('');
+  const router = useRouter();
   // const [searchParams, setSearchParams] = useSearchParams();
   const { setSearchValue } = searchSlice.actions;
   const { setCurrentPage } = currentPageSlice.actions;
@@ -35,7 +37,7 @@ export const Search: FC = () => {
     dispatch(setCurrentPage(0));
     dispatch(setSearchValue(searchTemp));
     // setSearchParams(params);
-    setSearchValue(searchTemp);
+    router.push(searchTemp ? `?fname=${searchTemp}` : '');
     localStorage.setItem('prevSearch', searchTemp || '');
   };
 

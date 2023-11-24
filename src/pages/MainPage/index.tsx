@@ -1,10 +1,8 @@
+import { GetServerSideProps } from 'next';
 import { FC, useEffect, useState } from 'react';
 import { CardList } from 'src/components/CardList';
 import { Search } from 'src/components/Search';
-import { useAppDispatch, useAppSelector } from 'src/hooks/redux';
-import { ICardMeta } from 'src/types/types';
 
-import Details from '../details/[id]';
 import styles from './MainPage.module.scss';
 
 export type MainSearch = {
@@ -13,10 +11,12 @@ export type MainSearch = {
   id?: string;
 };
 
-export const MainPage: FC = () => {
-  const [meta, setMeta] = useState<ICardMeta | null>(null);
+interface IMainPageProps {
+  newData: object;
+}
+
+export const MainPage: FC<IMainPageProps> = ({ newData }) => {
   const [throwErrorMessage, setThrowErrorMessage] = useState('');
-  const { id } = useAppSelector((state) => state.idReducer);
 
   const handleThrowError = () => {
     setThrowErrorMessage('Whoops! An error has occured.');
@@ -35,9 +35,8 @@ export const MainPage: FC = () => {
           Throw an error!
         </button>
         <Search />
-        <CardList />
+        <CardList newData={newData} />
       </section>
-      {id && <Details />}
     </div>
   );
 };

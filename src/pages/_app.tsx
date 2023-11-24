@@ -6,8 +6,6 @@ import { setupStore } from 'src/store/store';
 import 'src/styles/globals.scss';
 
 export default function App({ Component, pageProps }: AppProps) {
-  const store = setupStore();
-
   return (
     <>
       <Head>
@@ -16,8 +14,9 @@ export default function App({ Component, pageProps }: AppProps) {
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
+
       <ErrorBoundary>
-        <Provider store={store}>
+        <Provider store={setupStore()}>
           <Component {...pageProps} />
         </Provider>
       </ErrorBoundary>

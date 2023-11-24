@@ -1,18 +1,17 @@
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { FC, useEffect } from 'react';
-// import { useSearchParams } from 'react-router-dom';
 import next from 'src/assets/next.svg';
 import prev from 'src/assets/prev.svg';
 import { useAppDispatch, useAppSelector } from 'src/hooks/redux';
 import { currentPageSlice } from 'src/store/reducers/PaginationSlice';
 import { ICardMeta } from 'src/types/types';
-import { MainSearch } from 'srcpages/MainPage';
 
 import styles from './Pagination.module.scss';
 
 interface IPaginationProps {
   meta: ICardMeta | null | undefined;
-  isFetching: boolean;
+  isFetching?: boolean;
 }
 
 export const Pagination: FC<IPaginationProps> = ({ meta, isFetching }) => {
@@ -20,15 +19,18 @@ export const Pagination: FC<IPaginationProps> = ({ meta, isFetching }) => {
   const { nextPage, prevPage } = currentPageSlice.actions;
   const { searchValue } = useAppSelector((state) => state.searchReducer);
   const dispatch = useAppDispatch();
+  const router = useRouter();
 
   // const [searchParams, setSearchParams] = useSearchParams();
 
   const handlePrevPage = () => {
     dispatch(prevPage());
+    router.push(`?page=${currentPage}`);
   };
 
   const handleNextPage = () => {
     dispatch(nextPage());
+    router.push(`?page=${currentPage}`);
   };
 
   useEffect(() => {

@@ -61,3 +61,18 @@ export interface ILogo {
   src: string | StaticImageData;
   className?: string;
 }
+
+export interface IServerSideData {
+  data: ICardAPI;
+  endpointName: 'fetchAllCards';
+  fulfilledTimeStamp: 1700826982001;
+  initialState: object;
+  isError: boolean;
+  isLoading: boolean;
+  isSuccess: boolean;
+  isUninitialized: boolean;
+  originalArgs: object;
+  requestId: string;
+  startedTimeStamp: number;
+  status: string;
+}

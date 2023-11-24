@@ -1,8 +1,8 @@
 import { FC } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
+import Details from '../components/CardDetails/CardDetails';
 import ErrorBoundary from '../components/ErrorBoundary';
-import Details from '../pages/details/[id]';
 import { MainPage } from '../pages/mainpage';
 import NotFound from '../pages/notfound';
 

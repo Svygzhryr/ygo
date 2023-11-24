@@ -1,10 +1,16 @@
 import { PropsWithChildren } from 'react';
 import { MainPage } from 'src/pages/mainpage';
 
-function Layout({ children }: PropsWithChildren): JSX.Element {
+interface ILayoutProps {
+  children?: PropsWithChildren;
+  newData: object;
+}
+
+function Layout({ children, newData }: ILayoutProps): JSX.Element {
   return (
     <>
-      <main>{children}</main>
+      <MainPage newData={newData} />
+      {children}
     </>
   );
 }

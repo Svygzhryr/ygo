@@ -1,11 +1,18 @@
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from 'src/hooks/redux';
 import { itemsPerPageSlice } from 'src/store/reducers/ItemsPerPageSlice';
 
 import styles from './ItemsPerPage.module.scss';
 
 export const ItemsPerPage = () => {
+  const router = useRouter();
   const { setThreeItems, setSixItems, setTwelveItems } = itemsPerPageSlice.actions;
   const { itemsPerPage } = useAppSelector((state) => state.itemsPerPageReducer);
+
+  useEffect(() => {
+    router.push(`?num=${itemsPerPage}`);
+  }, [itemsPerPage]);
 
   const dispatch = useAppDispatch();
   return (

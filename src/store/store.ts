@@ -1,4 +1,5 @@
 import { PreloadedState, combineReducers, configureStore } from '@reduxjs/toolkit';
+import { createWrapper } from 'next-redux-wrapper';
 
 import { cardsAPI } from '../pages/api/api';
 import idReducer from './reducers/IdSlice';
@@ -14,14 +15,14 @@ const rootReducer = combineReducers({
   [cardsAPI.reducerPath]: cardsAPI.reducer,
 });
 
-export const setupStore = (preloadedState?: PreloadedState<RootState>) => {
+export const setupStore = () => {
   return configureStore({
     reducer: rootReducer,
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(cardsAPI.middleware),
-    preloadedState,
   });
 };
 
 export type RootState = ReturnType<typeof rootReducer>;
 export type AppStore = ReturnType<typeof setupStore>;
 export type AppDispatch = AppStore['dispatch'];
+export const wrapper = createWrapper<AppStore>(setupStore, { debug: false });
