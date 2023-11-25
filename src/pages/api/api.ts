@@ -27,7 +27,7 @@ export const cardsAPI = createApi({
     }),
     fetchCardById: build.query<ICardAPI, string>({
       query: (id) => ({
-        url: `?id=${id || 34541863}`,
+        url: `?id=${id}`,
       }),
     }),
   }),

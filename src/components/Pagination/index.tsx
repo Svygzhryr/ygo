@@ -1,6 +1,7 @@
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
-import { FC, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/router';
+import { FC, useEffect, useState } from 'react';
 import next from 'src/assets/next.svg';
 import prev from 'src/assets/prev.svg';
 import { useAppDispatch, useAppSelector } from 'src/hooks/redux';
@@ -11,36 +12,37 @@ import styles from './Pagination.module.scss';
 
 interface IPaginationProps {
   meta: ICardMeta | null | undefined;
-  isFetching?: boolean;
 }
 
-export const Pagination: FC<IPaginationProps> = ({ meta, isFetching }) => {
-  const { currentPage } = useAppSelector((state) => state.pageReducer);
-  const { nextPage, prevPage } = currentPageSlice.actions;
-  const { searchValue } = useAppSelector((state) => state.searchReducer);
-  const dispatch = useAppDispatch();
+export const Pagination: FC<IPaginationProps> = ({ meta }) => {
+  // const { currentPage } = useAppSelector((state) => state.pageReducer);
+  // const { nextPage, prevPage } = currentPageSlice.actions;
+  // const dispatch = useAppDispatch();
   const router = useRouter();
-
-  // const [searchParams, setSearchParams] = useSearchParams();
+  const [currentPage, setCurrentPage] = useState(0);
+  const searchParams = useSearchParams();
 
   const handlePrevPage = () => {
-    dispatch(prevPage());
-    router.push(`?page=${currentPage}`);
+    setCurrentPage(currentPage - 1);
+    // dispatch(prevPage());
   };
 
   const handleNextPage = () => {
-    dispatch(nextPage());
-    router.push(`?page=${currentPage}`);
+    setCurrentPage(currentPage + 1);
+    // dispatch(nextPage());
   };
 
   useEffect(() => {
-    // const params: MainSearch = Object.fromEntries(searchParams.entries());
-    // params.page = String(currentPage + 1);
-    // if (searchValue) {
-    //   params.search = searchValue;
-    // }
-    // setSearchParams(params);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    console.log(currentPage);
+    router.query.page = `${currentPage + 1}`;
+    router.push(
+      {
+        pathname: '/',
+        query: { ...router.query },
+      },
+      undefined,
+      {}
+    );
   }, [currentPage]);
 
   if (!meta) {
@@ -49,12 +51,14 @@ export const Pagination: FC<IPaginationProps> = ({ meta, isFetching }) => {
 
   return (
     <div className={styles.wrapper}>
-      <button onClick={handlePrevPage} disabled={currentPage <= 0 || isFetching}>
-        {isFetching ? <div className={styles.loader}></div> : <Image alt="<" src={prev} />}
+      <button onClick={handlePrevPage} disabled={currentPage <= 0}>
+        {/* {isFetching ? <div className={styles.loader}></div> : <Image alt="<" src={prev} />} */}
+        <Image alt="<" src={prev} />
       </button>
-      <button disabled={true}>{currentPage + 1}</button>
-      <button onClick={handleNextPage} disabled={meta?.pages_remaining === 0 || isFetching}>
-        {isFetching ? <div className={styles.loader}></div> : <Image alt=">" src={next} />}
+      <button disabled={true}>{searchParams?.get('page') || 0 + 1}</button>
+      <button onClick={handleNextPage} disabled={meta?.pages_remaining === 0}>
+        {/* {isFetching ? <div className={styles.loader}></div> : } */}
+        <Image alt=">" src={next} />
       </button>
     </div>
   );

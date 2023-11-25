@@ -1,6 +1,5 @@
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/router';
 import { ChangeEvent, FC, KeyboardEventHandler, useEffect, useState } from 'react';
-// import { useSearchParams } from 'react-router-dom';
 import { useAppDispatch } from 'src/hooks/redux';
 import { MainSearch } from 'src/pages/mainpage';
 import { currentPageSlice } from 'src/store/reducers/PaginationSlice';
@@ -10,11 +9,10 @@ import styles from './Search.module.scss';
 
 export const Search: FC = () => {
   const [searchTemp, setSearchTemp] = useState('');
-  const router = useRouter();
-  // const [searchParams, setSearchParams] = useSearchParams();
   const { setSearchValue } = searchSlice.actions;
   const { setCurrentPage } = currentPageSlice.actions;
   const dispatch = useAppDispatch();
+  const router = useRouter();
 
   useEffect(() => {
     const storageSearchValue = localStorage.getItem('prevSearch') || '';
@@ -36,8 +34,16 @@ export const Search: FC = () => {
 
     dispatch(setCurrentPage(0));
     dispatch(setSearchValue(searchTemp));
-    // setSearchParams(params);
-    router.push(searchTemp ? `?fname=${searchTemp}` : '');
+    router.query.fname = searchTemp;
+    router.query.page = `${1}`;
+    router.push(
+      {
+        pathname: '/',
+        query: { ...router.query },
+      },
+      undefined,
+      {}
+    );
     localStorage.setItem('prevSearch', searchTemp || '');
   };
 

@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { FC, ReactEventHandler } from 'react';
 // import { useLocation, useNavigate } from 'react-router-dom';
 import fallback from 'src/assets/fallback.jpg';
@@ -18,6 +19,7 @@ export const CardItem: FC<CardItemProps> = ({ card }) => {
   // const location = useLocation();
   const dispatch = useAppDispatch();
   const { setId } = idSlice.actions;
+  const router = useRouter();
 
   const defineType = (type: string) => {
     switch (true) {
@@ -61,11 +63,20 @@ export const CardItem: FC<CardItemProps> = ({ card }) => {
   const handleCardClick = () => {
     const id = card.id;
     dispatch(setId(id));
+    router.query.details = `${id}`;
+    router.push(
+      {
+        pathname: '/',
+        query: { ...router.query },
+      },
+      undefined,
+      {}
+    );
   };
 
   return (
-    <Link
-      href={`/details/${card.id}`}
+    <div
+      // href={`/details/${card.id}`}
       key={card.id}
       className={`${styles.cardItemWrapper} ${defineType(card.type)}`}
       onClick={handleCardClick}
@@ -95,6 +106,6 @@ export const CardItem: FC<CardItemProps> = ({ card }) => {
           </div>
         )}
       </div>
-    </Link>
+    </div>
   );
 };

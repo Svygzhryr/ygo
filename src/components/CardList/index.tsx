@@ -16,7 +16,7 @@ interface ICardListProps {
 
 export const CardList: FC<ICardListProps> = ({ newData }) => {
   console.log(newData);
-  const { data } = newData;
+  const { data, isError } = newData;
   const { currentPage } = useAppSelector((state) => state.pageReducer);
   const { searchValue } = useAppSelector((state) => state.searchReducer);
   const { itemsPerPage } = useAppSelector((state) => state.itemsPerPageReducer);
@@ -30,9 +30,9 @@ export const CardList: FC<ICardListProps> = ({ newData }) => {
   const cardList = data?.data;
   const meta = data?.meta;
 
-  // if (error) {
-  //   return <h5 className={styles.errorMessage}>No cards matching your query.</h5>;
-  // }
+  if (isError) {
+    return <h5 className={styles.errorMessage}>No cards matching your query.</h5>;
+  }
 
   return (
     <div className={styles.wrapper}>

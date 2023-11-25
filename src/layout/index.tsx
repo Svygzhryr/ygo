@@ -1,9 +1,11 @@
 import { PropsWithChildren } from 'react';
+import CardDetails from 'src/components/CardDetails/CardDetails';
 import { MainPage } from 'src/pages/mainpage';
+import { IServerSideData, IServerSideProps } from 'src/types/types';
 
 interface ILayoutProps {
   children?: PropsWithChildren;
-  newData: object;
+  newData: IServerSideProps;
 }
 
 function Layout({ children, newData }: ILayoutProps): JSX.Element {

@@ -1,7 +1,8 @@
-import { GetServerSideProps } from 'next';
 import { FC, useEffect, useState } from 'react';
+import CardDetails from 'src/components/CardDetails/CardDetails';
 import { CardList } from 'src/components/CardList';
 import { Search } from 'src/components/Search';
+import { IServerSideData, IServerSideProps } from 'src/types/types';
 
 import styles from './MainPage.module.scss';
 
@@ -12,10 +13,11 @@ export type MainSearch = {
 };
 
 interface IMainPageProps {
-  newData: object;
+  newData: IServerSideProps;
 }
 
 export const MainPage: FC<IMainPageProps> = ({ newData }) => {
+  const { cardsData, singleCardData } = newData;
   const [throwErrorMessage, setThrowErrorMessage] = useState('');
 
   const handleThrowError = () => {
@@ -35,8 +37,9 @@ export const MainPage: FC<IMainPageProps> = ({ newData }) => {
           Throw an error!
         </button>
         <Search />
-        <CardList newData={newData} />
+        <CardList newData={cardsData} />
       </section>
+      {/* <CardDetails data={singleCardData} /> */}
     </div>
   );
 };

@@ -62,6 +62,11 @@ export interface ILogo {
   className?: string;
 }
 
+export interface IServerSideProps {
+  cardsData: IServerSideData;
+  singleCardData: IServerSideData;
+}
+
 export interface IServerSideData {
   data: ICardAPI;
   endpointName: 'fetchAllCards';

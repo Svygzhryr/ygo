@@ -1,19 +1,35 @@
 import Image from 'next/image';
-import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/router';
 import { FC, ReactEventHandler } from 'react';
-import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import fallback from 'src/assets/fallback.jpg';
+import { IServerSideData } from 'src/types/types';
 import { cardState } from 'src/utils/cardState';
 
-import { cardsAPI } from '../../pages/api/api';
 import styles from './Details.module.scss';
 
-const Details: FC = () => {
+interface ICardDetailsProps {
+  data: IServerSideData;
+}
+
+const CardDetails: FC<ICardDetailsProps> = (data) => {
+  const router = useRouter();
+
   // const { id } = useAppSelector((state) => state.idReducer);
-  const id = window.location.pathname.match(/\d{2,}/)[0];
+  // const dispatch = useAppDispatch();
+  // const { setId } = idSlice.actions;
+  const searchParams = useSearchParams();
+  const id = searchParams?.get('details') as string;
+
   // const id = router.pathname;
-  const { data, isLoading, error } = cardsAPI.useFetchCardByIdQuery(id);
-  const card = data?.data[0] || cardState;
+  // const { data, isLoading, error } = cardsAPI.useFetchCardByIdQuery(id);
+  const { isError } = data.data;
+
+  if (!data) {
+    return;
+  }
+
+  const card = data?.data.data.data[0] || cardState;
 
   const addDefaultSrc: ReactEventHandler<HTMLImageElement> = (e) => {
     const target = e.target as HTMLImageElement;
@@ -35,31 +51,39 @@ const Details: FC = () => {
     }
   };
 
-  // const handleHistoryBack = () => {
-  //   navigate(-1);
-  // };
-
-  if (error) {
-    return <h5>Can't retrieve card data..</h5>;
-  }
-
-  if (isLoading) {
-    return (
-      <SkeletonTheme baseColor="#2b2b2b" highlightColor="#707070">
-        <Skeleton className={styles.skeletonCard} />
-        {Array(5)
-          .fill(true)
-          .map((_, i) => (
-            <Skeleton key={i} className={styles.skeletonText} />
-          ))}
-      </SkeletonTheme>
+  const handleClose = () => {
+    router.query.details = '';
+    router.push(
+      {
+        pathname: '/',
+        query: { ...router.query },
+      },
+      undefined,
+      {}
     );
+  };
+
+  if (isError) {
+    return;
   }
+
+  // if (isLoading) {
+  //   return (
+  //     <SkeletonTheme baseColor="#2b2b2b" highlightColor="#707070">
+  //       <Skeleton className={styles.skeletonCard} />
+  //       {Array(5)
+  //         .fill(true)
+  //         .map((_, i) => (
+  //           <Skeleton key={i} className={styles.skeletonText} />
+  //         ))}
+  //     </SkeletonTheme>
+  //   );
+  // }
 
   return (
     <>
-      {/* <div onClick={handleHistoryBack} className={styles.overlay} /> */}
-      <Link href="/" className={styles.overlay} />
+      <div onClick={handleClose} className={styles.overlay} />
+      {/* <Link href="/" className={styles.overlay} /> */}
       <div className={`${styles.fixed} ${defineType(card.type)}`}>
         <div className={styles.info}>
           <Image
@@ -77,4 +101,4 @@ const Details: FC = () => {
   );
 };
 
-export default Details;
+export default CardDetails;
