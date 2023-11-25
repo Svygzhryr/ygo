@@ -1,9 +1,8 @@
 import { GetServerSideProps } from 'next';
 import Layout from 'src/layout';
 import { wrapper } from 'src/store/store';
-import { IServerSideData, IServerSideProps } from 'src/types/types';
+import { IServerSideProps } from 'src/types/types';
 
-import Details from '../components/CardDetails/CardDetails';
 import { fetchAllCards, fetchCardById, getRunningQueriesThunk } from './api/api';
 
 export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps(

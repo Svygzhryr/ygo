@@ -4,8 +4,6 @@ import { useRouter } from 'next/router';
 import { FC, useEffect, useState } from 'react';
 import next from 'src/assets/next.svg';
 import prev from 'src/assets/prev.svg';
-import { useAppDispatch, useAppSelector } from 'src/hooks/redux';
-import { currentPageSlice } from 'src/store/reducers/PaginationSlice';
 import { ICardMeta } from 'src/types/types';
 
 import styles from './Pagination.module.scss';
@@ -15,25 +13,19 @@ interface IPaginationProps {
 }
 
 export const Pagination: FC<IPaginationProps> = ({ meta }) => {
-  // const { currentPage } = useAppSelector((state) => state.pageReducer);
-  // const { nextPage, prevPage } = currentPageSlice.actions;
-  // const dispatch = useAppDispatch();
   const router = useRouter();
-  const [currentPage, setCurrentPage] = useState(0);
+  const [currentPage, setCurrentPage] = useState(+router.query.page! || 0);
   const searchParams = useSearchParams();
 
   const handlePrevPage = () => {
     setCurrentPage(currentPage - 1);
-    // dispatch(prevPage());
   };
 
   const handleNextPage = () => {
     setCurrentPage(currentPage + 1);
-    // dispatch(nextPage());
   };
 
   useEffect(() => {
-    console.log(currentPage);
     router.query.page = `${currentPage + 1}`;
     router.push(
       {

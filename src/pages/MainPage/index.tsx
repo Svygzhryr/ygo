@@ -2,7 +2,7 @@ import { FC, useEffect, useState } from 'react';
 import CardDetails from 'src/components/CardDetails/CardDetails';
 import { CardList } from 'src/components/CardList';
 import { Search } from 'src/components/Search';
-import { IServerSideData, IServerSideProps } from 'src/types/types';
+import { IServerSideProps } from 'src/types/types';
 
 import styles from './MainPage.module.scss';
 
@@ -39,7 +39,7 @@ export const MainPage: FC<IMainPageProps> = ({ newData }) => {
         <Search />
         <CardList newData={cardsData} />
       </section>
-      {/* <CardDetails data={singleCardData} /> */}
+      <CardDetails data={singleCardData} />
     </div>
   );
 };

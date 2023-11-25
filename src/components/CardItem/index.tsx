@@ -76,7 +76,6 @@ export const CardItem: FC<CardItemProps> = ({ card }) => {
 
   return (
     <div
-      // href={`/details/${card.id}`}
       key={card.id}
       className={`${styles.cardItemWrapper} ${defineType(card.type)}`}
       onClick={handleCardClick}

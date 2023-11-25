@@ -15,17 +15,8 @@ interface ICardListProps {
 }
 
 export const CardList: FC<ICardListProps> = ({ newData }) => {
-  console.log(newData);
   const { data, isError } = newData;
-  const { currentPage } = useAppSelector((state) => state.pageReducer);
-  const { searchValue } = useAppSelector((state) => state.searchReducer);
   const { itemsPerPage } = useAppSelector((state) => state.itemsPerPageReducer);
-
-  // const { data, error, isLoading, isFetching } = cardsAPI.useFetchAllCardsQuery({
-  //   num: itemsPerPage,
-  //   offset: Math.ceil(currentPage * itemsPerPage),
-  //   fname: searchValue,
-  // });
 
   const cardList = data?.data;
   const meta = data?.meta;
