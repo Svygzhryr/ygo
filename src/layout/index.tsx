@@ -1,6 +1,6 @@
 import { PropsWithChildren } from 'react';
 import CardDetails from 'src/components/CardDetails/CardDetails';
-import { MainPage } from 'src/pages/mainpage';
+import { MainPage } from 'src/pages/MainPage';
 import { IServerSideData, IServerSideProps } from 'src/types/types';
 
 interface ILayoutProps {

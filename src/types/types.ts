@@ -12,32 +12,26 @@ export interface ICard {
   level?: number;
   race: string;
   archetype?: string;
-  card_sets: [
-    {
-      set_name: string;
-      set_code: string;
-      set_rarity: string;
-      set_rarity_code: string;
-      set_price: string;
-    }
-  ];
-  card_images: [
-    {
-      id: number;
-      image_url: string;
-      image_url_small: string;
-      image_url_cropped: string;
-    }
-  ];
-  card_prices: [
-    {
-      cardmarket_price: string;
-      tcgplayer_price: string;
-      ebay_price: string;
-      amazon_price: string;
-      coolstuffinc_price: string;
-    }
-  ];
+  card_sets?: {
+    set_name: string;
+    set_code: string;
+    set_rarity: string;
+    set_rarity_code: string;
+    set_price: string;
+  }[];
+  card_images: {
+    id: number;
+    image_url: string;
+    image_url_small: string;
+    image_url_cropped: string;
+  }[];
+  card_prices: {
+    cardmarket_price: string;
+    tcgplayer_price: string;
+    ebay_price: string;
+    amazon_price: string;
+    coolstuffinc_price: string;
+  }[];
 }
 
 export interface ICardMeta {
@@ -53,7 +47,7 @@ export interface ICardMeta {
 
 export interface ICardAPI {
   data: ICard[];
-  meta: ICardMeta | null;
+  meta?: ICardMeta | null;
 }
 
 export interface ILogo {
@@ -69,14 +63,13 @@ export interface IServerSideProps {
 
 export interface IServerSideData {
   data: ICardAPI;
-  endpointName: 'fetchAllCards';
-  fulfilledTimeStamp: 1700826982001;
-  initialState: object;
+  endpointName: string;
+  fulfilledTimeStamp: number;
   isError: boolean;
   isLoading: boolean;
   isSuccess: boolean;
   isUninitialized: boolean;
-  originalArgs: object;
+  originalArgs: string | object;
   requestId: string;
   startedTimeStamp: number;
   status: string;

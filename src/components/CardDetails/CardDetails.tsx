@@ -24,7 +24,7 @@ const CardDetails: FC<ICardDetailsProps> = (data) => {
 
   const cardsData = gotCards.data;
   const card = cardsData[0];
-  const { isError, isLoading } = data.data;
+  const { isError } = data.data;
 
   const addDefaultSrc: ReactEventHandler<HTMLImageElement> = (e) => {
     const target = e.target as HTMLImageElement;
@@ -60,19 +60,6 @@ const CardDetails: FC<ICardDetailsProps> = (data) => {
 
   if (isError) {
     return;
-  }
-
-  if (isLoading) {
-    return (
-      <SkeletonTheme baseColor="#2b2b2b" highlightColor="#707070">
-        <Skeleton className={styles.skeletonCard} />
-        {Array(5)
-          .fill(true)
-          .map((_, i) => (
-            <Skeleton key={i} className={styles.skeletonText} />
-          ))}
-      </SkeletonTheme>
-    );
   }
 
   return (

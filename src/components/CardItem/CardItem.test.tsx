@@ -1,19 +1,18 @@
 import '@testing-library/jest-dom';
 import { screen } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
+import { useRouter } from 'next/router';
+import React from 'react';
+import { card } from 'src/mocks/mockedData';
 import { ICard } from 'src/types/types';
 import { renderWithProviders } from 'src/utils/test-utils';
-import { card } from 'srcmocks/mockedData';
 
 import { CardItem } from '.';
 
+jest.mock('next/router', () => jest.requireActual('next-router-mock'));
+
 describe('Card Item', () => {
   test('Monster card and its data displays correctly', () => {
-    renderWithProviders(
-      <BrowserRouter>
-        <CardItem card={card as ICard} />
-      </BrowserRouter>
-    );
+    renderWithProviders(<CardItem card={card as ICard} />);
 
     const { name, atk, def } = card;
 

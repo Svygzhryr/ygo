@@ -1,18 +1,19 @@
 import '@testing-library/jest-dom';
 // eslint-disable-next-line react/no-deprecated
 import { fireEvent, screen, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
+import { serverSideProps } from 'src/mocks/mockedData';
+import { IServerSideData } from 'src/types/types';
 import { renderWithProviders } from 'src/utils/test-utils';
 
 import { CardList } from '.';
 
+const { cardsData } = serverSideProps;
+
+jest.mock('next/router', () => jest.requireActual('next-router-mock'));
+
 describe('CardList tests', () => {
   test('Card list displays correctly', async () => {
-    renderWithProviders(
-      <BrowserRouter>
-        <CardList />
-      </BrowserRouter>
-    );
+    renderWithProviders(<CardList newData={cardsData as unknown as IServerSideData} />);
 
     await waitFor(async () => {
       const gotCard = screen.getByText('"A" Cell Breeding Device');
@@ -24,11 +25,7 @@ describe('CardList tests', () => {
   });
 
   test('Check if itemsPerPage buttons are disabling upon clicking', async () => {
-    renderWithProviders(
-      <BrowserRouter>
-        <CardList />
-      </BrowserRouter>
-    );
+    renderWithProviders(<CardList newData={cardsData as unknown as IServerSideData} />);
 
     await waitFor(async () => {
       const threeItemsButton = await screen.findByText('3');

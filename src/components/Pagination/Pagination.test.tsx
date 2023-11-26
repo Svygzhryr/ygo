@@ -1,6 +1,5 @@
 import '@testing-library/jest-dom';
 import { screen } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
 import { renderWithProviders } from 'src/utils/test-utils';
 
 import { Pagination } from '.';
@@ -15,26 +14,18 @@ const meta = {
   next_page_offset: 12,
 };
 
-const isFetching = false;
+jest.mock('next/router', () => jest.requireActual('next-router-mock'));
 
 describe('Pagination', () => {
   test('Page number displays correctly', async () => {
-    renderWithProviders(
-      <BrowserRouter>
-        <Pagination meta={meta} isFetching={isFetching} />
-      </BrowserRouter>
-    );
+    renderWithProviders(<Pagination meta={meta} />);
 
     const getCurrentPage = await screen.findByText('1');
     expect(getCurrentPage).toBeInTheDocument();
   });
 
   test('Button click', async () => {
-    renderWithProviders(
-      <BrowserRouter>
-        <Pagination meta={meta} isFetching={isFetching} />
-      </BrowserRouter>
-    );
+    renderWithProviders(<Pagination meta={meta} />);
 
     const buttons = screen.getAllByRole('button');
     expect(buttons[0]).toBeDisabled();

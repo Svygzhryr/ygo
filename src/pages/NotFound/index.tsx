@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 import styles from './NotFound.module.scss';
 
-const NotFound = () => {
+export const NotFound = () => {
   return (
     <div className={styles.title}>
       <h2>Page not found..</h2>
@@ -12,5 +12,3 @@ const NotFound = () => {
     </div>
   );
 };
-
-export default NotFound;

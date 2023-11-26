@@ -1,8 +1,8 @@
-import { FC } from 'react';
+import router from 'next/router';
+import { FC, useEffect, useState } from 'react';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import { useAppSelector } from 'src/hooks/redux';
-import { cardsAPI } from 'src/pages/api/api';
 import { ICard, IServerSideData } from 'src/types/types';
 
 import { CardItem } from '../CardItem';
@@ -29,7 +29,7 @@ export const CardList: FC<ICardListProps> = ({ newData }) => {
     <div className={styles.wrapper}>
       {cardList && (
         <>
-          <Pagination /*isFetching={isFetching}*/ meta={meta} /> <ItemsPerPage />
+          <Pagination meta={meta} /> <ItemsPerPage />
         </>
       )}
 
@@ -50,7 +50,7 @@ export const CardList: FC<ICardListProps> = ({ newData }) => {
       </div>
       {cardList && itemsPerPage !== 3 && (
         <>
-          <Pagination /*isFetching={isFetching}*/ meta={meta} />
+          <Pagination meta={meta} />
         </>
       )}
     </div>

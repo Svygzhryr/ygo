@@ -15,8 +15,6 @@ interface CardItemProps {
 }
 
 export const CardItem: FC<CardItemProps> = ({ card }) => {
-  // const navigate = useNavigate();
-  // const location = useLocation();
   const dispatch = useAppDispatch();
   const { setId } = idSlice.actions;
   const router = useRouter();
@@ -56,7 +54,7 @@ export const CardItem: FC<CardItemProps> = ({ card }) => {
   const addDefaultSrc: ReactEventHandler<HTMLImageElement> = (e) => {
     const target = e.target as HTMLImageElement;
     if (target) {
-      target.src = fallback.src;
+      target.srcset = fallback.src;
     }
   };
 

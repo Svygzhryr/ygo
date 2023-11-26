@@ -1,20 +1,19 @@
 import '@testing-library/jest-dom';
-import { render, screen } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { serverSideCard } from 'src/mocks/mockedData';
 import { renderWithProviders } from 'src/utils/test-utils';
-import { card, cards } from 'srcmocks/mockedData';
 
-import { Details } from './CardDetails';
+import CardDetails from './CardDetails';
+
+const data = serverSideCard;
+
+jest.mock('next/router', () => jest.requireActual('next-router-mock'));
 
 describe('Details', () => {
-  test('Error message displays correctly', async () => {
-    renderWithProviders(
-      <BrowserRouter>
-        <Details />
-      </BrowserRouter>
-    );
+  test('Card description displays correctly', async () => {
+    renderWithProviders(<CardDetails data={data.data} />);
 
-    const getCardDesc = await screen.findByText("Can't retrieve card data..");
+    const getCardDesc = await screen.findByText(/Target 1 face-up/);
     expect(getCardDesc).toBeInTheDocument();
   });
 });

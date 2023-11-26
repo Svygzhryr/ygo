@@ -1,10 +1,10 @@
 import '@testing-library/jest-dom';
 
 import { server } from '../mocks/api/server';
-import { cardsAPI } from '../pages/api/RequestService';
+import { cardsAPI } from '../pages/api/api';
 import { setupStore } from '../store/store';
 
-const store = setupStore({});
+const store = setupStore();
 
 beforeAll(() => {
   server.listen();

@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, Suspense, useEffect, useState } from 'react';
 import CardDetails from 'src/components/CardDetails/CardDetails';
 import { CardList } from 'src/components/CardList';
 import { Search } from 'src/components/Search';
@@ -13,22 +13,27 @@ export type MainSearch = {
 };
 
 interface IMainPageProps {
-  newData: IServerSideProps;
+  newData?: IServerSideProps;
 }
 
 export const MainPage: FC<IMainPageProps> = ({ newData }) => {
-  const { cardsData, singleCardData } = newData;
   const [throwErrorMessage, setThrowErrorMessage] = useState('');
-
-  const handleThrowError = () => {
-    setThrowErrorMessage('Whoops! An error has occured.');
-  };
 
   useEffect(() => {
     if (throwErrorMessage) {
       throw new Error(throwErrorMessage);
     }
   }, [throwErrorMessage]);
+
+  if (!newData) {
+    return <h5>No cards matching your query.</h5>;
+  }
+
+  const { cardsData, singleCardData } = newData;
+
+  const handleThrowError = () => {
+    setThrowErrorMessage('Whoops! An error has occured.');
+  };
 
   return (
     <div className={styles.details}>

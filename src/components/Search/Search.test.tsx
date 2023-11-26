@@ -1,18 +1,15 @@
 import '@testing-library/jest-dom';
-import { screen } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
+import { fireEvent, screen } from '@testing-library/react';
+import { cards } from 'src/mocks/mockedData';
 import { renderWithProviders } from 'src/utils/test-utils';
-import { cards } from 'srcmocks/mockedData';
 
 import { Search } from '.';
 
+jest.mock('next/router', () => jest.requireActual('next-router-mock'));
+
 describe('Search', () => {
   test('Input displays correctly', async () => {
-    renderWithProviders(
-      <BrowserRouter>
-        <Search />
-      </BrowserRouter>
-    );
+    renderWithProviders(<Search />);
 
     const placeholderText = await screen.findByRole('textbox');
     expect(placeholderText).toBeInTheDocument();

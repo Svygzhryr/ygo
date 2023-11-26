@@ -1,8 +1,7 @@
 import { useRouter } from 'next/router';
 import { ChangeEvent, FC, KeyboardEventHandler, useEffect, useState } from 'react';
 import { useAppDispatch } from 'src/hooks/redux';
-import { MainSearch } from 'src/pages/mainpage';
-import { currentPageSlice } from 'src/store/reducers/PaginationSlice';
+import { MainSearch } from 'src/pages/MainPage';
 import { searchSlice } from 'src/store/reducers/SearchSlice';
 
 import styles from './Search.module.scss';
@@ -10,7 +9,6 @@ import styles from './Search.module.scss';
 export const Search: FC = () => {
   const [searchTemp, setSearchTemp] = useState('');
   const { setSearchValue } = searchSlice.actions;
-  const { setCurrentPage } = currentPageSlice.actions;
   const dispatch = useAppDispatch();
   const router = useRouter();
 
@@ -32,7 +30,6 @@ export const Search: FC = () => {
       params.search = searchTemp;
     }
 
-    dispatch(setCurrentPage(0));
     dispatch(setSearchValue(searchTemp));
     router.query.fname = searchTemp;
     router.query.page = `${1}`;

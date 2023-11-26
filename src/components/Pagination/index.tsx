@@ -14,19 +14,20 @@ interface IPaginationProps {
 
 export const Pagination: FC<IPaginationProps> = ({ meta }) => {
   const router = useRouter();
-  const [currentPage, setCurrentPage] = useState(+router.query.page! || 0);
+
+  const [currentPage, setCurrentPage] = useState(+router.query.page! || 1);
   const searchParams = useSearchParams();
 
   const handlePrevPage = () => {
-    setCurrentPage(currentPage - 1);
+    setCurrentPage(+router.query.page! - 1);
   };
 
   const handleNextPage = () => {
-    setCurrentPage(currentPage + 1);
+    setCurrentPage(+router.query.page! + 1);
   };
 
   useEffect(() => {
-    router.query.page = `${currentPage + 1}`;
+    router.query.page = `${currentPage}`;
     router.push(
       {
         pathname: '/',
@@ -43,13 +44,11 @@ export const Pagination: FC<IPaginationProps> = ({ meta }) => {
 
   return (
     <div className={styles.wrapper}>
-      <button onClick={handlePrevPage} disabled={currentPage <= 0}>
-        {/* {isFetching ? <div className={styles.loader}></div> : <Image alt="<" src={prev} />} */}
+      <button onClick={handlePrevPage} disabled={currentPage <= 1}>
         <Image alt="<" src={prev} />
       </button>
       <button disabled={true}>{searchParams?.get('page') || 0 + 1}</button>
       <button onClick={handleNextPage} disabled={meta?.pages_remaining === 0}>
-        {/* {isFetching ? <div className={styles.loader}></div> : } */}
         <Image alt=">" src={next} />
       </button>
     </div>
