@@ -15,5 +15,8 @@ describe('Details', () => {
 
     const getCardDesc = await screen.findByText(/Target 1 face-up/);
     expect(getCardDesc).toBeInTheDocument();
+
+    const cardImg = screen.getByRole('img');
+    expect(cardImg).toBeInTheDocument();
   });
 });

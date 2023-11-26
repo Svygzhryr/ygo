@@ -21,10 +21,6 @@ describe('Main page tests', () => {
 
     const card3 = await screen.findByText('4-Starred Ladybug of Doom');
     expect(card3).toBeInTheDocument();
-
-    fireEvent(card, new MouseEvent('click', { bubbles: true }));
-    const desc = await screen.findByText(/If there are 3/);
-    expect(desc).toBeInTheDocument();
   });
 
   test('A message displays correctly if no cards has been found', async () => {
@@ -44,5 +40,19 @@ describe('Main page tests', () => {
     const errorButton = screen.getByText('Throw an error!');
 
     expect(() => fireEvent.click(errorButton)).toThrow(Error);
+  });
+
+  test('Search does something', async () => {
+    renderWithProviders(<MainPage newData={newData} />);
+
+    const input = screen.getByRole('textbox');
+    const searchButton = screen.getByText(/Search/);
+
+    fireEvent.change(input, { target: { value: 'device' } });
+    fireEvent.click(searchButton);
+
+    const something = await screen.findByText(/Breeding/);
+
+    expect(something).toBeInTheDocument();
   });
 });

@@ -1770,6 +1770,71 @@ export const card = {
   ],
 };
 
+export const monsterCard = {
+  id: 11714098,
+  name: '30,000-Year White Turtle',
+  type: 'Normal Monster',
+  frameType: 'normal',
+  desc: 'A huge turtle that has existed for more than 30,000 years.',
+  atk: 1250,
+  def: 2100,
+  level: 5,
+  race: 'Aqua',
+  attribute: 'WATER',
+  card_images: [
+    {
+      id: 11714098,
+      image_url: 'https://images.ygoprodeck.com/images/cards/11714098.jpg',
+      image_url_small: 'https://images.ygoprodeck.com/images/cards_small/11714098.jpg',
+      image_url_cropped: 'https://images.ygoprodeck.com/images/cards_cropped/11714098.jpg',
+    },
+  ],
+  card_prices: [
+    {
+      cardmarket_price: '0.00',
+      tcgplayer_price: '0.00',
+      ebay_price: '10.00',
+      amazon_price: '0.50',
+      coolstuffinc_price: '0.00',
+    },
+  ],
+};
+
+export const trapCard = {
+  id: 42425831,
+  name: 'Sealing Ceremony of Raiton',
+  type: 'Trap Card',
+  frameType: 'trap',
+  desc: "Once per turn: You can return 1 face-up WIND monster you control to the bottom of the Main Deck to target up to 2 cards in your opponent's Graveyard; banish those targets.",
+  race: 'Continuous',
+  card_sets: [
+    {
+      set_name: 'Galactic Overlord',
+      set_code: 'GAOV-EN078',
+      set_rarity: 'Common',
+      set_rarity_code: '(C)',
+      set_price: '1.04',
+    },
+  ],
+  card_images: [
+    {
+      id: 42425831,
+      image_url: 'https://images.ygoprodeck.com/images/cards/42425831.jpg',
+      image_url_small: 'https://images.ygoprodeck.com/images/cards_small/42425831.jpg',
+      image_url_cropped: 'https://images.ygoprodeck.com/images/cards_cropped/42425831.jpg',
+    },
+  ],
+  card_prices: [
+    {
+      cardmarket_price: '0.08',
+      tcgplayer_price: '0.05',
+      ebay_price: '0.99',
+      amazon_price: '0.25',
+      coolstuffinc_price: '0.00',
+    },
+  ],
+};
+
 export const serverSideCard = {
   data: {
     status: 'fulfilled',
