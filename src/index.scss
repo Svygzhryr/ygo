@@ -1,0 +1,58 @@
+@import './utils/normalize.scss';
+@import './utils/variables';
+@font-face {
+  font-family: 'DevilTail';
+  src: local('DevilTailPersonalUse-vmZ2A'), url('./assets/fonts/DevilTailPersonalUse-vmZ2A.otf'),
+    format('opentype');
+}
+
+body {
+  // background: url('./assets/images/hellscape.jpg') no-repeat;
+  background-color: $cream-1;
+
+  background-size: cover;
+  background-attachment: fixed;
+  height: 100%;
+}
+
+button {
+  padding: 5px 20px;
+  border: none;
+  border-radius: 5px;
+
+  background-color: $red-2;
+
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    background-color: $red-3;
+    cursor: pointer;
+  }
+}
+
+* {
+  font-family: 'Noto Serif', serif;
+  color: $cream-1;
+}
+
+/* ===== Scrollbar CSS ===== */
+/* Firefox */
+* {
+  scrollbar-width: auto;
+  scrollbar-color: #730202;
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: $red-5;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #730202;
+  border-radius: 10px;
+  border: 0px solid #ffffff;
+}
