@@ -10,24 +10,29 @@ h6 {
 }
 
 .formWrapper {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(4, 1fr);
-    grid-column-gap: 26px;
-    grid-row-gap: 26px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  grid-column-gap: 26px;
 
-    width: 90%;
-    margin: 40px auto 20px;
+  width: 90%;
+  margin: 40px auto 0;
+
+  justify-content: center;
 }
 
-.form:before, .form:after {
+.invalid {
+  outline: 6px double $red-3;
+}
+
+.form:before,
+.form:after {
   content: '';
   display: block;
   border-top: 6px double $cream-1;
   width: 250px;
   margin: 0 auto;
   border-radius: 200px 200px 50% 50%;
-
 }
 
 .form:after {
@@ -35,8 +40,11 @@ h6 {
 }
 
 .file {
-  padding: 0;
   color: transparent;
+  width: 276px;
+  height: 50px;
+  padding: 0;
+  transition: 0.3s ease-in-out;
 
   &:hover {
     color: $red-5;
@@ -47,31 +55,30 @@ h6 {
   }
 
   &:active {
+    transition: none;
+
     outline: 6px double $cream-1;
   }
 }
 
 .file::-webkit-file-upload-button {
   visibility: hidden;
-
-} 
+}
 
 .file::before {
-  content: "Pick your photo..";
+  content: 'Pick your photo..';
   display: block;
   height: 100%;
-  width: 100%;
   background-color: $red-2;
   border: none;
   color: $cream-1;
-
   display: flex;
   justify-content: center;
   align-items: center;
 
   cursor: pointer;
 
-  transition: all .2s ease-in-out;
+  transition: all 0.2s ease-in-out;
 
   &:hover {
     background-color: $cream-1;
@@ -83,26 +90,29 @@ h6 {
   width: 80%;
 
   margin: 0 auto;
-  margin-top: 40px;
   display: flex;
-
-  transition: all .2s ease-out;
 
   p {
     margin: 0px 5px 0;
+    transition: all 0.2s ease-out;
   }
 
   &:hover {
-    transition: none;
     cursor: pointer;
-    color: $red-4;
+
+    p {
+      transition: none;
+      color: $red-3;
+    }
   }
 }
 
 .checkbox {
+  border-radius: 0;
   width: 40px;
   height: 40px;
   background-color: $cream-1;
+  accent-color: $red-2;
 
   &:hover {
     cursor: pointer;
@@ -111,7 +121,6 @@ h6 {
   &:focus {
     outline: 2px double transparent;
   }
-
 }
 
 .submitButton {
@@ -119,14 +128,65 @@ h6 {
   padding: 10px 20px;
   font-size: 20px;
 
+  border-top: 8px double $red-1;
+  border-bottom: 8px double $red-1;
+
+  box-shadow: 0 0 30px 5px $red-1;
+
   &:hover {
     background-color: $red-1;
-
   }
 
   &:active {
     background-color: $red-2;
     transition: unset;
+  }
+}
 
+.errorText {
+  height: 40px;
+  margin: 10px auto 0;
+  width: 90%;
+  color: $red-4;
+  font-size: 14px;
+}
+
+.autocompleteInputWrapper {
+  position: relative;
+  margin: 0 auto;
+
+  input {
+    border-radius: 5px 5px 0 0;
+  }
+}
+
+.countriesInput {
+  &:focus + div {
+    display: block;
+  }
+}
+
+.countries {
+  display: none;
+  width: 276px;
+  max-height: 200px;
+  overflow: auto;
+  position: absolute;
+  z-index: 1;
+}
+
+.countriesItem {
+  padding: 10px;
+  text-align: left;
+  background-color: $cream-1;
+  color: $red-2;
+  font-weight: 700;
+  font-size: 20px;
+  border-bottom: 2px solid $cream-3;
+
+  &:hover {
+    cursor: pointer;
+    background-color: $red-1;
+    color: $cream-1;
   }
 }
