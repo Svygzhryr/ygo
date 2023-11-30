@@ -7,9 +7,11 @@
 }
 
 body {
-  // background: url('./assets/images/hellscape.jpg') no-repeat;
-  background-color: $cream-1;
+  background: url('./assets/images/background2.jpg') no-repeat;
+  // background: linear-gradient(350deg, $black-1, $red-2, $cream-1);
+  // background-color: $cream-3;
 
+  background-position: 50% 40%;
   background-size: cover;
   background-attachment: fixed;
   height: 100%;

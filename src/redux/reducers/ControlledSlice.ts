@@ -6,6 +6,8 @@ const initialState = {
   search: '',
   filteredCountries: countryList,
   isSuggestionsVisible: false,
+  image: '',
+  base64: '',
 };
 
 export const controlledFormSlice = createSlice({
@@ -23,6 +25,9 @@ export const controlledFormSlice = createSlice({
     },
     setSuggestions(state, action) {
       state.isSuggestionsVisible = action.payload;
+    },
+    setBase64(state, action) {
+      state.base64 = action.payload;
     },
   },
 });

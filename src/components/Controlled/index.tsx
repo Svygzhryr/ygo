@@ -21,7 +21,8 @@ export const Controlled = () => {
 
   const isInvalid = !!Object.entries(errors).length;
   const dispatch = useAppDispatch();
-  const { setSearch, filterCountries, setSuggestions } = controlledFormSlice.actions;
+
+  const { setSearch, filterCountries, setSuggestions, setBase64 } = controlledFormSlice.actions;
   const searchValue = useAppSelector(controlledCountrySearch);
   const filteredCountries = useAppSelector(controlledFilteredCountries);
   const isSuggestionsVisible = useAppSelector(controlledIsSuggestions);
@@ -53,6 +54,34 @@ export const Controlled = () => {
     dispatch(setSearch(value));
   };
 
+  const convertBase64 = (file: File) => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+
+      fileReader.onload = () => {
+        resolve(fileReader.result);
+      };
+
+      fileReader.onerror = (error) => {
+        reject(error);
+      };
+    });
+  };
+
+  const handleFileChange: ChangeEventHandler<HTMLInputElement> = async (e) => {
+    const target = e.target as HTMLInputElement;
+    let value;
+    if (target.files) {
+      value = target.files[0];
+    } else {
+      console.error('Cant upload an image...');
+      return;
+    }
+    const convertedImage = await convertBase64(value);
+    dispatch(setBase64(convertedImage));
+  };
+
   return (
     <div className={styles.wrapper}>
       <h1>Forfeit your soul!</h1>
@@ -66,6 +95,7 @@ export const Controlled = () => {
               name="name"
               type="text"
               placeholder="Your name here.."
+              defaultValue="Pavel"
             />
             <div className={styles.errorText}>{errors.name?.message}</div>
           </div>
@@ -76,6 +106,7 @@ export const Controlled = () => {
               name="email"
               type="text"
               placeholder="Email here.."
+              defaultValue="pamixy@gmail.com"
             />
             <div className={styles.errorText}>{errors.email?.message}</div>
           </div>
@@ -86,6 +117,7 @@ export const Controlled = () => {
               name="password"
               type="text"
               placeholder="Password, for some reason"
+              defaultValue="asdA1@@@@"
             />
             <div className={styles.errorText}>{errors.password?.message}</div>
           </div>
@@ -96,6 +128,7 @@ export const Controlled = () => {
               name="confirmPassword"
               type="text"
               placeholder="Repeat your password.."
+              defaultValue="asdA1@@@@"
             />
             <div className={styles.errorText}>{errors.confirmPassword?.message}</div>
           </div>
@@ -106,6 +139,7 @@ export const Controlled = () => {
               name="age"
               type="text"
               placeholder="Age, if you please"
+              defaultValue="20"
             />
             <div className={styles.errorText}>{errors.age?.message}</div>
           </div>
@@ -113,7 +147,7 @@ export const Controlled = () => {
             <select
               {...register('gender')}
               name="gender"
-              defaultValue="default"
+              defaultValue="Male"
               placeholder="Your gender.."
             >
               <option value="default" disabled>
@@ -133,6 +167,7 @@ export const Controlled = () => {
               className={`${styles.file} ${errors.file && styles.invalid}`}
               type="file"
               placeholder="Your photo, please"
+              onChange={handleFileChange}
             />
             <div className={styles.errorText}>{errors.file?.message}</div>
           </div>
@@ -145,10 +180,10 @@ export const Controlled = () => {
               placeholder="Finally, your country"
               className={`${styles.countriesInput} ${errors.country && styles.invalid}`}
               onChange={handleCountryChange}
-              onFocus={handleCountryFocus}
-              onBlur={handleCountryBlur}
+              // onFocus={handleCountryFocus}
+              // onBlur={handleCountryBlur}
             />
-            {isSuggestionsVisible && (
+            {searchValue && (
               <ul className={styles.countries}>
                 {filteredCountries.map((item) => (
                   <li onClick={handleCountryClick} className={styles.countriesItem} key={item}>

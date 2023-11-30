@@ -6,3 +6,4 @@ export const controlledFilteredCountries = (state: RootState) =>
   state.controlledReducer.filteredCountries;
 export const controlledIsSuggestions = (state: RootState) =>
   state.controlledReducer.isSuggestionsVisible;
+export const controlledBase64 = (state: RootState) => state.controlledReducer.base64;
