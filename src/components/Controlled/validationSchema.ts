@@ -11,7 +11,7 @@ export const schema = yup.object().shape({
   name: yup.string().matches(VALIDATION_RULES.nameRules, VALIDATION_MESSAGES.message_uppercase),
   email: yup
     .string()
-    // .required(VALIDATION_MESSAGES.message_required)
+    .required(VALIDATION_MESSAGES.message_required)
     .email(EMAIL_VALIDATION.message)
     .matches(EMAIL_VALIDATION.rules, EMAIL_VALIDATION.message),
   password: PASSWORD_SCHEMA,
@@ -21,12 +21,13 @@ export const schema = yup.object().shape({
     .oneOf([yup.ref('password')], 'Your passwords do not match.'),
   age: yup
     .number()
+    .required(VALIDATION_MESSAGES.message_required)
     .typeError(VALIDATION_MESSAGES.message_number)
     .min(0, VALIDATION_MESSAGES.message_positive),
   gender: yup.string(),
   file: yup
     .mixed<FileList>()
-    .required()
+    .required(VALIDATION_MESSAGES.message_required)
     .test(
       'fileSize',
       'Only documents up to 2MB are permitted.',
@@ -41,8 +42,8 @@ export const schema = yup.object().shape({
         files.length === 0 ||
         Array.from(files).every((file) => file && SUPPORTED_FORMATS.includes(file.type))
     ),
-  country: yup.string(),
-  terms: yup.boolean().required(),
+  country: yup.string().required(VALIDATION_MESSAGES.message_required),
+  terms: yup.boolean().oneOf([true], 'Just accept it already!'),
 });
 
 export type SchemaType = yup.InferType<typeof schema>;

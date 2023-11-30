@@ -1,8 +1,8 @@
 import { PreloadedState, combineReducers, configureStore } from '@reduxjs/toolkit';
 import controlledReducer from './reducers/ControlledSlice';
-import UncontrolledReducer from './reducers/UncontrolledSlice';
+import uncontrolledReducer from './reducers/UncontrolledSlice';
 
-const rootReducer = combineReducers({ controlledReducer, UncontrolledReducer });
+const rootReducer = combineReducers({ controlledReducer, uncontrolledReducer });
 
 export const setupStore = (preloadedState?: PreloadedState<RootState>) => {
   return configureStore({

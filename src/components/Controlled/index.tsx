@@ -3,7 +3,15 @@ import { useForm } from 'react-hook-form';
 import styles from './Controlled.module.scss';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { schema } from './validationSchema';
-import { countryList } from '../../utils/validation';
+import { controlledFormSlice } from '../../redux/reducers/ControlledSlice';
+import {
+  controlledCountrySearch,
+  controlledFilteredCountries,
+  controlledIsSuggestions,
+} from '../../redux/state';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks/redux';
+import { ChangeEventHandler, MouseEventHandler } from 'react';
+
 export const Controlled = () => {
   const {
     register,
@@ -11,11 +19,39 @@ export const Controlled = () => {
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema), mode: 'all' });
 
+  const isInvalid = !!Object.entries(errors).length;
+  const dispatch = useAppDispatch();
+  const { setSearch, filterCountries, setSuggestions } = controlledFormSlice.actions;
+  const searchValue = useAppSelector(controlledCountrySearch);
+  const filteredCountries = useAppSelector(controlledFilteredCountries);
+  const isSuggestionsVisible = useAppSelector(controlledIsSuggestions);
+
   const onSubmitHandler = (formData: object) => {
     console.log(formData);
   };
 
-  const isInvalid = !!Object.entries(errors).length;
+  const handleCountryClick: MouseEventHandler<HTMLLIElement> = (e) => {
+    const target = e.target as HTMLElement;
+    const value = target.innerHTML;
+    dispatch(setSearch(value));
+  };
+
+  const handleCountryFocus = () => {
+    dispatch(setSuggestions(true));
+  };
+
+  const handleCountryBlur = () => {
+    setTimeout(() => {
+      dispatch(setSuggestions(false));
+    }, 100);
+  };
+
+  const handleCountryChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    const target = e.target as HTMLInputElement;
+    const value = target.value;
+    dispatch(filterCountries(value));
+    dispatch(setSearch(value));
+  };
 
   return (
     <div className={styles.wrapper}>
@@ -103,18 +139,25 @@ export const Controlled = () => {
           <div className={`${styles.inputWrapper} ${styles.autocompleteInputWrapper}`}>
             <input
               {...register('country')}
+              value={searchValue}
               name="country"
               type="text"
               placeholder="Finally, your country"
-              className={styles.countriesInput}
+              className={`${styles.countriesInput} ${errors.country && styles.invalid}`}
+              onChange={handleCountryChange}
+              onFocus={handleCountryFocus}
+              onBlur={handleCountryBlur}
             />
-            <div className={styles.countries}>
-              {countryList.map((item) => (
-                <div className={styles.countriesItem} key={item}>
-                  {item}
-                </div>
-              ))}
-            </div>
+            {isSuggestionsVisible && (
+              <ul className={styles.countries}>
+                {filteredCountries.map((item) => (
+                  <li onClick={handleCountryClick} className={styles.countriesItem} key={item}>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            )}
+            <div className={styles.errorText}>{errors.country?.message}</div>
           </div>
         </div>
         <label className={styles.checkboxWrapper}>
@@ -124,6 +167,7 @@ export const Controlled = () => {
             knowledge, immortality, etc. whatever
           </p>
         </label>
+        <div className={styles.errorText}>{errors.terms?.message}</div>
         <button disabled={isInvalid} className={styles.submitButton} type="submit">
           {isInvalid ? 'Fill out this form first, dear' : 'Become a senior developer'}
         </button>

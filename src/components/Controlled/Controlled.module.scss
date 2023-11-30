@@ -124,7 +124,7 @@ h6 {
 }
 
 .submitButton {
-  margin: 40px 0;
+  margin: 10px 0 40px;
   padding: 10px 20px;
   font-size: 20px;
 
@@ -160,19 +160,28 @@ h6 {
   }
 }
 
-.countriesInput {
-  &:focus + div {
-    display: block;
-  }
-}
+// .countriesInput {
+//   &:focus {
+//   }
+
+//   &:focus + .countries {
+//     display: block;
+//   }
+// }
 
 .countries {
-  display: none;
+  // display: none;
   width: 276px;
-  max-height: 200px;
+  max-height: 130px;
   overflow: auto;
   position: absolute;
   z-index: 1;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+
+  border-radius: 0 0 5px 5px;
+  border-top: 2px solid $cream-3;
 }
 
 .countriesItem {
@@ -182,11 +191,14 @@ h6 {
   color: $red-2;
   font-weight: 700;
   font-size: 20px;
-  border-bottom: 2px solid $cream-3;
 
   &:hover {
     cursor: pointer;
     background-color: $red-1;
     color: $cream-1;
+  }
+
+  &:not(:last-child) {
+    border-bottom: 2px solid $cream-3;
   }
 }
