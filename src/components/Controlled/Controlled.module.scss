@@ -40,7 +40,8 @@ h6 {
 }
 
 .file {
-  color: transparent;
+  color: $cream-1;
+  background-color: $red-2;
   width: 276px;
   height: 50px;
   padding: 0;
@@ -48,6 +49,7 @@ h6 {
 
   &:hover {
     color: $red-5;
+    cursor: pointer;
   }
 
   &:focus {
@@ -63,27 +65,8 @@ h6 {
 
 .file::-webkit-file-upload-button {
   visibility: hidden;
-}
-
-.file::before {
-  content: 'Pick your photo..';
-  display: block;
-  height: 100%;
-  background-color: $red-2;
-  border: none;
-  color: $cream-1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  cursor: pointer;
-
-  transition: all 0.2s ease-in-out;
-
-  &:hover {
-    background-color: $cream-1;
-    color: $red-1;
-  }
+  width: 5px;
+  height: 50px;
 }
 
 .checkboxWrapper {
@@ -91,6 +74,8 @@ h6 {
 
   margin: 0 auto;
   display: flex;
+
+  user-select: none;
 
   p {
     margin: 0px 5px 0;
@@ -144,11 +129,11 @@ h6 {
 }
 
 .errorText {
-  height: 40px;
-  margin: 10px auto 0;
+  height: 20px;
+  margin: 10px auto 4px;
   width: 90%;
   color: $red-4;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .autocompleteInputWrapper {

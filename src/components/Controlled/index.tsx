@@ -1,8 +1,8 @@
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 
 import styles from './Controlled.module.scss';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { schema } from './validationSchema';
+import { schema } from '../../utils/validationSchema';
 import { controlledFormSlice } from '../../redux/reducers/ControlledSlice';
 import {
   controlledCountrySearch,
@@ -11,6 +11,7 @@ import {
 } from '../../redux/state';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks/redux';
 import { ChangeEventHandler, MouseEventHandler } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export const Controlled = () => {
   const {
@@ -21,14 +22,18 @@ export const Controlled = () => {
 
   const isInvalid = !!Object.entries(errors).length;
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
-  const { setSearch, filterCountries, setSuggestions, setBase64 } = controlledFormSlice.actions;
+  const { setSearch, filterCountries, setSuggestions, setBase64, setData } =
+    controlledFormSlice.actions;
   const searchValue = useAppSelector(controlledCountrySearch);
   const filteredCountries = useAppSelector(controlledFilteredCountries);
   const isSuggestionsVisible = useAppSelector(controlledIsSuggestions);
 
   const onSubmitHandler = (formData: object) => {
+    dispatch(setData(formData));
     console.log(formData);
+    navigate('/');
   };
 
   const handleCountryClick: MouseEventHandler<HTMLLIElement> = (e) => {
@@ -78,7 +83,7 @@ export const Controlled = () => {
       console.error('Cant upload an image...');
       return;
     }
-    const convertedImage = await convertBase64(value);
+    const convertedImage = (await convertBase64(value)) as string;
     dispatch(setBase64(convertedImage));
   };
 
@@ -162,6 +167,7 @@ export const Controlled = () => {
           </div>
           <div className={styles.inputWrapper}>
             <input
+              id="file-upload"
               {...register('file')}
               name="file"
               className={`${styles.file} ${errors.file && styles.invalid}`}

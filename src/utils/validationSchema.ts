@@ -5,7 +5,7 @@ import {
   EMAIL_VALIDATION,
   PASSWORD_SCHEMA,
   SUPPORTED_FORMATS,
-} from '../../utils/validation';
+} from './validation';
 
 export const schema = yup.object().shape({
   name: yup.string().matches(VALIDATION_RULES.nameRules, VALIDATION_MESSAGES.message_uppercase),
@@ -27,7 +27,11 @@ export const schema = yup.object().shape({
   gender: yup.string(),
   file: yup
     .mixed<FileList>()
-    .required(VALIDATION_MESSAGES.message_required)
+    .test(
+      'required',
+      VALIDATION_MESSAGES.message_required,
+      (files) => !files || (files?.length > 0 && !!files)
+    )
     .test(
       'fileSize',
       'Only documents up to 2MB are permitted.',

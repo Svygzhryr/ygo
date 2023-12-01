@@ -4,7 +4,7 @@ export const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png'];
 
 export const EMAIL_VALIDATION = {
   rules: /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/,
-  message: 'Please type an email of correct format (e.g. example@gmail.com)!',
+  message: 'Incorrect email! (e.g. underworld@gmail.com)',
 };
 
 export const PASSWORD_VALIDATION = {

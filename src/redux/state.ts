@@ -7,3 +7,11 @@ export const controlledFilteredCountries = (state: RootState) =>
 export const controlledIsSuggestions = (state: RootState) =>
   state.controlledReducer.isSuggestionsVisible;
 export const controlledBase64 = (state: RootState) => state.controlledReducer.base64;
+
+export const uncontrolledData = (state: RootState) => state.uncontrolledReducer.data;
+export const uncontrolledCountrySearch = (state: RootState) => state.uncontrolledReducer.search;
+export const uncontrolledFilteredCountries = (state: RootState) =>
+  state.uncontrolledReducer.filteredCountries;
+export const uncontrolledIsSuggestions = (state: RootState) =>
+  state.uncontrolledReducer.isSuggestionsVisible;
+export const uncontrolledBase64 = (state: RootState) => state.uncontrolledReducer.base64;
