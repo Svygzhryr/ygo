@@ -10,7 +10,7 @@ import {
   controlledIsSuggestions,
 } from '../../redux/state';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks/redux';
-import { ChangeEventHandler, MouseEventHandler } from 'react';
+import { ChangeEventHandler, MouseEventHandler, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export const Controlled = () => {
@@ -18,6 +18,8 @@ export const Controlled = () => {
     register,
     handleSubmit,
     formState: { errors },
+    watch,
+    setValue,
   } = useForm({ resolver: yupResolver(schema), mode: 'all' });
 
   const isInvalid = !!Object.entries(errors).length;
@@ -40,6 +42,7 @@ export const Controlled = () => {
     const target = e.target as HTMLElement;
     const value = target.innerHTML;
     dispatch(setSearch(value));
+    setValue('country', value);
   };
 
   const handleCountryFocus = () => {
@@ -50,13 +53,6 @@ export const Controlled = () => {
     setTimeout(() => {
       dispatch(setSuggestions(false));
     }, 100);
-  };
-
-  const handleCountryChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-    const target = e.target as HTMLInputElement;
-    const value = target.value;
-    dispatch(filterCountries(value));
-    dispatch(setSearch(value));
   };
 
   const convertBase64 = (file: File) => {
@@ -86,6 +82,17 @@ export const Controlled = () => {
     const convertedImage = (await convertBase64(value)) as string;
     dispatch(setBase64(convertedImage));
   };
+
+  useEffect(() => {
+    watch(({ country }) => {
+      dispatch(setSearch(country));
+      dispatch(filterCountries(country));
+    });
+  }, [watch]);
+
+  // useEffect(() => {
+  //   console.log(filterCountries);
+  // }, []);
 
   return (
     <div className={styles.wrapper}>
@@ -177,25 +184,28 @@ export const Controlled = () => {
             />
             <div className={styles.errorText}>{errors.file?.message}</div>
           </div>
-          <div className={`${styles.inputWrapper} ${styles.autocompleteInputWrapper}`}>
+          <div
+            // onClick={handleCountryFocus}
+            // onBlur={handleCountryBlur}
+            className={`${styles.inputWrapper} ${styles.autocompleteInputWrapper}`}
+          >
             <input
               {...register('country')}
-              value={searchValue}
               name="country"
               type="text"
               placeholder="Finally, your country"
               className={`${styles.countriesInput} ${errors.country && styles.invalid}`}
-              onChange={handleCountryChange}
-              // onFocus={handleCountryFocus}
-              // onBlur={handleCountryBlur}
             />
             {searchValue && (
               <ul className={styles.countries}>
-                {filteredCountries.map((item) => (
-                  <li onClick={handleCountryClick} className={styles.countriesItem} key={item}>
-                    {item}
-                  </li>
-                ))}
+                {filteredCountries.map(
+                  (item) =>
+                    item === searchValue || (
+                      <li onClick={handleCountryClick} className={styles.countriesItem} key={item}>
+                        {item}
+                      </li>
+                    )
+                )}
               </ul>
             )}
             <div className={styles.errorText}>{errors.country?.message}</div>

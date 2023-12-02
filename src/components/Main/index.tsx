@@ -13,7 +13,9 @@ export const Main = () => {
   const controlledImage = useAppSelector(controlledBase64);
   const uncontrolledImage = useAppSelector(uncontrolledBase64);
 
-  if (controlledOutput || controlledImage) {
+  console.log(controlledOutput, uncontrolledOutput);
+
+  if (controlledOutput.name || uncontrolledOutput.name) {
     return (
       <>
         <h1>Data output</h1>

@@ -145,17 +145,7 @@ h6 {
   }
 }
 
-// .countriesInput {
-//   &:focus {
-//   }
-
-//   &:focus + .countries {
-//     display: block;
-//   }
-// }
-
 .countries {
-  // display: none;
   width: 276px;
   max-height: 130px;
   overflow: auto;
@@ -166,7 +156,6 @@ h6 {
   margin: 0;
 
   border-radius: 0 0 5px 5px;
-  border-top: 2px solid $cream-3;
 }
 
 .countriesItem {
