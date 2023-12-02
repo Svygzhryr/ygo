@@ -5,6 +5,7 @@ import {
   useRef,
   FormEventHandler,
   FormEvent,
+  LegacyRef,
 } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks/redux';
@@ -16,18 +17,33 @@ import {
 } from '../../redux/state';
 import { schema } from '../../utils/validationSchema';
 import styles from './Uncontrolled.module.scss';
-import { IFormProps } from '../../utils/types';
+import { IErrors, IFormProps } from '../../utils/types';
+
+export interface IFormRef {
+  current: (HTMLInputElement | HTMLSelectElement)[];
+}
 
 export const Uncontrolled = () => {
-  const formRef = useRef([]);
-
-  const setRef = (item) => {
-    if (item && !formRef.current.includes(item)) {
-      formRef.current.push(item);
+  const formRef = useRef<HTMLFormElement | []>([]);
+  const setRef = (item: HTMLElement) => {
+    if (item && !formRef.current?.includes(item)) {
+      formRef.current?.push(item);
     }
   };
 
-  const [errorsState, setErrorsState] = useState(null);
+  const errors = {
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+    age: '',
+    gender: '',
+    file: '',
+    country: '',
+    terms: '',
+  };
+
+  const [errorsState, setErrorsState] = useState(errors);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -39,19 +55,28 @@ export const Uncontrolled = () => {
 
   const onSubmitHandler: FormEventHandler<HTMLFormElement> = (e: FormEvent) => {
     e.preventDefault();
-    const formData: IFormProps = {
-      name: formRef.current[0].value,
-      email: formRef.current[1].value,
-      password: formRef.current[2].value,
-      confirmPassword: formRef.current[3].value,
-      age: formRef.current[4].value,
-      gender: formRef.current[5].value,
-      file: formRef.current[6]?.files,
-      country: formRef.current[7].value,
-      terms: formRef.current[8].checked,
-    };
 
-    const errors = {};
+    const name = formRef.current[0] as HTMLInputElement;
+    const email = formRef.current[1] as HTMLInputElement;
+    const password = formRef.current[2] as HTMLInputElement;
+    const confirmPassword = formRef.current[3] as HTMLInputElement;
+    const age = formRef.current[4] as HTMLInputElement;
+    const gender = formRef.current[5] as HTMLInputElement;
+    const file = formRef.current[6] as HTMLInputElement;
+    const country = formRef.current[7] as HTMLInputElement;
+    const terms = formRef.current[8] as HTMLInputElement;
+
+    const formData = {
+      name: name.value,
+      email: email.value,
+      password: password.value,
+      confirmPassword: confirmPassword.value,
+      age: age.value,
+      gender: gender.value,
+      file: file.files,
+      country: country.value,
+      terms: terms.checked,
+    };
 
     schema
       .validate(formData, { abortEarly: false })
@@ -60,8 +85,8 @@ export const Uncontrolled = () => {
         navigate('/');
       })
       .catch((err) => {
-        err.inner.forEach((e: Error) => {
-          errors[e.path] = e.message;
+        err.inner.forEach((e: { path: string; message: string }) => {
+          errors[e.path as keyof typeof errors] = e.message;
         });
         setErrorsState(errors);
       });
@@ -127,7 +152,7 @@ export const Uncontrolled = () => {
           <div className={styles.inputWrapper}>
             <input
               className={errorsState?.name && styles.invalid}
-              ref={setRef}
+              ref={setRef as LegacyRef<HTMLInputElement> | undefined}
               name="name"
               type="text"
               placeholder="Your name here.."
@@ -138,7 +163,7 @@ export const Uncontrolled = () => {
           <div className={styles.inputWrapper}>
             <input
               className={errorsState?.email && styles.invalid}
-              ref={setRef}
+              ref={setRef as LegacyRef<HTMLInputElement> | undefined}
               name="email"
               type="text"
               placeholder="Email here.."
@@ -148,7 +173,7 @@ export const Uncontrolled = () => {
           </div>
           <div className={styles.inputWrapper}>
             <input
-              ref={setRef}
+              ref={setRef as LegacyRef<HTMLInputElement> | undefined}
               className={errorsState?.password && styles.invalid}
               name="password"
               type="text"
@@ -159,7 +184,7 @@ export const Uncontrolled = () => {
           </div>
           <div className={styles.inputWrapper}>
             <input
-              ref={setRef}
+              ref={setRef as LegacyRef<HTMLInputElement> | undefined}
               className={errorsState?.confirmPassword && styles.invalid}
               name="confirmPassword"
               type="text"
@@ -170,7 +195,7 @@ export const Uncontrolled = () => {
           </div>
           <div className={styles.inputWrapper}>
             <input
-              ref={setRef}
+              ref={setRef as LegacyRef<HTMLInputElement> | undefined}
               className={errorsState?.age && styles.invalid}
               name="age"
               type="text"
@@ -180,7 +205,12 @@ export const Uncontrolled = () => {
             <div className={styles.errorText}>{errorsState?.age}</div>
           </div>
           <div className={styles.inputWrapper}>
-            <select ref={setRef} name="gender" defaultValue="Male" placeholder="Your gender..">
+            <select
+              ref={setRef as LegacyRef<HTMLSelectElement> | undefined}
+              name="gender"
+              defaultValue="Male"
+              placeholder="Your gender.."
+            >
               <option value="default" disabled>
                 Select your gender
               </option>
@@ -195,7 +225,7 @@ export const Uncontrolled = () => {
             <input
               id="file-upload"
               name="file"
-              ref={setRef}
+              ref={setRef as LegacyRef<HTMLInputElement> | undefined}
               className={`${styles.file} ${errorsState?.file && styles.invalid}`}
               type="file"
               placeholder="Your photo, please"
@@ -205,7 +235,7 @@ export const Uncontrolled = () => {
           </div>
           <div className={`${styles.inputWrapper} ${styles.autocompleteInputWrapper}`}>
             <input
-              ref={setRef}
+              ref={setRef as LegacyRef<HTMLInputElement> | undefined}
               value={searchValue}
               name="country"
               type="text"
@@ -228,7 +258,12 @@ export const Uncontrolled = () => {
           </div>
         </div>
         <label className={styles.checkboxWrapper}>
-          <input ref={setRef} name="terms" className={styles.checkbox} type="checkbox" />
+          <input
+            ref={setRef as LegacyRef<HTMLInputElement> | undefined}
+            name="terms"
+            className={styles.checkbox}
+            type="checkbox"
+          />
           <p>
             I understand that there is no way I can get my soul back and an oath I&apos;ve made
             cannot be broken

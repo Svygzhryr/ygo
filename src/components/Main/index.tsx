@@ -5,15 +5,14 @@ import {
   uncontrolledBase64,
   uncontrolledData,
 } from '../../redux/state';
+import { IFormProps } from '../../utils/types';
 import styles from './Main.module.scss';
 
 export const Main = () => {
-  const controlledOutput = useAppSelector(controlledData);
-  const uncontrolledOutput = useAppSelector(uncontrolledData);
+  const controlledOutput = useAppSelector(controlledData) as IFormProps;
+  const uncontrolledOutput = useAppSelector(uncontrolledData) as IFormProps;
   const controlledImage = useAppSelector(controlledBase64);
   const uncontrolledImage = useAppSelector(uncontrolledBase64);
-
-  console.log(controlledOutput, uncontrolledOutput);
 
   if (controlledOutput.name || uncontrolledOutput.name) {
     return (
