@@ -1,20 +1,20 @@
 import { RootState } from './store';
 
-export const controlledData = (state: RootState) => state.controlledForm.data;
-export const controlledCountrySearch = (state: RootState) => state.controlledForm.search;
+export const controlledData = (state: RootState) => state.controlledReducer.data;
+export const controlledCountrySearch = (state: RootState) => state.controlledReducer.search;
 export const controlledFilteredCountries = (state: RootState) =>
-  state.controlledForm.filteredCountries;
+  state.controlledReducer.filteredCountries;
 export const controlledIsSuggestions = (state: RootState) =>
-  state.controlledForm.isSuggestionsVisible;
-export const controlledBase64 = (state: RootState) => state.controlledForm.base64;
+  state.controlledReducer.isSuggestionsVisible;
+export const controlledBase64 = (state: RootState) => state.controlledReducer.base64;
 
-export const uncontrolledData = (state: RootState) => state.uncontrolledForm.data;
-export const uncontrolledCountrySearch = (state: RootState) => state.uncontrolledForm.search;
+export const uncontrolledData = (state: RootState) => state.uncontrolledReducer.data;
+export const uncontrolledCountrySearch = (state: RootState) => state.uncontrolledReducer.search;
 export const uncontrolledFilteredCountries = (state: RootState) =>
-  state.uncontrolledForm.filteredCountries;
+  state.uncontrolledReducer.filteredCountries;
 export const uncontrolledIsSuggestions = (state: RootState) =>
-  state.uncontrolledForm.isSuggestionsVisible;
-export const uncontrolledBase64 = (state: RootState) => state.uncontrolledForm.base64;
-export const uncontrolledErrors = (state: RootState) => state.uncontrolledForm.errors;
+  state.uncontrolledReducer.isSuggestionsVisible;
+export const uncontrolledBase64 = (state: RootState) => state.uncontrolledReducer.base64;
+export const uncontrolledErrors = (state: RootState) => state.uncontrolledReducer.errors;
 
-export const isNotificationActive = (state: RootState) => state.notitication.isActive;
+export const isNotificationActive = (state: RootState) => state.notiticationReducer.isActive;

@@ -42,7 +42,9 @@ export const Controlled = () => {
       console.error('Cant upload image..');
     }
 
-    dispatch(setData(formData));
+    const { age, confirmPassword, country, email, gender, name, password, terms } = formData;
+
+    dispatch(setData({ name, email, password, confirmPassword, age, country, gender, terms }));
     navigate('/');
     dispatch(setIsActive(true));
     setTimeout(() => {

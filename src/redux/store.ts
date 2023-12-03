@@ -1,12 +1,12 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import controlledForm from './reducers/controlledSlice';
-import uncontrolledForm from './reducers/uncontrolledSlice';
-import notitication from './reducers/notificationSlice';
+import controlledReducer from './reducers/controlledSlice';
+import uncontrolledReducer from './reducers/uncontrolledSlice';
+import notiticationReducer from './reducers/notificationSlice';
 
 const rootReducer = combineReducers({
-  controlledForm,
-  uncontrolledForm,
-  notitication,
+  controlledReducer,
+  uncontrolledReducer,
+  notiticationReducer,
 });
 
 export const setupStore = configureStore({
