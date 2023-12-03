@@ -17,8 +17,7 @@ import {
 } from '../../redux/state';
 import { schema } from '../../utils/validationSchema';
 import styles from './Uncontrolled.module.scss';
-import { IErrors, IFormProps } from '../../utils/types';
-
+import { notificationSlice } from '../../redux/reducers/NotificationSlice';
 export interface IFormRef {
   current: (HTMLInputElement | HTMLSelectElement)[];
 }
@@ -49,6 +48,7 @@ export const Uncontrolled = () => {
 
   const { setSearch, filterCountries, setSuggestions, setBase64, setData } =
     uncontrolledFormSlice.actions;
+  const { setIsActive } = notificationSlice.actions;
   const searchValue = useAppSelector(uncontrolledCountrySearch);
   const filteredCountries = useAppSelector(uncontrolledFilteredCountries);
   const isSuggestionsVisible = useAppSelector(uncontrolledIsSuggestions);
@@ -83,6 +83,10 @@ export const Uncontrolled = () => {
       .then(() => {
         dispatch(setData(formData));
         navigate('/');
+        dispatch(setIsActive(true));
+        setTimeout(() => {
+          dispatch(setIsActive(false));
+        }, 500);
       })
       .catch((err) => {
         err.inner.forEach((e: { path: string; message: string }) => {

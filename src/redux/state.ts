@@ -15,3 +15,5 @@ export const uncontrolledFilteredCountries = (state: RootState) =>
 export const uncontrolledIsSuggestions = (state: RootState) =>
   state.uncontrolledReducer.isSuggestionsVisible;
 export const uncontrolledBase64 = (state: RootState) => state.uncontrolledReducer.base64;
+
+export const isNotificationActive = (state: RootState) => state.notificationReducer.isActive;

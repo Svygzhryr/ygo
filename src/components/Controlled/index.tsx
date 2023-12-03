@@ -12,6 +12,7 @@ import {
 import { useAppDispatch, useAppSelector } from '../../redux/hooks/redux';
 import { ChangeEventHandler, MouseEventHandler, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { notificationSlice } from '../../redux/reducers/NotificationSlice';
 
 export const Controlled = () => {
   const {
@@ -28,14 +29,17 @@ export const Controlled = () => {
 
   const { setSearch, filterCountries, setSuggestions, setBase64, setData } =
     controlledFormSlice.actions;
+  const { setIsActive } = notificationSlice.actions;
   const searchValue = useAppSelector(controlledCountrySearch);
   const filteredCountries = useAppSelector(controlledFilteredCountries);
-  const isSuggestionsVisible = useAppSelector(controlledIsSuggestions);
 
   const onSubmitHandler = (formData: object) => {
     dispatch(setData(formData));
-    console.log(formData);
     navigate('/');
+    dispatch(setIsActive(true));
+    setTimeout(() => {
+      dispatch(setIsActive(false));
+    }, 500);
   };
 
   const handleCountryClick: MouseEventHandler<HTMLLIElement> = (e) => {
@@ -43,16 +47,6 @@ export const Controlled = () => {
     const value = target.innerHTML;
     dispatch(setSearch(value));
     setValue('country', value);
-  };
-
-  const handleCountryFocus = () => {
-    dispatch(setSuggestions(true));
-  };
-
-  const handleCountryBlur = () => {
-    setTimeout(() => {
-      dispatch(setSuggestions(false));
-    }, 100);
   };
 
   const convertBase64 = (file: File) => {
@@ -89,10 +83,6 @@ export const Controlled = () => {
       dispatch(filterCountries(country));
     });
   }, [watch]);
-
-  // useEffect(() => {
-  //   console.log(filterCountries);
-  // }, []);
 
   return (
     <div className={styles.wrapper}>

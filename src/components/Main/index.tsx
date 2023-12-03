@@ -3,21 +3,25 @@ import { useAppSelector } from '../../redux/hooks/redux';
 import {
   controlledBase64,
   controlledData,
+  isNotificationActive,
   uncontrolledBase64,
   uncontrolledData,
 } from '../../redux/state';
 import { IFormProps } from '../../utils/types';
 import styles from './Main.module.scss';
+import { Notification } from '../Notification';
 
 export const Main = () => {
   const controlledOutput = useAppSelector(controlledData) as IFormProps;
   const uncontrolledOutput = useAppSelector(uncontrolledData) as IFormProps;
   const controlledImage = useAppSelector(controlledBase64);
   const uncontrolledImage = useAppSelector(uncontrolledBase64);
+  const isPopupActive = useAppSelector(isNotificationActive);
 
   if (controlledOutput.name || uncontrolledOutput.name) {
     return (
       <>
+        <Notification active={isPopupActive} />
         <h1>Data output</h1>
         <h6>take a look at your agreements</h6>
         <div className={styles.outputWrapper}>
@@ -81,7 +85,7 @@ export const Main = () => {
       </div>
       <div className={styles.footnote}>
         <br />
-        <p>* - the only thing we take away is just soul. no money, vouchers or precious metals</p>
+        <p>* - the only thing taken away is just soul. no money, vouchers or precious metals</p>
         <p>** - except for eternal servitude</p>
       </div>
     </div>
