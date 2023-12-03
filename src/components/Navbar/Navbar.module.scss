@@ -1,5 +1,19 @@
 @import '../../utils/variables';
 
+button {
+  p {
+    padding: 0;
+    margin: 0;
+    font-size: 10px;
+    font-weight: 700;
+    transition: all 0.2s ease-in-out;
+  }
+}
+
+.controlledText {
+  color: $red-1;
+}
+
 .navbarWrapper {
   background-color: $black-1t;
   height: 80px;
@@ -11,6 +25,10 @@
   padding: 5px 0;
   width: 800px;
   border-radius: 0 0 20px 20px;
+}
+
+.logo {
+  margin: 0 20px;
 }
 
 .logo,
@@ -35,13 +53,21 @@
 }
 
 .button {
-  width: 250px;
+  width: 200px;
   padding: 10px 0;
   font-size: 20px;
 
   &:hover {
     background-color: $cream-1;
     color: $red-2;
+
+    .uncontrolledText {
+      color: $red-1;
+    }
+
+    .controlledText {
+      color: $cream-1;
+    }
   }
 }
 
