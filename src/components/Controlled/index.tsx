@@ -47,7 +47,7 @@ export const Controlled = () => {
     dispatch(setIsActive(true));
     setTimeout(() => {
       dispatch(setIsActive(false));
-    }, 1000);
+    }, 2000);
   };
 
   const handleCountryClick: MouseEventHandler<HTMLLIElement> = (e) => {

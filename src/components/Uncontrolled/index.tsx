@@ -91,7 +91,7 @@ export const Uncontrolled = () => {
         dispatch(setIsActive(true));
         setTimeout(() => {
           dispatch(setIsActive(false));
-        }, 500);
+        }, 2000);
       })
       .catch((err) => {
         err.inner.forEach((e: { path: string; message: string }) => {
