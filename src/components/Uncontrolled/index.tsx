@@ -8,17 +8,18 @@ import {
 } from 'react';
 
 import { useNavigate } from 'react-router-dom';
+import clsx from 'clsx';
 
 import { useAppDispatch, useAppSelector } from '../../redux/hooks/redux';
-import { uncontrolledFormSlice } from '../../redux/reducers/UncontrolledSlice';
+import { uncontrolledFormSlice } from '../../redux/reducers/uncontrolledSlice';
 import {
   uncontrolledCountrySearch,
   uncontrolledErrors,
   uncontrolledFilteredCountries,
   uncontrolledIsSuggestions,
-} from '../../redux/state';
+} from '../../redux/selectors';
 import { schema } from '../../utils/validationSchema';
-import { notificationSlice } from '../../redux/reducers/NotificationSlice';
+import { notificationSlice } from '../../redux/reducers/notificationSlice';
 import { convertBase64 } from '../../utils/utils';
 
 import styles from './Uncontrolled.module.scss';
@@ -34,19 +35,6 @@ export const Uncontrolled = () => {
     }
   };
 
-  // const errors = {
-  //   name: '',
-  //   email: '',
-  //   password: '',
-  //   confirmPassword: '',
-  //   age: '',
-  //   gender: '',
-  //   file: '',
-  //   country: '',
-  //   terms: '',
-  // };
-
-  // const [errorsState, setErrorsState] = useState(errors);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -171,6 +159,7 @@ export const Uncontrolled = () => {
               ref={setRef as LegacyRef<HTMLInputElement> | undefined}
               name="email"
               type="text"
+              autoComplete="username"
               placeholder="Email here.."
             />
             <div className={styles.errorText}>{errorsState?.email}</div>
@@ -180,7 +169,8 @@ export const Uncontrolled = () => {
               ref={setRef as LegacyRef<HTMLInputElement> | undefined}
               className={errorsState?.password && styles.invalid}
               name="password"
-              type="text"
+              type="password"
+              autoComplete="new-password"
               placeholder="Password, for some reason"
             />
             <div className={styles.errorText}>{errorsState?.password}</div>
@@ -190,7 +180,8 @@ export const Uncontrolled = () => {
               ref={setRef as LegacyRef<HTMLInputElement> | undefined}
               className={errorsState?.confirmPassword && styles.invalid}
               name="confirmPassword"
-              type="text"
+              type="password"
+              autoComplete="new-password"
               placeholder="Repeat your password.."
             />
             <div className={styles.errorText}>{errorsState?.confirmPassword}</div>
@@ -233,14 +224,14 @@ export const Uncontrolled = () => {
             />
             <div className={styles.errorText}>{errorsState?.file}</div>
           </div>
-          <div className={`${styles.inputWrapper} ${styles.autocompleteInputWrapper}`}>
+          <div className={styles.autocompleteInputWrapper}>
             <input
               ref={setRef as LegacyRef<HTMLInputElement> | undefined}
               value={searchValue}
               name="country"
               type="text"
               placeholder="Finally, your country"
-              className={`${styles.countriesInput} ${errorsState?.country && styles.invalid}`}
+              className={clsx({ [styles.invalid]: !!errorsState.country })}
               onChange={handleCountryChange}
               onFocus={handleCountryFocus}
               onBlur={handleCountryBlur}

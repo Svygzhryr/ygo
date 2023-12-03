@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 const initialState = {
   isActive: false,
@@ -8,8 +8,8 @@ export const notificationSlice = createSlice({
   name: 'notification',
   initialState,
   reducers: {
-    setIsActive(state, action) {
-      state.isActive = action.payload;
+    setIsActive(state, { payload }: PayloadAction<boolean>) {
+      state.isActive = payload;
     },
   },
 });

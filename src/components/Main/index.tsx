@@ -7,7 +7,7 @@ import {
   isNotificationActive,
   uncontrolledBase64,
   uncontrolledData,
-} from '../../redux/state';
+} from '../../redux/selectors';
 import { IFormProps } from '../../utils/types';
 import { Notification } from '../Notification';
 

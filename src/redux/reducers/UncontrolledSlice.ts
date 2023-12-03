@@ -32,7 +32,9 @@ export const uncontrolledFormSlice = createSlice({
       state.search = action.payload;
     },
     filterCountries(state, action) {
-      state.filteredCountries = countryList.filter((item) => item.includes(action.payload));
+      state.filteredCountries = countryList.filter((item) =>
+        item.toLowerCase().includes(action.payload.toLowerCase())
+      );
     },
     setSuggestions(state, action) {
       state.isSuggestionsVisible = action.payload;

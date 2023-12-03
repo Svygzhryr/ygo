@@ -4,15 +4,16 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 
-import { controlledFormSlice } from '../../redux/reducers/ControlledSlice';
-import { controlledCountrySearch, controlledFilteredCountries } from '../../redux/state';
+import { controlledFormSlice } from '../../redux/reducers/controlledSlice';
+import { controlledCountrySearch, controlledFilteredCountries } from '../../redux/selectors';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks/redux';
-import { notificationSlice } from '../../redux/reducers/NotificationSlice';
+import { notificationSlice } from '../../redux/reducers/notificationSlice';
 import { schema } from '../../utils/validationSchema';
 import { convertBase64 } from '../../utils/utils';
 
 import styles from './Controlled.module.scss';
 import { IFormProps } from '../../utils/types';
+import clsx from 'clsx';
 
 export const Controlled = () => {
   const {
@@ -85,6 +86,7 @@ export const Controlled = () => {
               {...register('email')}
               name="email"
               type="text"
+              autoComplete="username"
               placeholder="Email here.."
             />
             <div className={styles.errorText}>{errors.email?.message}</div>
@@ -94,7 +96,8 @@ export const Controlled = () => {
               className={errors.password && styles.invalid}
               {...register('password')}
               name="password"
-              type="text"
+              type="password"
+              autoComplete="new-password"
               placeholder="Password, for some reason"
             />
             <div className={styles.errorText}>{errors.password?.message}</div>
@@ -104,7 +107,8 @@ export const Controlled = () => {
               className={errors.confirmPassword && styles.invalid}
               {...register('confirmPassword')}
               name="confirmPassword"
-              type="text"
+              type="password"
+              autoComplete="new-password"
               placeholder="Repeat your password.."
             />
             <div className={styles.errorText}>{errors.confirmPassword?.message}</div>
@@ -142,13 +146,13 @@ export const Controlled = () => {
             />
             <div className={styles.errorText}>{errors.file?.message}</div>
           </div>
-          <div className={`${styles.inputWrapper} ${styles.autocompleteInputWrapper}`}>
+          <div className={styles.autocompleteInputWrapper}>
             <input
               {...register('country')}
               name="country"
               type="text"
               placeholder="Finally, your country"
-              className={`${styles.countriesInput} ${errors.country && styles.invalid}`}
+              className={clsx(errors.country && styles.invalid)}
             />
             {searchValue && (
               <ul className={styles.countries}>
