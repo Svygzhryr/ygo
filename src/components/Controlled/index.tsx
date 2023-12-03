@@ -157,7 +157,7 @@ export const Controlled = () => {
             {searchValue && (
               <ul className={styles.countries}>
                 {filteredCountries.map(
-                  (item) =>
+                  (item: string) =>
                     item === searchValue || (
                       <li onClick={handleCountryClick} className={styles.countriesItem} key={item}>
                         {item}
