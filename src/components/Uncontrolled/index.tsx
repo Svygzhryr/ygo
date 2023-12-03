@@ -238,7 +238,7 @@ export const Uncontrolled = () => {
             />
             {isSuggestionsVisible && (
               <ul className={styles.countries}>
-                {filteredCountries.map((item) => (
+                {filteredCountries.map((item: string) => (
                   <li onClick={handleCountryClick} className={styles.countriesItem} key={item}>
                     {item}
                   </li>
