@@ -58,3 +58,56 @@ h2 {
   margin: 10px;
   border-radius: 10px;
 }
+
+.mainTitle {
+  color: $cream-1;
+}
+
+.welcomeWrapper {
+  &::before,
+  &::after {
+    content: '';
+    display: block;
+    margin: 0 auto;
+    width: 500px;
+    border-top: 6px double $cream-1;
+  }
+
+  letter-spacing: 1.5px;
+
+  p {
+    font-size: 20px;
+  }
+}
+
+.link {
+  font-weight: 700;
+  text-decoration: none;
+  animation: contract 4s infinite ease-in-out;
+}
+
+.footnote {
+  font-size: 10px;
+}
+
+@keyframes contract {
+  0% {
+    color: $red-4;
+  }
+
+  25% {
+    color: $red-2;
+  }
+
+  50% {
+    color: $red-3;
+  }
+
+  75% {
+    color: $red-2;
+  }
+
+  100% {
+    color: $red-4;
+  }
+}

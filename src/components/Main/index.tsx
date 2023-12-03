@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { useAppSelector } from '../../redux/hooks/redux';
 import {
   controlledBase64,
@@ -62,7 +63,27 @@ export const Main = () => {
 
   return (
     <div className={styles.wrapper}>
-      <h1>Abandon hope all ye who enter here</h1>
+      <h1 className={styles.mainTitle}>Welcome, lost one</h1>
+      <div className={styles.welcomeWrapper}>
+        <p>
+          Have you always wanted to be the best at something? Maybe to become a chef, top tier
+          racer, or maybe a president?
+        </p>
+        <p>Have you ever felt like you lack of time, or maybe motivation or patience?</p>
+        <p>
+          Fear not, for you have a great chance to achieve what you always wanted! And the best part
+          is, it&apos;s completely* free**! All you need to do is fill a small little{' '}
+          <Link className={styles.link} to="/controlled">
+            contract
+          </Link>
+          , and I will take care of the rest..
+        </p>
+      </div>
+      <div className={styles.footnote}>
+        <br />
+        <p>* - the only thing we take away is just soul. no money, vouchers or precious metals</p>
+        <p>** - except for eternal servitude</p>
+      </div>
     </div>
   );
 };
