@@ -64,7 +64,7 @@ export const Controlled = () => {
       dispatch(setSearch(country));
       dispatch(filterCountries(country));
     });
-  }, [watch]);
+  }, [watch, dispatch, filterCountries, setSearch]);
 
   return (
     <div className={styles.wrapper}>
