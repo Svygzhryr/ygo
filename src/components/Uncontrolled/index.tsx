@@ -7,7 +7,9 @@ import {
   FormEvent,
   LegacyRef,
 } from 'react';
+
 import { useNavigate } from 'react-router-dom';
+
 import { useAppDispatch, useAppSelector } from '../../redux/hooks/redux';
 import { uncontrolledFormSlice } from '../../redux/reducers/UncontrolledSlice';
 import {
@@ -16,8 +18,10 @@ import {
   uncontrolledIsSuggestions,
 } from '../../redux/state';
 import { schema } from '../../utils/validationSchema';
-import styles from './Uncontrolled.module.scss';
 import { notificationSlice } from '../../redux/reducers/NotificationSlice';
+import { convertBase64 } from '../../utils/utils';
+
+import styles from './Uncontrolled.module.scss';
 export interface IFormRef {
   current: (HTMLInputElement | HTMLSelectElement)[];
 }
@@ -117,21 +121,6 @@ export const Uncontrolled = () => {
     const value = target.value;
     dispatch(filterCountries(value));
     dispatch(setSearch(value));
-  };
-
-  const convertBase64 = (file: File) => {
-    return new Promise((resolve, reject) => {
-      const fileReader = new FileReader();
-      fileReader.readAsDataURL(file);
-
-      fileReader.onload = () => {
-        resolve(fileReader.result);
-      };
-
-      fileReader.onerror = (error) => {
-        reject(error);
-      };
-    });
   };
 
   const handleFileChange: ChangeEventHandler<HTMLInputElement> = async (e) => {

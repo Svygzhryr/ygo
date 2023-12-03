@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+
 import { useAppSelector } from '../../redux/hooks/redux';
 import {
   controlledBase64,
@@ -8,8 +9,9 @@ import {
   uncontrolledData,
 } from '../../redux/state';
 import { IFormProps } from '../../utils/types';
-import styles from './Main.module.scss';
 import { Notification } from '../Notification';
+
+import styles from './Main.module.scss';
 
 export const Main = () => {
   const controlledOutput = useAppSelector(controlledData) as IFormProps;

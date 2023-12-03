@@ -1,18 +1,17 @@
-import { Controller, useForm } from 'react-hook-form';
+import { MouseEventHandler, useEffect } from 'react';
+
+import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import { yupResolver } from '@hookform/resolvers/yup';
+
+import { controlledFormSlice } from '../../redux/reducers/ControlledSlice';
+import { controlledCountrySearch, controlledFilteredCountries } from '../../redux/state';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks/redux';
+import { notificationSlice } from '../../redux/reducers/NotificationSlice';
+import { schema } from '../../utils/validationSchema';
+import { convertBase64 } from '../../utils/utils';
 
 import styles from './Controlled.module.scss';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { schema } from '../../utils/validationSchema';
-import { controlledFormSlice } from '../../redux/reducers/ControlledSlice';
-import {
-  controlledCountrySearch,
-  controlledFilteredCountries,
-  controlledIsSuggestions,
-} from '../../redux/state';
-import { useAppDispatch, useAppSelector } from '../../redux/hooks/redux';
-import { ChangeEventHandler, MouseEventHandler, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { notificationSlice } from '../../redux/reducers/NotificationSlice';
 
 export const Controlled = () => {
   const {
@@ -27,8 +26,7 @@ export const Controlled = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const { setSearch, filterCountries, setSuggestions, setBase64, setData } =
-    controlledFormSlice.actions;
+  const { setSearch, filterCountries, setBase64, setData } = controlledFormSlice.actions;
   const { setIsActive } = notificationSlice.actions;
   const searchValue = useAppSelector(controlledCountrySearch);
   const filteredCountries = useAppSelector(controlledFilteredCountries);
@@ -47,21 +45,6 @@ export const Controlled = () => {
     const value = target.innerHTML;
     dispatch(setSearch(value));
     setValue('country', value);
-  };
-
-  const convertBase64 = (file: File) => {
-    return new Promise((resolve, reject) => {
-      const fileReader = new FileReader();
-      fileReader.readAsDataURL(file);
-
-      fileReader.onload = () => {
-        resolve(fileReader.result);
-      };
-
-      fileReader.onerror = (error) => {
-        reject(error);
-      };
-    });
   };
 
   useEffect(() => {
@@ -165,7 +148,6 @@ export const Controlled = () => {
               className={`${styles.file} ${errors.file && styles.invalid}`}
               type="file"
               placeholder="Your photo, please"
-              // onChange={handleFileChange}
             />
             <div className={styles.errorText}>{errors.file?.message}</div>
           </div>
