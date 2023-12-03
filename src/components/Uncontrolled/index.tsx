@@ -6,6 +6,7 @@ import {
   FormEventHandler,
   FormEvent,
   LegacyRef,
+  useEffect,
 } from 'react';
 
 import { useNavigate } from 'react-router-dom';
@@ -14,6 +15,7 @@ import { useAppDispatch, useAppSelector } from '../../redux/hooks/redux';
 import { uncontrolledFormSlice } from '../../redux/reducers/UncontrolledSlice';
 import {
   uncontrolledCountrySearch,
+  uncontrolledErrors,
   uncontrolledFilteredCountries,
   uncontrolledIsSuggestions,
 } from '../../redux/state';
@@ -34,28 +36,29 @@ export const Uncontrolled = () => {
     }
   };
 
-  const errors = {
-    name: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-    age: '',
-    gender: '',
-    file: '',
-    country: '',
-    terms: '',
-  };
+  // const errors = {
+  //   name: '',
+  //   email: '',
+  //   password: '',
+  //   confirmPassword: '',
+  //   age: '',
+  //   gender: '',
+  //   file: '',
+  //   country: '',
+  //   terms: '',
+  // };
 
-  const [errorsState, setErrorsState] = useState(errors);
+  // const [errorsState, setErrorsState] = useState(errors);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const { setSearch, filterCountries, setSuggestions, setBase64, setData } =
+  const { setSearch, filterCountries, setSuggestions, setBase64, setData, setErrors } =
     uncontrolledFormSlice.actions;
   const { setIsActive } = notificationSlice.actions;
   const searchValue = useAppSelector(uncontrolledCountrySearch);
   const filteredCountries = useAppSelector(uncontrolledFilteredCountries);
   const isSuggestionsVisible = useAppSelector(uncontrolledIsSuggestions);
+  const errorsState = useAppSelector(uncontrolledErrors);
 
   const onSubmitHandler: FormEventHandler<HTMLFormElement> = (e: FormEvent) => {
     e.preventDefault();
@@ -82,6 +85,18 @@ export const Uncontrolled = () => {
       terms: terms.checked,
     };
 
+    const errors = {
+      name: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+      age: '',
+      gender: '',
+      file: '',
+      country: '',
+      terms: '',
+    };
+
     schema
       .validate(formData, { abortEarly: false })
       .then(() => {
@@ -96,7 +111,7 @@ export const Uncontrolled = () => {
         err.inner.forEach((e: { path: string; message: string }) => {
           errors[e.path as keyof typeof errors] = e.message;
         });
-        setErrorsState(errors);
+        dispatch(setErrors(errors));
       });
   };
 
@@ -149,7 +164,6 @@ export const Uncontrolled = () => {
               name="name"
               type="text"
               placeholder="Your name here.."
-              defaultValue="Pavel"
             />
             <div className={styles.errorText}>{errorsState?.name}</div>
           </div>
@@ -160,7 +174,6 @@ export const Uncontrolled = () => {
               name="email"
               type="text"
               placeholder="Email here.."
-              defaultValue="pamixy@gmail.com"
             />
             <div className={styles.errorText}>{errorsState?.email}</div>
           </div>
@@ -171,7 +184,6 @@ export const Uncontrolled = () => {
               name="password"
               type="text"
               placeholder="Password, for some reason"
-              defaultValue="asdA1@@@@"
             />
             <div className={styles.errorText}>{errorsState?.password}</div>
           </div>
@@ -182,7 +194,6 @@ export const Uncontrolled = () => {
               name="confirmPassword"
               type="text"
               placeholder="Repeat your password.."
-              defaultValue="asdA1@@@@"
             />
             <div className={styles.errorText}>{errorsState?.confirmPassword}</div>
           </div>
@@ -193,7 +204,6 @@ export const Uncontrolled = () => {
               name="age"
               type="text"
               placeholder="Age, if you please"
-              defaultValue="20"
             />
             <div className={styles.errorText}>{errorsState?.age}</div>
           </div>
@@ -201,7 +211,6 @@ export const Uncontrolled = () => {
             <select
               ref={setRef as LegacyRef<HTMLSelectElement> | undefined}
               name="gender"
-              defaultValue="Male"
               placeholder="Your gender.."
             >
               <option value="default" disabled>

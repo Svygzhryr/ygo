@@ -8,6 +8,17 @@ const initialState = {
   isSuggestionsVisible: false,
   image: '',
   base64: '',
+  errors: {
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+    age: '',
+    gender: '',
+    file: '',
+    country: '',
+    terms: '',
+  },
 };
 
 export const uncontrolledFormSlice = createSlice({
@@ -28,6 +39,9 @@ export const uncontrolledFormSlice = createSlice({
     },
     setBase64(state, action) {
       state.base64 = action.payload;
+    },
+    setErrors(state, action) {
+      state.errors = action.payload;
     },
   },
 });

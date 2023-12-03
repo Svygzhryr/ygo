@@ -12,6 +12,7 @@ import { schema } from '../../utils/validationSchema';
 import { convertBase64 } from '../../utils/utils';
 
 import styles from './Controlled.module.scss';
+import { IFormProps } from '../../utils/types';
 
 export const Controlled = () => {
   const {
@@ -31,13 +32,21 @@ export const Controlled = () => {
   const searchValue = useAppSelector(controlledCountrySearch);
   const filteredCountries = useAppSelector(controlledFilteredCountries);
 
-  const onSubmitHandler = (formData: object) => {
+  const onSubmitHandler = (formData: IFormProps) => {
+    if (formData.file) {
+      convertBase64(formData.file[0]).then((base64) => {
+        dispatch(setBase64(base64));
+      });
+    } else {
+      console.error('Cant upload image..');
+    }
+
     dispatch(setData(formData));
     navigate('/');
     dispatch(setIsActive(true));
     setTimeout(() => {
       dispatch(setIsActive(false));
-    }, 500);
+    }, 1000);
   };
 
   const handleCountryClick: MouseEventHandler<HTMLLIElement> = (e) => {
@@ -48,17 +57,9 @@ export const Controlled = () => {
   };
 
   useEffect(() => {
-    watch(({ country, file }) => {
+    watch(({ country }) => {
       dispatch(setSearch(country));
       dispatch(filterCountries(country));
-
-      if (file) {
-        convertBase64(file[0]).then((base64) => {
-          dispatch(setBase64(base64));
-        });
-      } else {
-        console.error('Cant upload image..');
-      }
     });
   }, [watch]);
 
@@ -75,7 +76,6 @@ export const Controlled = () => {
               name="name"
               type="text"
               placeholder="Your name here.."
-              defaultValue="Pavel"
             />
             <div className={styles.errorText}>{errors.name?.message}</div>
           </div>
@@ -86,7 +86,6 @@ export const Controlled = () => {
               name="email"
               type="text"
               placeholder="Email here.."
-              defaultValue="pamixy@gmail.com"
             />
             <div className={styles.errorText}>{errors.email?.message}</div>
           </div>
@@ -97,7 +96,6 @@ export const Controlled = () => {
               name="password"
               type="text"
               placeholder="Password, for some reason"
-              defaultValue="asdA1@@@@"
             />
             <div className={styles.errorText}>{errors.password?.message}</div>
           </div>
@@ -108,7 +106,6 @@ export const Controlled = () => {
               name="confirmPassword"
               type="text"
               placeholder="Repeat your password.."
-              defaultValue="asdA1@@@@"
             />
             <div className={styles.errorText}>{errors.confirmPassword?.message}</div>
           </div>
@@ -119,17 +116,11 @@ export const Controlled = () => {
               name="age"
               type="text"
               placeholder="Age, if you please"
-              defaultValue="20"
             />
             <div className={styles.errorText}>{errors.age?.message}</div>
           </div>
           <div className={styles.inputWrapper}>
-            <select
-              {...register('gender')}
-              name="gender"
-              defaultValue="Male"
-              placeholder="Your gender.."
-            >
+            <select {...register('gender')} name="gender" placeholder="Your gender..">
               <option value="default" disabled>
                 Select your gender
               </option>
