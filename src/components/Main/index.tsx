@@ -85,7 +85,7 @@ export const Main = () => {
       </div>
       <div className={styles.footnote}>
         <br />
-        <p>* - the only thing taken away is just soul. no money, vouchers or precious metals</p>
+        <p>* - the only thing taken away is soul. no money, vouchers or precious metals</p>
         <p>** - except for eternal servitude</p>
       </div>
     </div>

@@ -64,23 +64,18 @@ export const Controlled = () => {
     });
   };
 
-  const handleFileChange: ChangeEventHandler<HTMLInputElement> = async (e) => {
-    const target = e.target as HTMLInputElement;
-    let value;
-    if (target.files) {
-      value = target.files[0];
-    } else {
-      console.error('Cant upload an image...');
-      return;
-    }
-    const convertedImage = (await convertBase64(value)) as string;
-    dispatch(setBase64(convertedImage));
-  };
-
   useEffect(() => {
-    watch(({ country }) => {
+    watch(({ country, file }) => {
       dispatch(setSearch(country));
       dispatch(filterCountries(country));
+
+      if (file) {
+        convertBase64(file[0]).then((base64) => {
+          dispatch(setBase64(base64));
+        });
+      } else {
+        console.error('Cant upload image..');
+      }
     });
   }, [watch]);
 
@@ -170,15 +165,11 @@ export const Controlled = () => {
               className={`${styles.file} ${errors.file && styles.invalid}`}
               type="file"
               placeholder="Your photo, please"
-              onChange={handleFileChange}
+              // onChange={handleFileChange}
             />
             <div className={styles.errorText}>{errors.file?.message}</div>
           </div>
-          <div
-            // onClick={handleCountryFocus}
-            // onBlur={handleCountryBlur}
-            className={`${styles.inputWrapper} ${styles.autocompleteInputWrapper}`}
-          >
+          <div className={`${styles.inputWrapper} ${styles.autocompleteInputWrapper}`}>
             <input
               {...register('country')}
               name="country"
